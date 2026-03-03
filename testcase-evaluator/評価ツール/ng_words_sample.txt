@@ -1,0 +1,10 @@
+# NGワードリスト（TSV形式: NG単語<TAB>正式名称）
+# プロジェクトの仕様書・PRDに合わせて編集してください
+#
+# 使い方:
+#   python evaluate_testcases.py テスト項目書.xlsx --keywords ng_words_sample.txt
+#
+# === TH-898 ログイン制限プロジェクトの例 ===
+ID/PW	メールアドレス・パスワード
+PW	パスワード
+リカバリー	パスワード再設定

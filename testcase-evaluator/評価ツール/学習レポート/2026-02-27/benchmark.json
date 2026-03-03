@@ -1,0 +1,741 @@
+{
+  "_meta": {
+    "generated_at": "2026-02-27 14:25",
+    "source_files": [
+      "【テスト項目書】クリッピング練習問題の複数ページ対応（画像の複数枚アップロード対応）.xlsx",
+      "【テンプレ】クリッピング時に、OCR結果を流用して「税抜⇆税込」の値をチェックしたい.xlsx",
+      "【テンプレ】テスト項目書_GAS検証用.xlsx",
+      "【テンプレ】テスト項目書_リグレッションテスト用.xlsx",
+      "【テンプレ】テスト項目書_ログイン画面から「パスワードをお忘れの場合」を操作すると「ブラウザアプリをインストールしてください」となり進めない不具合を修正.xlsx",
+      "【メイテック様】テスト項目書_会計出力テスト_251120提出済み.xlsx",
+      "【レクチャー用】テスト項目書_請求書一覧で関連書類が確認できるようになる.xlsx",
+      "テスト項目書_ [クリッピング練習問題]ホームの受験履歴画面で正解問題数が表示されるようにしたい.xlsx",
+      "テスト項目書_(Android)TK・TI の申請タイムラインにおいて、ファイル・画像のアップロード機能を追加.xlsx",
+      "テスト項目書_(Android)乗車割引が適用された経費の金額_経路情報に対する修正.xlsx",
+      "テスト項目書_(Android)参加者入力画面のUI及びロジックの刷新.xlsx",
+      "テスト項目書_(Android)特定の外貨レートの場合、外貨計算処理の結果が一円ずれるバグ.xlsx",
+      "テスト項目書_(Android)申請時の承認者選択画面で承認者のメールアドレスを非表示にする.xlsx",
+      "テスト項目書_(ES)該当の場合サンプリングチェックシートに出力されないようにする.xlsx",
+      "テスト項目書_(iOS)特定の外貨レートの場合、外貨計算処理の結果が一円ずれるバグ.xlsx",
+      "テスト項目書_(iOS)申請時の承認者選択画面で承認者のメールアドレスを非表示にする.xlsx",
+      "テスト項目書_(iOS)通知に正しい総額・事前申請額が表示されない.xlsx",
+      "テスト項目書_(iOS)金額誤差の低減.xlsx",
+      "テスト項目書_(QA) マニュアルボタン押下したときの遷移でエラーが発生する.xlsx",
+      "テスト項目書_(QA) 長納期レーンでクリッピングレーンに流そうとすると画像変換に失敗する.xlsx",
+      "テスト項目書_(SRE)ECSへの基盤移行_本番環境用.xlsx",
+      "テスト項目書_(SRE)ECSへの基盤移行_開発環境用.xlsx",
+      "テスト項目書_(WF)初回リリースまでのテスト.xlsx",
+      "テスト項目書_(インシデント恒久対策)10月頭に発生したインシデントの影響範囲最小化.xlsx",
+      "テスト項目書_(再)ヘッダーから実績に関する情報を削除する.xlsx",
+      "テスト項目書_(再)ヘッダーに注意書きを追加する.xlsx",
+      "テスト項目書_(認証T)ログイン周りのリグレッション.xlsx",
+      "テスト項目書_[2025_11_06]本番リリース分.xlsx",
+      "テスト項目書_[2025_11_27]本番リリース.xlsx",
+      "テスト項目書_[AIマスキング] 書類種別は不要になったので削除する.xlsx",
+      "テスト項目書_[AI適格請求書チェック]複数指定、一括支払い申請でも、判定中は申請不可に.xlsx",
+      "テスト項目書_[Android]経費一覧のアイコン変更.xlsx",
+      "テスト項目書_[IP制限]TH側でIP制限を行えるように+OAuthの永続化.xlsx",
+      "テスト項目書_[SAML認証関連][TOKIUM側実装] TOKIUMにログイン済みの場合、THに遷移した段階でそのユーザーでログイン済みの状態で画面を表示する.xlsx",
+      "テスト項目書_[WDL]ユーザーはweb送付の帳票公開メールのURLから、送付した帳票だけを一覧で確認できる.xlsx",
+      "テスト項目書_[クリッピング練習問題] クリッピング画面で見切れることがある.xlsx",
+      "テスト項目書_[クリッピング練習問題] 回答結果確認画面からボタンで前後の問題に遷移できるようにしてほしい.xlsx",
+      "テスト項目書_[クリッピング練習問題] 採点結果画面の画像を拡大・縮小できるようにしたい.xlsx",
+      "テスト項目書_[クリッピング練習問題] 解説を編集できるようにする.xlsx",
+      "テスト項目書_[スロークエリ] リードレプリカでの検証.xlsx",
+      "テスト項目書_[スロークエリ] リードレプリカでの検証（再テスト）.xlsx",
+      "テスト項目書_[フェーズ1]PreInputを削除（領収書入力・Dr.walletの回帰テスト）.xlsx",
+      "テスト項目書_[メアド非表示] メールアドレスを非表示にするためのフラグをテーブルに追加.xlsx",
+      "テスト項目書_[メール受領] ライブラリのバージョンアップ.xlsx",
+      "テスト項目書_[実装]NTVのWBSで担当者・責任者をnullableにする_.xlsx",
+      "テスト項目書_[新リース]関連契約AI自動紐付け(1).xlsx",
+      "テスト項目書_[新リース]関連契約AI自動紐付け.xlsx",
+      "テスト項目書_[新リース]関連契約を含んだリース判定.xlsx",
+      "テスト項目書_[明細インポート] 按分金額_割合が0のデータが作成できてしまう.xlsx",
+      "テスト項目書_[特定顧客要望]ユーザーはマイナス金額を一覧画面で確認できる.xlsx",
+      "テスト項目書_[過去明細]（新UI）費用負担部署が金額按分の時に引用するよう変更する.xlsx",
+      "テスト項目書_「admin_invoice_entry権限」があれば、領収書の入力を禁止する.xlsx",
+      "テスト項目書_「Android15」への対応に伴うリグレッションテスト.xlsx",
+      "テスト項目書_「Android16」への対応に伴うリグレッションテスト.xlsx",
+      "テスト項目書_「attached_s3_files」テーブルの軽微な変更に伴うリグレッションテスト.xlsx",
+      "テスト項目書_「値入力→検索ボタン押下」という既存のUXに戻す.xlsx",
+      "テスト項目書_「取引先」検索欄付近に注記を追加する（アップロードサイト）.xlsx",
+      "テスト項目書_「承認済み承認者」検索の高速化の件.xlsx",
+      "テスト項目書_「特権請求書入力」と「特権送付先選択」の2つの権限を付与しようとした時のバリデーション強化.xlsx",
+      "テスト項目書_ログイン方法でID・PWとTOKIUM IDが存在し、TOKIUM IDだけ利用したい場合にフラグでログイン制限できるように (2).xlsx",
+      "テスト項目書_取引先マスタのテーブル構造変更（企業マスタ追加）.xlsx",
+      "テスト項目書_改善後_v7.xlsx"
+    ],
+    "total_cases": 39766,
+    "total_expected": 28996
+  },
+  "expected_length": {
+    "avg": 20.0,
+    "p5": 7,
+    "p95": 42,
+    "ideal_min": 7,
+    "ideal_max": 80
+  },
+  "steps_length": {
+    "avg": 24.1
+  },
+  "steps_coverage": {
+    "rate": 0.82,
+    "good": 0.8,
+    "warning": 0.6
+  },
+  "numbered_steps": {
+    "rate": 0.114,
+    "good": 0.2
+  },
+  "single_koto_rate": {
+    "rate": 0.8464,
+    "good": 0.98,
+    "warning": 0.95
+  },
+  "vague_rate": {
+    "rate": 0.0197,
+    "good": 0.01,
+    "acceptable": 0.03
+  },
+  "good_endings": {
+    "rate": 0.818,
+    "good": 0.8,
+    "patterns": [
+      "できること",
+      "されること",
+      "されていること",
+      "ないこと",
+      "すること",
+      "になること",
+      "していること",
+      "であること",
+      "できていること",
+      "れること",
+      "くこと",
+      "になっていること",
+      "いること"
+    ]
+  },
+  "per_file": [
+    {
+      "file": "【テスト項目書】クリッピング練習問題の複数ページ対応（画像の複数枚アップロード対応）.xlsx",
+      "cases": 1711,
+      "expected_avg": 22.0,
+      "steps_avg": 22.3,
+      "steps_coverage": 0.836,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.906
+    },
+    {
+      "file": "【テンプレ】クリッピング時に、OCR結果を流用して「税抜⇆税込」の値をチェックしたい.xlsx",
+      "cases": 157,
+      "expected_avg": 12.8,
+      "steps_avg": 30.9,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "【テンプレ】テスト項目書_GAS検証用.xlsx",
+      "cases": 10,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.1,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "【テンプレ】テスト項目書_リグレッションテスト用.xlsx",
+      "cases": 6775,
+      "expected_avg": 20.1,
+      "steps_avg": 17.5,
+      "steps_coverage": 0.939,
+      "koto_1_rate": 0.834,
+      "vague_rate": 0.0379,
+      "good_ending_rate": 0.844
+    },
+    {
+      "file": "【テンプレ】テスト項目書_ログイン画面から「パスワードをお忘れの場合」を操作すると「ブラウザアプリをインストールしてください」となり進めない不具合を修正.xlsx",
+      "cases": 10,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.1,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "【メイテック様】テスト項目書_会計出力テスト_251120提出済み.xlsx",
+      "cases": 1851,
+      "expected_avg": 12.3,
+      "steps_avg": 27.5,
+      "steps_coverage": 0.955,
+      "koto_1_rate": 0.235,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.217
+    },
+    {
+      "file": "【レクチャー用】テスト項目書_請求書一覧で関連書類が確認できるようになる.xlsx",
+      "cases": 10,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.1,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "テスト項目書_ [クリッピング練習問題]ホームの受験履歴画面で正解問題数が表示されるようにしたい.xlsx",
+      "cases": 11,
+      "expected_avg": 15.9,
+      "steps_avg": 10.1,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(Android)TK・TI の申請タイムラインにおいて、ファイル・画像のアップロード機能を追加.xlsx",
+      "cases": 299,
+      "expected_avg": 26.4,
+      "steps_avg": 7.0,
+      "steps_coverage": 0.997,
+      "koto_1_rate": 0.418,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.527
+    },
+    {
+      "file": "テスト項目書_(Android)乗車割引が適用された経費の金額_経路情報に対する修正.xlsx",
+      "cases": 2153,
+      "expected_avg": 33.7,
+      "steps_avg": 132.7,
+      "steps_coverage": 0.029,
+      "koto_1_rate": 0.691,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.181
+    },
+    {
+      "file": "テスト項目書_(Android)参加者入力画面のUI及びロジックの刷新.xlsx",
+      "cases": 539,
+      "expected_avg": 24.7,
+      "steps_avg": 14.2,
+      "steps_coverage": 0.993,
+      "koto_1_rate": 0.806,
+      "vague_rate": 0.017,
+      "good_ending_rate": 0.904
+    },
+    {
+      "file": "テスト項目書_(Android)特定の外貨レートの場合、外貨計算処理の結果が一円ずれるバグ.xlsx",
+      "cases": 74,
+      "expected_avg": 19.3,
+      "steps_avg": 30.2,
+      "steps_coverage": 0.905,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.838
+    },
+    {
+      "file": "テスト項目書_(Android)申請時の承認者選択画面で承認者のメールアドレスを非表示にする.xlsx",
+      "cases": 48,
+      "expected_avg": 23.8,
+      "steps_avg": 72.3,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.625,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(ES)該当の場合サンプリングチェックシートに出力されないようにする.xlsx",
+      "cases": 6,
+      "expected_avg": 22.0,
+      "steps_avg": 97.0,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(iOS)特定の外貨レートの場合、外貨計算処理の結果が一円ずれるバグ.xlsx",
+      "cases": 74,
+      "expected_avg": 19.3,
+      "steps_avg": 29.0,
+      "steps_coverage": 0.905,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.838
+    },
+    {
+      "file": "テスト項目書_(iOS)申請時の承認者選択画面で承認者のメールアドレスを非表示にする.xlsx",
+      "cases": 43,
+      "expected_avg": 21.4,
+      "steps_avg": 70.7,
+      "steps_coverage": 0.977,
+      "koto_1_rate": 0.714,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(iOS)通知に正しい総額・事前申請額が表示されない.xlsx",
+      "cases": 426,
+      "expected_avg": 17.2,
+      "steps_avg": 33.9,
+      "steps_coverage": 0.685,
+      "koto_1_rate": 0.995,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.971
+    },
+    {
+      "file": "テスト項目書_(iOS)金額誤差の低減.xlsx",
+      "cases": 363,
+      "expected_avg": 16.4,
+      "steps_avg": 21.2,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.854,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.138
+    },
+    {
+      "file": "テスト項目書_(QA) マニュアルボタン押下したときの遷移でエラーが発生する.xlsx",
+      "cases": 20,
+      "expected_avg": 20.7,
+      "steps_avg": 5.3,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(QA) 長納期レーンでクリッピングレーンに流そうとすると画像変換に失敗する.xlsx",
+      "cases": 194,
+      "expected_avg": 16.2,
+      "steps_avg": 40.2,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(SRE)ECSへの基盤移行_本番環境用.xlsx",
+      "cases": 6785,
+      "expected_avg": 20.1,
+      "steps_avg": 17.5,
+      "steps_coverage": 0.937,
+      "koto_1_rate": 0.835,
+      "vague_rate": 0.0378,
+      "good_ending_rate": 0.845
+    },
+    {
+      "file": "テスト項目書_(SRE)ECSへの基盤移行_開発環境用.xlsx",
+      "cases": 6785,
+      "expected_avg": 20.1,
+      "steps_avg": 17.5,
+      "steps_coverage": 0.937,
+      "koto_1_rate": 0.835,
+      "vague_rate": 0.0378,
+      "good_ending_rate": 0.845
+    },
+    {
+      "file": "テスト項目書_(WF)初回リリースまでのテスト.xlsx",
+      "cases": 115,
+      "expected_avg": 14.7,
+      "steps_avg": 76.4,
+      "steps_coverage": 0.043,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.9
+    },
+    {
+      "file": "テスト項目書_(インシデント恒久対策)10月頭に発生したインシデントの影響範囲最小化.xlsx",
+      "cases": 31,
+      "expected_avg": 29.0,
+      "steps_avg": 43.9,
+      "steps_coverage": 0.645,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.828
+    },
+    {
+      "file": "テスト項目書_(再)ヘッダーから実績に関する情報を削除する.xlsx",
+      "cases": 24,
+      "expected_avg": 12.4,
+      "steps_avg": 3.5,
+      "steps_coverage": 0.875,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.5714,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(再)ヘッダーに注意書きを追加する.xlsx",
+      "cases": 33,
+      "expected_avg": 15.7,
+      "steps_avg": 5.0,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_(認証T)ログイン周りのリグレッション.xlsx",
+      "cases": 20,
+      "expected_avg": 20.2,
+      "steps_avg": 7.8,
+      "steps_coverage": 0.85,
+      "koto_1_rate": 0.875,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.688
+    },
+    {
+      "file": "テスト項目書_[2025_11_06]本番リリース分.xlsx",
+      "cases": 56,
+      "expected_avg": 46.5,
+      "steps_avg": 100.7,
+      "steps_coverage": 0.107,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "テスト項目書_[2025_11_27]本番リリース.xlsx",
+      "cases": 34,
+      "expected_avg": 11.6,
+      "steps_avg": 32.7,
+      "steps_coverage": 0.176,
+      "koto_1_rate": 0.833,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.458
+    },
+    {
+      "file": "テスト項目書_[AIマスキング] 書類種別は不要になったので削除する.xlsx",
+      "cases": 34,
+      "expected_avg": 27.6,
+      "steps_avg": 67.1,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.941
+    },
+    {
+      "file": "テスト項目書_[AI適格請求書チェック]複数指定、一括支払い申請でも、判定中は申請不可に.xlsx",
+      "cases": 27,
+      "expected_avg": 35.9,
+      "steps_avg": 178.4,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[Android]経費一覧のアイコン変更.xlsx",
+      "cases": 34,
+      "expected_avg": 27.3,
+      "steps_avg": 68.0,
+      "steps_coverage": 0.588,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.853
+    },
+    {
+      "file": "テスト項目書_[IP制限]TH側でIP制限を行えるように+OAuthの永続化.xlsx",
+      "cases": 40,
+      "expected_avg": 30.8,
+      "steps_avg": 116.6,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.825,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.5
+    },
+    {
+      "file": "テスト項目書_[SAML認証関連][TOKIUM側実装] TOKIUMにログイン済みの場合、THに遷移した段階でそのユーザーでログイン済みの状態で画面を表示する.xlsx",
+      "cases": 19,
+      "expected_avg": 23.5,
+      "steps_avg": 93.6,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.947,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[WDL]ユーザーはweb送付の帳票公開メールのURLから、送付した帳票だけを一覧で確認できる.xlsx",
+      "cases": 17,
+      "expected_avg": 25.4,
+      "steps_avg": 61.0,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.941
+    },
+    {
+      "file": "テスト項目書_[クリッピング練習問題] クリッピング画面で見切れることがある.xlsx",
+      "cases": 10,
+      "expected_avg": 17.0,
+      "steps_avg": 17.8,
+      "steps_coverage": 0.8,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[クリッピング練習問題] 回答結果確認画面からボタンで前後の問題に遷移できるようにしてほしい.xlsx",
+      "cases": 15,
+      "expected_avg": 21.1,
+      "steps_avg": 32.5,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.786
+    },
+    {
+      "file": "テスト項目書_[クリッピング練習問題] 採点結果画面の画像を拡大・縮小できるようにしたい.xlsx",
+      "cases": 15,
+      "expected_avg": 21.0,
+      "steps_avg": 3.8,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[クリッピング練習問題] 解説を編集できるようにする.xlsx",
+      "cases": 120,
+      "expected_avg": 18.8,
+      "steps_avg": 7.9,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.87
+    },
+    {
+      "file": "テスト項目書_[スロークエリ] リードレプリカでの検証.xlsx",
+      "cases": 163,
+      "expected_avg": 17.6,
+      "steps_avg": 63.1,
+      "steps_coverage": 0.571,
+      "koto_1_rate": 0.626,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.528
+    },
+    {
+      "file": "テスト項目書_[スロークエリ] リードレプリカでの検証（再テスト）.xlsx",
+      "cases": 332,
+      "expected_avg": 16.7,
+      "steps_avg": 9.2,
+      "steps_coverage": 0.807,
+      "koto_1_rate": 0.588,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.581
+    },
+    {
+      "file": "テスト項目書_[フェーズ1]PreInputを削除（領収書入力・Dr.walletの回帰テスト）.xlsx",
+      "cases": 123,
+      "expected_avg": 29.0,
+      "steps_avg": 36.9,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.84,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.958
+    },
+    {
+      "file": "テスト項目書_[メアド非表示] メールアドレスを非表示にするためのフラグをテーブルに追加.xlsx",
+      "cases": 52,
+      "expected_avg": 18.3,
+      "steps_avg": 79.0,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[メール受領] ライブラリのバージョンアップ.xlsx",
+      "cases": 1019,
+      "expected_avg": 24.9,
+      "steps_avg": 0.0,
+      "steps_coverage": 0.0,
+      "koto_1_rate": 0.939,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.909
+    },
+    {
+      "file": "テスト項目書_[実装]NTVのWBSで担当者・責任者をnullableにする_.xlsx",
+      "cases": 24,
+      "expected_avg": 68.8,
+      "steps_avg": 85.5,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_[新リース]関連契約AI自動紐付け(1).xlsx",
+      "cases": 47,
+      "expected_avg": 30.1,
+      "steps_avg": 88.0,
+      "steps_coverage": 0.617,
+      "koto_1_rate": 0.957,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.809
+    },
+    {
+      "file": "テスト項目書_[新リース]関連契約AI自動紐付け.xlsx",
+      "cases": 10,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.1,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "テスト項目書_[新リース]関連契約を含んだリース判定.xlsx",
+      "cases": 10,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.1,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "テスト項目書_[明細インポート] 按分金額_割合が0のデータが作成できてしまう.xlsx",
+      "cases": 18,
+      "expected_avg": 0.0,
+      "steps_avg": 9.0,
+      "steps_coverage": 0.056,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.0
+    },
+    {
+      "file": "テスト項目書_[特定顧客要望]ユーザーはマイナス金額を一覧画面で確認できる.xlsx",
+      "cases": 77,
+      "expected_avg": 20.9,
+      "steps_avg": 85.8,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.714
+    },
+    {
+      "file": "テスト項目書_[過去明細]（新UI）費用負担部署が金額按分の時に引用するよう変更する.xlsx",
+      "cases": 101,
+      "expected_avg": 39.6,
+      "steps_avg": 94.2,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.99,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.525
+    },
+    {
+      "file": "テスト項目書_「admin_invoice_entry権限」があれば、領収書の入力を禁止する.xlsx",
+      "cases": 24,
+      "expected_avg": 16.8,
+      "steps_avg": 30.2,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.3333,
+      "good_ending_rate": 0.333
+    },
+    {
+      "file": "テスト項目書_「Android15」への対応に伴うリグレッションテスト.xlsx",
+      "cases": 935,
+      "expected_avg": 15.5,
+      "steps_avg": 11.6,
+      "steps_coverage": 0.919,
+      "koto_1_rate": 0.98,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.94
+    },
+    {
+      "file": "テスト項目書_「Android16」への対応に伴うリグレッションテスト.xlsx",
+      "cases": 935,
+      "expected_avg": 15.6,
+      "steps_avg": 11.6,
+      "steps_coverage": 0.919,
+      "koto_1_rate": 0.98,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.941
+    },
+    {
+      "file": "テスト項目書_「attached_s3_files」テーブルの軽微な変更に伴うリグレッションテスト.xlsx",
+      "cases": 124,
+      "expected_avg": 11.2,
+      "steps_avg": 16.4,
+      "steps_coverage": 0.984,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0656,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_「値入力→検索ボタン押下」という既存のUXに戻す.xlsx",
+      "cases": 19,
+      "expected_avg": 13.5,
+      "steps_avg": 40.5,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_「取引先」検索欄付近に注記を追加する（アップロードサイト）.xlsx",
+      "cases": 8,
+      "expected_avg": 28.5,
+      "steps_avg": 26.8,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.875,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_「承認済み承認者」検索の高速化の件.xlsx",
+      "cases": 238,
+      "expected_avg": 33.6,
+      "steps_avg": 116.5,
+      "steps_coverage": 0.765,
+      "koto_1_rate": 0.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_「特権請求書入力」と「特権送付先選択」の2つの権限を付与しようとした時のバリデーション強化.xlsx",
+      "cases": 28,
+      "expected_avg": 14.9,
+      "steps_avg": 32.8,
+      "steps_coverage": 1.0,
+      "koto_1_rate": 0.875,
+      "vague_rate": 0.0,
+      "good_ending_rate": 1.0
+    },
+    {
+      "file": "テスト項目書_ログイン方法でID・PWとTOKIUM IDが存在し、TOKIUM IDだけ利用したい場合にフラグでログイン制限できるように (2).xlsx",
+      "cases": 198,
+      "expected_avg": 26.7,
+      "steps_avg": 240.7,
+      "steps_coverage": 0.434,
+      "koto_1_rate": 0.99,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.914
+    },
+    {
+      "file": "テスト項目書_取引先マスタのテーブル構造変更（企業マスタ追加）.xlsx",
+      "cases": 6079,
+      "expected_avg": 21.1,
+      "steps_avg": 36.8,
+      "steps_coverage": 0.774,
+      "koto_1_rate": 0.991,
+      "vague_rate": 0.0017,
+      "good_ending_rate": 0.912
+    },
+    {
+      "file": "テスト項目書_改善後_v7.xlsx",
+      "cases": 214,
+      "expected_avg": 26.3,
+      "steps_avg": 145.8,
+      "steps_coverage": 0.435,
+      "koto_1_rate": 1.0,
+      "vague_rate": 0.0,
+      "good_ending_rate": 0.925
+    }
+  ]
+}
