@@ -6,8 +6,10 @@ QAチームが作成したテスト自動化ツール群。
 
 | ブランチ | ツール | 概要 |
 |---|---|---|
-| `tool/pdf-test-data-generator` | PDFテストデータ生成 | ファイルアップロードテスト用のPDF・各種ファイルを生成 |
 | `tool/api-test-runner` | APIテスト自動化 | TOKIUM標準APIの自動テスト（CSV→テスト生成→実行→レポート） |
+| `tool/e2e-screen-test` | E2E画面テスト | Playwright + Claude APIによるE2Eテスト自動化（5画面・100テスト超） |
+| `tool/testcase-evaluator` | テストケース評価 | テスト項目書（Excel）を100点満点で自動評価 |
+| `tool/pdf-test-data-generator` | PDFテストデータ生成 | ファイルアップロードテスト用のPDF・各種ファイルを生成 |
 
 ## 使い方
 
