@@ -1,0 +1,708 @@
+=== ログイン ===
+ログイン完了: https://invoicing-staging.keihi.com/invoices
+
+=== チェックボックス選択 ===
+チェックボックス数: 10
+1件目チェック完了
+
+=== 「その他の操作」クリック ===
+「その他の操作」メニュー開き完了
+
+=== 「共通添付ファイルの一括添付」クリック ===
+「共通添付ファイルの一括添付」クリック完了
+
+=== モーダル/ダイアログ検出 ===
+検出された要素数: 49
+
+--- 要素 1: type=dialog ---
+tag: DIV
+id: headlessui-dialog-:r3b:
+classes: _dialog_1er8r_1
+aria-label: 
+aria-labelledby: 
+rect: x=0, y=720, w=1280, h=0
+innerText:
+共通添付ファイルの一括添付
+1
+ファイル選択
+2
+確認
+3
+完了
+新規アップロード
+既存から選択
+ファイルをアップロードして選択
+
+ファイルをドラッグ＆ドロップ、または
+
+ファイルを選択
+選択済みファイル
+(0件)
+
+ファイルが選択されていません
+
+閉じる
+
+ファイルを選択してください
+
+確認へ進む
+innerHTML (先頭5000文字):
+<div class="_dialogBackdrop_1er8r_6" aria-hidden="true" data-headlessui-state="open" data-open=""></div><div class="_dialogScroller_1er8r_17"><div class="_dialogVerticalAlign_1er8r_38"><div class="_dialogPanel_1er8r_44" id="headlessui-dialog-panel-:r3i:" data-headlessui-state="open" data-open=""><article class="_bigCard_vnnpk_1 _modal_1du64_1 d-flex flex-column"><header class="_header_vnnpk_16"><h2>共通添付ファイルの一括添付</h2><button type="button" class="_closeButton_vnnpk_31 _button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignCenter_1e3w6_310 _sizeMinimum_1e3w6_315" aria-disabled="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" class="svg-inline--fa fa-xmark " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path></svg></button></header><nav class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37 _justifyCenter_l2w3v_53 mb-2"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2 _stepActive_s8cyc_6"><span class="_stepNumber_s8cyc_15">1</span><span class="_stepLabel_s8cyc_47">ファイル選択</span></div></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_connector_s8cyc_53"></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2"><span class="_stepNumber_s8cyc_15">2</span><span class="_stepLabel_s8cyc_47">確認</span></div></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_connector_s8cyc_53"></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2"><span class="_stepNumber_s8cyc_15">3</span><span class="_stepLabel_s8cyc_47">完了</span></div></div></nav><nav class="_tabs_7ra6u_1 _tabsDefault_7ra6u_6"><button type="button" class="_tabButton_7ra6u_15 _tabButtonActive_7ra6u_62"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-arrow-up" class="svg-inline--fa fa-cloud-arrow-up " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path></svg>新規アップロード</button><div class="" data-headlessui-state=""><span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r3l:"><button type="button" class="_tabButton_7ra6u_15"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" class="svg-inline--fa fa-magnifying-glass " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>既存から選択</button></span></div></nav><section class="_bigCardSection_vnnpk_41 _bigCardSectionTight_vnnpk_51 _body_10aan_1 d-flex flex-1 min-h-0"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapDefault_l2w3v_21 _container_yrdrf_1 flex-1 min-h-0"><div class="_stack_l2w3v_1 _directionColumn_l2w3v_13 _gapDefault_l2w3v_21 _leftPane_yrdrf_5 flex-1"><h3 class="font-weight-bold font-size-default">ファイルをアップロードして選択</h3><div class="_dropZone_1yvt8_2"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-arrow-up" class="svg-inline--fa fa-cloud-arrow-up fa-2x text-light" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path></svg><p class="_dropZoneMessage_1yvt8_31 text-light text-center">ファイルをドラッグ＆ドロップ、または</p><button type="button" class="_button_1e3w6_1 _colorPrimaryOutlined_1e3w6_106 _alignCenter_1e3w6_3
+
+--- 要素 2: type=headlessui_NAV ---
+tag: NAV
+id: 
+classes: _container_1sd5f_1
+aria-label: 
+aria-labelledby: 
+rect: x=1085.796875, y=7.90625, w=162.203125, h=33.1875
+innerText:
+TOKIUM設定用
+ikeda_n+th1@tokium.jp
+innerHTML (先頭5000文字):
+<button id="headlessui-menu-button-:r2:" aria-haspopup="menu" aria-expanded="false" data-headlessui-state="" type="button" class="_button_1sd5f_6 _button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignLeft_1e3w6_300 _sizeMinimum_1e3w6_315" aria-disabled="false"><div class="_userData_1sd5f_11"><div class="_name_1sd5f_18">TOKIUM設定用</div><div class="_email_1sd5f_23">ikeda_n+th1@tokium.jp</div></div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg></button>
+
+--- 要素 3: type=headlessui_BUTTON ---
+tag: BUTTON
+id: headlessui-menu-button-:r2:
+classes: _button_1sd5f_6 _button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignLeft_1e3w6_300 _sizeMinimum_1e3w6_315
+aria-label: 
+aria-labelledby: 
+rect: x=1085.796875, y=7.90625, w=162.203125, h=33.1875
+innerText:
+TOKIUM設定用
+ikeda_n+th1@tokium.jp
+innerHTML (先頭5000文字):
+<div class="_userData_1sd5f_11"><div class="_name_1sd5f_18">TOKIUM設定用</div><div class="_email_1sd5f_23">ikeda_n+th1@tokium.jp</div></div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+
+--- 要素 4: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=279.1875, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:re:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 5: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:re:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=279.1875, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 6: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=275.1875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:ri:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 7: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:ri:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=275.1875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 8: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=350.5625, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:rm:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 9: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:rm:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=350.5625, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 10: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=346.5625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:rq:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 11: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:rq:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=346.5625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 12: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=421.9375, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:ru:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 13: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:ru:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=421.9375, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 14: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=417.9375, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r12:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 15: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r12:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=417.9375, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 16: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=493.3125, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r16:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 17: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r16:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=493.3125, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 18: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=489.3125, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1a:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 19: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1a:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=489.3125, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 20: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=564.6875, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1e:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 21: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1e:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=564.6875, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 22: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=560.6875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1i:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 23: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1i:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=560.6875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 24: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=636.0625, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1m:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 25: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1m:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=636.0625, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 26: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=632.0625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1q:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 27: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1q:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=632.0625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 28: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=707.4375, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r1u:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 29: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r1u:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=707.4375, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 30: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=703.4375, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r22:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 31: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r22:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=703.4375, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 32: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=778.8125, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r26:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 33: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r26:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=778.8125, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 34: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=774.8125, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2a:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 35: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r2a:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=774.8125, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 36: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=850.1875, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2e:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 37: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r2e:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=850.1875, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 38: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=846.1875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2i:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 39: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r2i:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=846.1875, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 40: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _emailTooltip_1nb2d_1
+aria-label: 
+aria-labelledby: 
+rect: x=563.5625, y=921.5625, w=48.96875, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2m:"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg></span>
+
+--- 要素 41: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r2m:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=580.046875, y=921.5625, w=16, h=24
+innerText:
+
+innerHTML (先頭5000文字):
+<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"></path></svg>
+
+--- 要素 42: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=917.5625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2q:"><span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span></span>
+
+--- 要素 43: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r2q:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=845.171875, y=917.5625, w=128, h=32
+innerText:
+未承認
+innerHTML (先頭5000文字):
+<span class="_tag_1pbx7_1 _tagUnapproved_1pbx7_17"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-half-stroke" class="svg-inline--fa fa-circle-half-stroke fa-fw _beforeIcon_1pbx7_10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg><span>未承認</span></span>
+
+--- 要素 44: type=headlessui_NAV ---
+tag: NAV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=845.4375, y=104, w=185.359375, h=42
+innerText:
+その他の操作
+innerHTML (先頭5000文字):
+<button id="headlessui-menu-button-:r8:" aria-haspopup="menu" aria-expanded="false" data-headlessui-state="" type="button" class="_button_1e3w6_1 _alignCenter_1e3w6_310 _colorDisabled_1e3w6_294 _sizeMediumWide_1e3w6_336 _freeze_1e3w6_350" aria-disabled="true" disabled="">その他の操作<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg></button>
+
+--- 要素 45: type=headlessui_BUTTON ---
+tag: BUTTON
+id: headlessui-menu-button-:r8:
+classes: _button_1e3w6_1 _alignCenter_1e3w6_310 _colorDisabled_1e3w6_294 _sizeMediumWide_1e3w6_336 _freeze_1e3w6_350
+aria-label: 
+aria-labelledby: 
+rect: x=845.4375, y=104, w=185.359375, h=42
+innerText:
+その他の操作
+innerHTML (先頭5000文字):
+その他の操作<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+
+--- 要素 46: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: _dialogBackdrop_1er8r_6
+aria-label: 
+aria-labelledby: 
+rect: x=0, y=0, w=1280, h=720
+innerText:
+
+innerHTML (先頭5000文字):
+
+
+--- 要素 47: type=headlessui_DIV ---
+tag: DIV
+id: headlessui-dialog-panel-:r3i:
+classes: _dialogPanel_1er8r_44
+aria-label: 
+aria-labelledby: 
+rect: x=200, y=72, w=880, h=576
+innerText:
+共通添付ファイルの一括添付
+1
+ファイル選択
+2
+確認
+3
+完了
+新規アップロード
+既存から選択
+ファイルをアップロードして選択
+
+ファイルをドラッグ＆ドロップ、または
+
+ファイルを選択
+選択済みファイル
+(0件)
+
+ファイルが選択されていません
+
+閉じる
+
+ファイルを選択してください
+
+確認へ進む
+innerHTML (先頭5000文字):
+<article class="_bigCard_vnnpk_1 _modal_1du64_1 d-flex flex-column"><header class="_header_vnnpk_16"><h2>共通添付ファイルの一括添付</h2><button type="button" class="_closeButton_vnnpk_31 _button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignCenter_1e3w6_310 _sizeMinimum_1e3w6_315" aria-disabled="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" class="svg-inline--fa fa-xmark " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path></svg></button></header><nav class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37 _justifyCenter_l2w3v_53 mb-2"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2 _stepActive_s8cyc_6"><span class="_stepNumber_s8cyc_15">1</span><span class="_stepLabel_s8cyc_47">ファイル選択</span></div></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_connector_s8cyc_53"></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2"><span class="_stepNumber_s8cyc_15">2</span><span class="_stepLabel_s8cyc_47">確認</span></div></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37"><div class="_connector_s8cyc_53"></div><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapExtraSmall_l2w3v_25 _itemsCenter_l2w3v_37 _step_s8cyc_2"><span class="_stepNumber_s8cyc_15">3</span><span class="_stepLabel_s8cyc_47">完了</span></div></div></nav><nav class="_tabs_7ra6u_1 _tabsDefault_7ra6u_6"><button type="button" class="_tabButton_7ra6u_15 _tabButtonActive_7ra6u_62"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-arrow-up" class="svg-inline--fa fa-cloud-arrow-up " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path></svg>新規アップロード</button><div class="" data-headlessui-state=""><span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r3l:"><button type="button" class="_tabButton_7ra6u_15"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" class="svg-inline--fa fa-magnifying-glass " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>既存から選択</button></span></div></nav><section class="_bigCardSection_vnnpk_41 _bigCardSectionTight_vnnpk_51 _body_10aan_1 d-flex flex-1 min-h-0"><div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapDefault_l2w3v_21 _container_yrdrf_1 flex-1 min-h-0"><div class="_stack_l2w3v_1 _directionColumn_l2w3v_13 _gapDefault_l2w3v_21 _leftPane_yrdrf_5 flex-1"><h3 class="font-weight-bold font-size-default">ファイルをアップロードして選択</h3><div class="_dropZone_1yvt8_2"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-arrow-up" class="svg-inline--fa fa-cloud-arrow-up fa-2x text-light" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path></svg><p class="_dropZoneMessage_1yvt8_31 text-light text-center">ファイルをドラッグ＆ドロップ、または</p><button type="button" class="_button_1e3w6_1 _colorPrimaryOutlined_1e3w6_106 _alignCenter_1e3w6_310 _sizeSmall_1e3w6_322" aria-disabled="false">ファイルを選択</button><input type="file" multiple="" class="_hiddenInput_1yvt8_35" style=""></div></div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" class="svg-inline--fa fa-chevron-right _divider_yrdrf_13" role="im
+
+--- 要素 48: type=headlessui_DIV ---
+tag: DIV
+id: 
+classes: 
+aria-label: 
+aria-labelledby: 
+rect: x=465, y=191, w=240, h=42
+innerText:
+既存から選択
+innerHTML (先頭5000文字):
+<span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r3l:"><button type="button" class="_tabButton_7ra6u_15"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" class="svg-inline--fa fa-magnifying-glass " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>既存から選択</button></span>
+
+--- 要素 49: type=headlessui_SPAN ---
+tag: SPAN
+id: headlessui-popover-button-:r3l:
+classes: _trigger_ohszv_1
+aria-label: 
+aria-labelledby: 
+rect: x=465, y=191, w=240, h=42
+innerText:
+既存から選択
+innerHTML (先頭5000文字):
+<button type="button" class="_tabButton_7ra6u_15"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" class="svg-inline--fa fa-magnifying-glass " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>既存から選択</button>
+
+=== モーダル内フォーム要素 ===
+フォーム要素数: 1
+  [1] type=input inputType=file name="" placeholder="" value="" disabled=False required=False accept="" aria-label=""
+
+=== モーダル内ボタン ===
+ボタン数: 6
+  [1] <BUTTON> text="" type=button disabled=False href="" aria-label="" testid="" rect=(1041,88,23,26)
+  [2] <BUTTON> text="新規アップロード" type=button disabled=False href="" aria-label="" testid="" rect=(225,191,240,42)
+  [3] <BUTTON> text="既存から選択" type=button disabled=False href="" aria-label="" testid="" rect=(465,191,240,42)
+  [4] <BUTTON> text="ファイルを選択" type=button disabled=False href="" aria-label="" testid="" rect=(368,457,124,34)
+  [5] <BUTTON> text="閉じる" type=button disabled=False href="" aria-label="" testid="" rect=(216,590,72,42)
+  [6] <BUTTON> text="確認へ進む" type=button disabled=True href="" aria-label="" testid="" rect=(900,590,164,42)
+
+=== モーダル内テキスト要素（見出し・ラベル） ===
+テキスト要素数: 7
+  [1] <HEADER> text="共通添付ファイルの一括添付" class="_header_vnnpk_16" for="" id=""
+  [2] <H2> text="共通添付ファイルの一括添付" class="" for="" id=""
+  [3] <H3> text="ファイルをアップロードして選択" class="font-weight-bold font-size-default" for="" id=""
+  [4] <P> text="ファイルをドラッグ＆ドロップ、または" class="_dropZoneMessage_1yvt8_31 text-light text-center" for="" id=""
+  [5] <H3> text="選択済みファイル
+(0件)" class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapSmall_l2w3v_29 _itemsCenter_l2w3v_37 font-weight-bold font-size-default" for="" id=""
+  [6] <P> text="ファイルが選択されていません" class="_emptyMessage_11ukp_13 text-light text-center" for="" id=""
+  [7] <P> text="ファイルを選択してください" class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapSmall_l2w3v_29 _itemsCenter_l2w3v_37 font-weight-medium" for="" id=""
+
+=== ファイルアップロード領域 ===
+アップロード領域数: 1
+  [1] type=file_input accept="" multiple=True name="" id="" class="_hiddenInput_1yvt8_35"
+
+=== iframe検出 ===
+iframe数: 0
+
+=== モーダル全体のDOM構造概要 ===
+--- Dialog 1 ---
+<div role="dialog" id="headlessui-dialog-:r3b:" class="_dialog_1er8r_1">
+  <div class="_dialogBackdrop_1er8r_6">
+  <div class="_dialogScroller_1er8r_17">
+    <div class="_dialogVerticalAlign_1er8r_38">
+      <div id="headlessui-dialog-panel-:r3i:" class="_dialogPanel_1er8r_44">
+        <article class="_bigCard_vnnpk_1 _modal_1du64_1 d-flex flex-column">
+          <header class="_header_vnnpk_16">
+            <h2> "共通添付ファイルの一括添付"
+            <button class="_closeButton_vnnpk_31 _button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignCenter_1e">
+          <nav class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37 _justifyCenter_l2w3v_">
+            <div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37">
+            <div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37">
+            <div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _itemsCenter_l2w3v_37">
+          <nav class="_tabs_7ra6u_1 _tabsDefault_7ra6u_6">
+            <button class="_tabButton_7ra6u_15 _tabButtonActive_7ra6u_62">
+            <div>
+          <section class="_bigCardSection_vnnpk_41 _bigCardSectionTight_vnnpk_51 _body_10aan_1 d-flex flex">
+            <div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapDefault_l2w3v_21 _container_yrdrf_1 fle">
+          <div class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapDefault_l2w3v_21 _itemsCenter_l2w3v_37 ">
+            <button class="mr-auto _button_1e3w6_1 _colorDefaultOutlined_1e3w6_54 _alignCenter_1e3w6_310 _s"> "閉じる"
+            <p class="_stack_l2w3v_1 _directionRow_l2w3v_9 _gapSmall_l2w3v_29 _itemsCenter_l2w3v_37 fo">
+            <button class="_button_1e3w6_1 _alignCenter_1e3w6_310 _colorDisabled_1e3w6_294 _sizeMediumWide_">
+

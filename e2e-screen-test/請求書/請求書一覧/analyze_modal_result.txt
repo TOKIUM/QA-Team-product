@@ -1,0 +1,55 @@
+=== ログイン ===
+ログイン完了: https://invoicing-staging.keihi.com/invoices
+
+=== チェックボックス選択 ===
+チェックボックス数: 10
+1件目チェック完了
+
+表示中のボタン一覧:
+  [TOKIUM設定用
+ikeda_n+th1@tokium.jp] disabled=False
+  [検索条件] disabled=False
+  [この条件で検索] disabled=False
+  [リセット] disabled=False
+  [帳票エラーをチェック] disabled=False
+  [請求書を送付する] disabled=False
+  [送付済みにする] disabled=False
+  [その他の操作] disabled=False
+  [選択解除] disabled=False
+
+=== 「その他の操作」ボタンクリック ===
+「その他の操作」クリック完了
+
+=== モーダル/メニュー分析 ===
+検出された要素数: 1
+
+--- 要素 1: type=menu ---
+tag: DIV
+classes: _menuItems_11t25_1
+innerText:
+共通添付ファイルの一括添付
+一括承認
+一括削除
+innerHTML (先頭2000文字):
+<div class="_menuItemPopover_11t25_20" id="headlessui-menu-item-:r2s:" role="menuitem" tabindex="-1" data-headlessui-state=""><span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r2v:"><button type="button" class="_button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignLeft_1e3w6_300 _sizeLarge_1e3w6_343 _block_1e3w6_32" aria-disabled="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" class="svg-inline--fa fa-paperclip text-shared-attachment-light" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"></path></svg>共通添付ファイルの一括添付</button></span></div><div class="_menuItemPopover_11t25_20" id="headlessui-menu-item-:r31:" role="menuitem" tabindex="-1" data-headlessui-state=""><span class="_trigger_ohszv_1" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:r34:"><button type="button" class="_button_1e3w6_1 _colorDefaultText_1e3w6_72 _alignLeft_1e3w6_300 _sizeLarge_1e3w6_343 _block_1e3w6_32" aria-disabled="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" class="svg-inline--fa fa-circle text-primary" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg>一括承認</button></span></div><div class="_menuItemPopover_11t25_20" id="headlessui-menu-item-:r36:" role="menuitem" tabindex="-1" data-headlessui-state=""><span class="_trigger_ohszv_1" aria-e
+
+=== メニュー項目の詳細 ===
+メニュー項目数: 3
+  [menuitem] text="共通添付ファイルの一括添付" disabled=None tag=DIV class=_menuItemPopover_11t25_20 testid=
+  [menuitem] text="一括承認" disabled=None tag=DIV class=_menuItemPopover_11t25_20 testid=
+  [menuitem] text="一括削除" disabled=None tag=DIV class=_menuItemPopover_11t25_20 testid=
+
+=== クリック可能な要素 ===
+クリック可能要素数: 6
+  <DIV> role="menuitem" text="共通添付ファイルの一括添付" disabled=False href="" testid="" aria-label=""
+  <BUTTON> role="" text="共通添付ファイルの一括添付" disabled=False href="" testid="" aria-label=""
+  <DIV> role="menuitem" text="一括承認" disabled=False href="" testid="" aria-label=""
+  <BUTTON> role="" text="一括承認" disabled=False href="" testid="" aria-label=""
+  <DIV> role="menuitem" text="一括削除" disabled=False href="" testid="" aria-label=""
+  <BUTTON> role="" text="一括削除" disabled=False href="" testid="" aria-label=""
+
+=== 各メニュー項目の確認 ===
+有効なメニュー項目: 3
+  "共通添付ファイルの一括添付"
+  "一括承認"
+  "一括削除"

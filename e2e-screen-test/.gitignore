@@ -1,0 +1,18 @@
+# テスト実行結果（ログ・スクリーンショット）
+test_results/
+
+# Python キャッシュ
+__pycache__/
+*.pyc
+
+# pytest キャッシュ
+.pytest_cache/
+
+# Claude Code 設定
+.claude/
+
+# Windows 誤生成ファイル
+nul
+
+# テスト用大容量PDF（スクリプトで再生成可能）
+ファイルサイズ/0[1-8]_*/

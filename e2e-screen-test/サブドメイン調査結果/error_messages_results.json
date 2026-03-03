@@ -1,0 +1,63 @@
+{
+  "invoicing_empty": {
+    "messages": [
+      {
+        "selector": "[class*=\"error\"]",
+        "class": "_errorMessage_1rqai_1",
+        "tag": "P",
+        "text": "必須項目です"
+      }
+    ],
+    "bodyText": "ログイン\nメールアドレス\n\n必須項目です\n\nパスワード\n\nログイン\n\nパスワードを忘れた場合\n\nTOKIUM ID でログイン\n\n新規登録はこちら",
+    "url": "https://invoicing-staging.keihi.com/login"
+  },
+  "invoicing_invalid": {
+    "messages": [
+      {
+        "selector": "[class*=\"error\"]",
+        "class": "_errorMessage_1rqai_1",
+        "tag": "P",
+        "text": "メールアドレスまたはパスワードが間違っています。再度お試しください。"
+      }
+    ],
+    "bodyText": "ログイン\nメールアドレス\nパスワード\n\nメールアドレスまたはパスワードが間違っています。再度お試しください。\n\nログイン\n\nパスワードを忘れた場合\n\nTOKIUM ID でログイン\n\n新規登録はこちら\n\nメールアドレスまたはパスワードが間違っています。再度お試しください。",
+    "url": "https://invoicing-staging.keihi.com/login"
+  },
+  "invoicing_wrong_pw": {
+    "messages": [
+      {
+        "selector": "[class*=\"error\"]",
+        "class": "_errorMessage_1rqai_1",
+        "tag": "P",
+        "text": "メールアドレスまたはパスワードが間違っています。再度お試しください。"
+      }
+    ],
+    "bodyText": "ログイン\nメールアドレス\nパスワード\n\nメールアドレスまたはパスワードが間違っています。再度お試しください。\n\nログイン\n\nパスワードを忘れた場合\n\nTOKIUM ID でログイン\n\n新規登録はこちら\n\nメールアドレスまたはパスワードが間違っています。再度お試しください。",
+    "url": "https://invoicing-staging.keihi.com/login"
+  },
+  "tokiumid_wrong_pw": {
+    "messages": [],
+    "bodyText": "ログインはこちらから\n\nログインに失敗しました\n\nログイン\nパスワードを忘れた方はこちら\n\nまたは\n\nGoogleでログイン\nMicrosoft 365でログイン\nサブドメインを入力\n\nTOKIUMシリーズ各詳細はこちら",
+    "url": "https://dev.keihi.com/users/sign_in"
+  },
+  "tokiumid_empty": {
+    "messages": [],
+    "bodyText": "ログインはこちらから\n\nログインに失敗しました\n\nログイン\nパスワードを忘れた方はこちら\n\nまたは\n\nGoogleでログイン\nMicrosoft 365でログイン\nサブドメインを入力\n\nTOKIUMシリーズ各詳細はこちら",
+    "url": "https://dev.keihi.com/users/sign_in"
+  },
+  "subdomain_wrong_pw": {
+    "messages": [],
+    "bodyText": "ログインはこちらから\n\nログインに失敗しました。あと3回失敗すると、アカウントがロックされます。パスワード再設定を行なってください。\n\nログイン\nパスワードを忘れた方はこちら\nサブドメイン入力に戻る\n\nTOKIUMシリーズ各詳細はこちら",
+    "url": "https://th-01.dev.keihi.com/subdomains/sign_in"
+  },
+  "subdomain_empty": {
+    "messages": [],
+    "bodyText": "ログインはこちらから\n\nログインに失敗しました\n\nログイン\nパスワードを忘れた方はこちら\nサブドメイン入力に戻る\n\nTOKIUMシリーズ各詳細はこちら",
+    "url": "https://th-01.dev.keihi.com/subdomains/sign_in"
+  },
+  "subdomain_required": {
+    "messages": [],
+    "bodyText": "ログインはこちらから\n\n許可されていないログイン方法です。サブドメインを入力してからログインしてください。\n\nログイン\nパスワードを忘れた方はこちら\n\nまたは\n\nGoogleでログイン\nMicrosoft 365でログイン\nサブドメインを入力\n\nTOKIUMシリーズ各詳細はこちら",
+    "url": "https://dev.keihi.com/users/sign_in"
+  }
+}

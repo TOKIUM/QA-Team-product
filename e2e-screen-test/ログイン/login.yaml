@@ -1,0 +1,88 @@
+# =============================================================================
+# テストシナリオ: ログイン機能
+# =============================================================================
+# 自然言語で「何をテストしたいか」を記述する。
+# AI がページ構造を解析し、最適なロケーターで Playwright コードを生成する。
+#
+# アクション一覧:
+#   goto          - ページ遷移
+#   fill          - テキスト入力
+#   click         - クリック
+#   select        - セレクトボックス選択
+#   check         - チェックボックス ON
+#   uncheck       - チェックボックス OFF
+#   assert_url    - URL パターンを検証
+#   assert_visible - 要素が表示されていることを検証
+#   assert_text   - テキスト内容を検証
+#   assert_hidden - 要素が非表示であることを検証
+#   wait          - 明示的に待機（秒）
+#   screenshot    - スクリーンショット取得
+# =============================================================================
+
+name: ログイン機能テスト
+base_url: https://your-app.example.com
+
+tests:
+  # -----------------------------------------------
+  # テスト1: 正常なログイン
+  # -----------------------------------------------
+  - name: 正常ログイン
+    description: 正しいメールアドレスとパスワードでログインできる
+    steps:
+      - action: goto
+        url: /login
+
+      - action: fill
+        target: メールアドレス入力欄
+        value: "test@example.com"
+
+      - action: fill
+        target: パスワード入力欄
+        value: "SecurePass123!"
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_url
+        pattern: "/dashboard"
+
+      - action: assert_visible
+        target: ダッシュボードのウェルカムメッセージ
+
+  # -----------------------------------------------
+  # テスト2: バリデーションエラー
+  # -----------------------------------------------
+  - name: 空欄でのログイン試行
+    description: 入力なしでログインボタンを押すとエラーが表示される
+    steps:
+      - action: goto
+        url: /login
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_visible
+        target: メールアドレスのバリデーションエラー
+
+  # -----------------------------------------------
+  # テスト3: 不正な認証情報
+  # -----------------------------------------------
+  - name: 不正なパスワードでのログイン
+    description: 間違ったパスワードでエラーメッセージが表示される
+    steps:
+      - action: goto
+        url: /login
+
+      - action: fill
+        target: メールアドレス入力欄
+        value: "test@example.com"
+
+      - action: fill
+        target: パスワード入力欄
+        value: "wrong-password"
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_visible
+        target: 認証エラーメッセージ

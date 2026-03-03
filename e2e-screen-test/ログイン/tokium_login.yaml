@@ -1,0 +1,114 @@
+# =============================================================================
+# テストシナリオ: TOKIUM 請求書発行 - ログイン機能
+# 対象: https://invoicing-staging.keihi.com
+# =============================================================================
+
+name: TOKIUM請求書発行_ログイン機能テスト
+base_url: https://invoicing-staging.keihi.com
+
+tests:
+  # -----------------------------------------------
+  # テスト1: 正常なログイン
+  # -----------------------------------------------
+  - name: 正常ログイン
+    description: 正しいメールアドレスとパスワードでログインし、ダッシュボードに遷移する
+    steps:
+      - action: goto
+        url: /login
+
+      - action: fill
+        target: メールアドレス入力欄
+        value: "${TEST_EMAIL}"
+
+      - action: fill
+        target: パスワード入力欄
+        value: "${TEST_PASSWORD}"
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_url
+        pattern: "!/login"  # ログインページから離れたことを確認
+
+  # -----------------------------------------------
+  # テスト2: 空欄でのログイン試行
+  # -----------------------------------------------
+  - name: 空欄でのログイン試行
+    description: 何も入力せずにログインボタンを押した場合のバリデーション確認
+    steps:
+      - action: goto
+        url: /login
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_visible
+        target: バリデーションエラーメッセージ
+
+  # -----------------------------------------------
+  # テスト3: 不正なパスワードでのログイン
+  # -----------------------------------------------
+  - name: 不正なパスワードでのログイン
+    description: 間違ったパスワードを入力するとエラーメッセージが表示される
+    steps:
+      - action: goto
+        url: /login
+
+      - action: fill
+        target: メールアドレス入力欄
+        value: "invalid-user@example.com"
+
+      - action: fill
+        target: パスワード入力欄
+        value: "wrongpassword123"
+
+      - action: click
+        target: ログインボタン
+
+      - action: assert_visible
+        target: 認証エラーメッセージ
+
+  # -----------------------------------------------
+  # テスト4: パスワードリセットリンク
+  # -----------------------------------------------
+  - name: パスワードリセット画面への遷移
+    description: 「パスワードを忘れた場合」リンクから復旧画面に遷移できる
+    steps:
+      - action: goto
+        url: /login
+
+      - action: click
+        target: パスワードを忘れた場合リンク
+
+      - action: assert_url
+        pattern: "/recovery"
+
+  # -----------------------------------------------
+  # テスト5: 新規登録画面への遷移
+  # -----------------------------------------------
+  - name: 新規登録画面への遷移
+    description: 「新規登録はこちら」リンクから登録画面に遷移できる
+    steps:
+      - action: goto
+        url: /login
+
+      - action: click
+        target: 新規登録はこちらリンク
+
+      - action: assert_url
+        pattern: "/registration"
+
+  # -----------------------------------------------
+  # テスト6: TOKIUM ID ログインボタン
+  # -----------------------------------------------
+  - name: TOKIUM_IDログイン画面への遷移
+    description: 「TOKIUM ID でログイン」ボタンから認証画面に遷移できる
+    steps:
+      - action: goto
+        url: /login
+
+      - action: click
+        target: TOKIUM ID でログインボタン
+
+      - action: assert_url
+        pattern: "/auth-redirect"

@@ -1,0 +1,55 @@
+=== ログイン ===
+ログイン完了: https://invoicing-staging.keihi.com/invoices
+
+=== VERIFY2検索 ===
+検索結果: 3件
+  請求書1: UUID=33cbeb8f-daa2-4f91-87ff-38abde00cb71
+  請求書2: UUID=36311de4-af1c-4920-9919-d0adf3736bc7
+  請求書3: UUID=b761e432-1855-4cbe-ad63-d5f3d3b5a04f
+
+UUID一覧: ['33cbeb8f-daa2-4f91-87ff-38abde00cb71', '36311de4-af1c-4920-9919-d0adf3736bc7', 'b761e432-1855-4cbe-ad63-d5f3d3b5a04f']
+
+=== メモ欄構造調査 ===
+「メモ」含む行:
+  メモ
+  メモを保存する
+
+入力フィールド (2):
+  [INPUT] name=codeOrName, id=code, label=, placeholder=取引先名または取引先コード, value=, editable=True
+  [TEXTAREA] name=memo, id=memo, label=メモ, placeholder=, value=, editable=True
+
+★メモフィールド発見: {'tag': 'TEXTAREA', 'type': 'textarea', 'name': 'memo', 'id': 'memo', 'placeholder': '', 'value': '', 'label': 'メモ', 'visible': True, 'editable': True, 'rect': {'x': 933.328125, 'y': 1439.203125, 'w': 314.65625, 'h': 66}}
+
+=== メモ欄記入 ===
+
+--- 請求書1: 33cbeb8f-daa2-4f91-87ff-38abde00cb71 ---
+  「自動生成」入力完了（直接）
+  保存ボタン: {'found': True, 'text': 'メモを保存する'}
+  保存クリック
+  結果: メモを保存する
+  結果: メモを保存しました
+
+--- 請求書2: 36311de4-af1c-4920-9919-d0adf3736bc7 ---
+  「自動生成」入力完了（直接）
+  保存ボタン: {'found': True, 'text': 'メモを保存する'}
+  保存クリック
+  結果: メモを保存する
+  結果: メモを保存しました
+
+--- 請求書3: b761e432-1855-4cbe-ad63-d5f3d3b5a04f ---
+  「自動生成」入力完了（直接）
+  保存ボタン: {'found': True, 'text': 'メモを保存する'}
+  保存クリック
+  結果: メモを保存する
+  結果: メモを保存しました
+
+=== メモ欄確認（一覧） ===
+最終確認テーブル行: 3
+  行1: 鈴木通信合同会社
+TH003 | 未送付 | 未承認 | VERIFY2-001 | TH003_鈴木通信合同会社_20260216.pdf | 自動生成
+  行2: 鈴木通信合同会社
+TH003 | 未送付 | 未承認 | VERIFY2-002 | TH003_鈴木通信合同会社_20260216.pdf | 自動生成
+  行3: 鈴木通信合同会社
+TH003 | 未送付 | 未承認 | VERIFY2-003 | TH003_鈴木通信合同会社_20260216.pdf | 自動生成
+
+=== 完了 ===
