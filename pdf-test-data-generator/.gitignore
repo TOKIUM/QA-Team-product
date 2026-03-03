@@ -1,0 +1,14 @@
+# 生成済みの大容量PDFファイル（スクリプトで再生成可能）
+ファイルサイズ/01_single_10MB_under/
+ファイルサイズ/02_single_10MB_over/
+ファイルサイズ/03_10files_upload/
+ファイルサイズ/04_11files_upload/
+ファイルサイズ/05_total_10MB_under/
+ファイルサイズ/06_total_10MB_over/
+ファイルサイズ/07_single_5MB/
+ファイルサイズ/08_single_5MB_over_10MB_under/
+
+# Claude Code 設定
+.claude/
+
+# NTFS上限テスト用の長いファイル名（gitで扱えないため、create_longest_pdf.py で生成する）
