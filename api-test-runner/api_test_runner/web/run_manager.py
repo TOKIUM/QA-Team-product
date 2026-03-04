@@ -141,6 +141,7 @@ class RunManager:
                 if result.passed and result.response_body is not None:
                     warnings = TestRunner._validate_schema(result)
                     result.schema_warnings = warnings
+                runner._validate_response_body(result)
 
                 # JSON 保存
                 if result.response_body is not None:

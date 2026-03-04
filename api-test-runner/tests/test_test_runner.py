@@ -227,6 +227,88 @@ class TestValidateSchema:
         assert result.schema_warnings == []
 
 
+class TestValidateResponseBody:
+    """レスポンスボディ検証テスト."""
+
+    @staticmethod
+    def _make_runner(enabled=True, pagination_check=True, fields_check=True):
+        config = {
+            "test": {
+                "response_validation": {
+                    "enabled": enabled,
+                    "pagination_count_check": pagination_check,
+                    "required_fields_check": fields_check,
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        return TestRunner(config, None, Path("/tmp"))
+
+    @staticmethod
+    def _make_result(api, body, passed=True, expected_status=200, query_params=None):
+        tc = TestCase(
+            name="test", pattern="auth", api=api, method="GET",
+            url_path="groups.json", query_params=query_params or {},
+            use_auth=True, expected_status=expected_status,
+        )
+        return TestResult(
+            test_case=tc, status_code=expected_status,
+            response_body=body, elapsed_ms=100.0, passed=passed,
+        )
+
+    def test_empty_body_warns(self, sample_spec):
+        runner = self._make_runner()
+        result = self._make_result(sample_spec, {})
+        runner._validate_response_body(result)
+        assert any("空" in w for w in result.schema_warnings)
+
+    def test_null_body_warns(self, sample_spec):
+        runner = self._make_runner()
+        result = self._make_result(sample_spec, None)
+        runner._validate_response_body(result)
+        assert any("空" in w for w in result.schema_warnings)
+
+    def test_pagination_count_exceeds_limit(self, sample_spec):
+        runner = self._make_runner()
+        body = {"groups": [{"id": 1}, {"id": 2}, {"id": 3}]}
+        result = self._make_result(sample_spec, body, query_params={"limit": 2})
+        runner._validate_response_body(result)
+        assert any("limit=2" in w for w in result.schema_warnings)
+
+    def test_pagination_count_within_limit(self, sample_spec):
+        runner = self._make_runner()
+        body = {"groups": [{"id": 1}, {"id": 2}]}
+        result = self._make_result(sample_spec, body, query_params={"limit": 5})
+        runner._validate_response_body(result)
+        assert not any("limit" in w for w in result.schema_warnings)
+
+    def test_disabled_skips_all(self, sample_spec):
+        runner = self._make_runner(enabled=False)
+        result = self._make_result(sample_spec, {})
+        runner._validate_response_body(result)
+        assert not any("response_validation" in w for w in result.schema_warnings)
+
+    def test_fail_result_skipped(self, sample_spec):
+        runner = self._make_runner()
+        result = self._make_result(sample_spec, {}, passed=False)
+        runner._validate_response_body(result)
+        assert result.schema_warnings == []
+
+    def test_key_consistency_warns(self, sample_spec):
+        runner = self._make_runner()
+        body = {"groups": [{"id": 1, "name": "a"}, {"id": 2}]}
+        result = self._make_result(sample_spec, body)
+        runner._validate_response_body(result)
+        assert any("キー欠損" in w for w in result.schema_warnings)
+
+    def test_key_consistency_ok(self, sample_spec):
+        runner = self._make_runner()
+        body = {"groups": [{"id": 1, "name": "a"}, {"id": 2, "name": "b"}]}
+        result = self._make_result(sample_spec, body)
+        runner._validate_response_body(result)
+        assert not any("キー欠損" in w for w in result.schema_warnings)
+
+
 class TestPutDeletePatchPatterns:
     """PUT/DELETE/PATCH パターンのテストケース生成テスト."""
 

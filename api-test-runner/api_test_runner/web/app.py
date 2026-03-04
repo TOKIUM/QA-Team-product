@@ -47,6 +47,15 @@ def create_app(project_root: Path) -> FastAPI:
         from ..__main__ import resolve_settings
         return resolve_settings(config, env)
 
+    def _get_env_files() -> list[str]:
+        """利用可能な .env.* ファイル一覧を返す."""
+        env_files = ["default (.env)"]
+        for f in sorted(project_root.iterdir()):
+            if f.is_file() and f.name.startswith(".env.") and not f.name.endswith(".example"):
+                env_name = f.name[5:]  # ".env.staging" → "staging"
+                env_files.append(env_name)
+        return env_files
+
     def _get_results_dir(config: dict) -> Path:
         name = config.get("output", {}).get("results_dir", "results")
         return project_root / name
@@ -189,6 +198,7 @@ def create_app(project_root: Path) -> FastAPI:
             "concurrency": test_config.get("concurrency", 3),
             "slack_webhook_url": config.get("notification", {}).get("slack", {}).get("webhook_url", ""),
             "slack_failure_only": config.get("notification", {}).get("slack", {}).get("on_failure_only", True),
+            "env_files": _get_env_files(),
         }
 
     @app.post("/api/settings")

@@ -475,7 +475,95 @@ class TestRunner:
                     request_body=body,
                 ))
 
+        # --- crud_chain パターン（POST→GET→DELETE→GET チェーン）---
+        if "crud_chain" in patterns:
+            cc_config = test_config.get("crud_chain", {})
+            if cc_config.get("enabled", False):
+                overrides = test_config.get("search", {}).get("overrides", {})
+                for spec in post_specs:
+                    url_path, resource_name = self._resolve_paths(spec, base_path)
+                    body = self._build_minimal_body(spec.params, overrides)
+                    cases.append(TestCase(
+                        name=f"crud-chain-{resource_name}",
+                        pattern="crud_chain",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={},
+                        use_auth=True,
+                        expected_status=cc_config.get("post_expected_status", 200),
+                        request_body=body if body else {},
+                    ))
+
+        # --- invalid_body パターン（型不正値テスト）---
+        if "invalid_body" in patterns:
+            ib_config = test_config.get("invalid_body", {})
+            ib_default_status = ib_config.get("expected_status", 400)
+            ib_api_overrides = ib_config.get("api_overrides", {})
+            overrides = test_config.get("search", {}).get("overrides", {})
+            for body_specs, method_prefix in [
+                (post_specs, "post"),
+                (put_specs, "put"),
+                (patch_specs, "patch"),
+            ]:
+                for spec in body_specs:
+                    url_path, resource_name = self._resolve_paths(spec, base_path)
+                    ib_res_overrides = ib_api_overrides.get(resource_name, {})
+                    ib_status = ib_res_overrides.get("expected_status", ib_default_status)
+                    # 空ボディ {} → 400 期待
+                    cases.append(TestCase(
+                        name=f"invalid-body-{resource_name}-empty",
+                        pattern="invalid_body",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={},
+                        use_auth=True,
+                        expected_status=ib_status,
+                        request_body={},
+                    ))
+                    # 各必須フィールドに型不正値を設定
+                    base_body = self._build_minimal_body(spec.params, overrides)
+                    if not base_body:
+                        continue
+                    for p in spec.params:
+                        if p.required not in ("〇", "〇"):
+                            continue
+                        invalid_val = self._invalid_value_for_type(p.data_type)
+                        if invalid_val is None:
+                            continue
+                        import copy
+                        bad_body = copy.deepcopy(base_body)
+                        bad_body[p.param_name] = invalid_val
+                        safe_name = p.param_name.replace(".", "-")
+                        cases.append(TestCase(
+                            name=f"invalid-body-{resource_name}-{safe_name}-wrong-type",
+                            pattern="invalid_body",
+                            api=spec,
+                            method=spec.method,
+                            url_path=url_path,
+                            query_params={},
+                            use_auth=True,
+                            expected_status=ib_status,
+                            request_body=bad_body,
+                        ))
+
         return cases
+
+    @staticmethod
+    def _invalid_value_for_type(data_type: str):
+        """データ型に対して不正な値を返す（型不一致テスト用）."""
+        if "文字列" in data_type:
+            return 999  # string に整数
+        if "整数" in data_type:
+            return "abc"  # int に文字列
+        if "真偽" in data_type:
+            return "invalid"  # bool に文字列
+        if "配列" in data_type:
+            return "not_an_array"  # array に文字列
+        if "オブジェクト" in data_type:
+            return "not_an_object"  # object に文字列
+        return None
 
     def run_all(self, test_cases: list[TestCase]) -> list[TestResult]:
         """全テスト実行、JSON 保存、コンソール出力."""
@@ -487,22 +575,27 @@ class TestRunner:
         print(f"Results: results/{timestamp}")
         print()
 
+        # crud_chain を通常テストと分離
+        normal_cases = [tc for tc in test_cases if tc.pattern != "crud_chain"]
+        chain_cases = [tc for tc in test_cases if tc.pattern == "crud_chain"]
+
         concurrency = self.config.get("test", {}).get("concurrency", 1)
 
-        # テスト実行
+        # 通常テスト実行
         if concurrency > 1:
-            raw_results = self._run_concurrent(test_cases, concurrency)
+            raw_results = self._run_concurrent(normal_cases, concurrency)
         else:
-            raw_results = self._run_sequential(test_cases)
+            raw_results = self._run_sequential(normal_cases)
 
         # スキーマ検証 + エラーボディ検証 + JSON 保存
         error_body_enabled = self.config.get("test", {}).get(
             "error_body_validation", False)
         results: list[TestResult] = []
-        for tc, result in zip(test_cases, raw_results):
+        for tc, result in zip(normal_cases, raw_results):
             self._validate_schema(result)
             if error_body_enabled:
                 self._validate_error_body(result)
+            self._validate_response_body(result)
             if result.response_body is not None:
                 output_file = run_dir / f"{tc.name}.json"
                 with open(output_file, "w", encoding="utf-8", newline="\n") as f:
@@ -511,6 +604,12 @@ class TestRunner:
                     f.write("\n")
                 result.output_file = str(output_file)
             results.append(result)
+
+        # CRUD chain テスト（逐次実行）
+        cc_config = self.config.get("test", {}).get("crud_chain", {})
+        for tc in chain_cases:
+            chain_results = self._run_crud_chain(tc, cc_config, run_dir)
+            results.extend(chain_results)
 
         # 並行モードの場合はまとめて結果表示
         if concurrency > 1:
@@ -545,6 +644,125 @@ class TestRunner:
         print()
         with ThreadPoolExecutor(max_workers=concurrency) as executor:
             return list(executor.map(self.client.execute, test_cases))
+
+    def _run_crud_chain(
+        self, tc: TestCase, cc_config: dict, run_dir: Path,
+    ) -> list[TestResult]:
+        """POST→GET→DELETE→GET のCRUDチェーンを実行.
+
+        失敗時もDELETEを試みてクリーンアップする。
+        """
+        results: list[TestResult] = []
+        resource_name = tc.name.replace("crud-chain-", "")
+        id_field = cc_config.get("id_field", "id")
+        delete_url_pattern = cc_config.get("delete_url_pattern", "{url_path}/{id}")
+        post_status = cc_config.get("post_expected_status", 200)
+        delete_status = cc_config.get("delete_expected_status", 200)
+        verify_delete_status = cc_config.get("verify_delete_expected_status", 404)
+
+        print(f"--- CRUD chain: {resource_name} ---")
+        created_id = None
+
+        try:
+            # Step 1: POST（作成）
+            post_tc = TestCase(
+                name=f"crud-chain-{resource_name}-post",
+                pattern="crud_chain",
+                api=tc.api,
+                method="POST",
+                url_path=tc.url_path,
+                query_params={},
+                use_auth=True,
+                expected_status=post_status,
+                request_body=tc.request_body,
+            )
+            post_result = self.client.execute(post_tc)
+            self._print_result(post_result)
+            results.append(post_result)
+
+            # ID 抽出
+            if post_result.passed and post_result.response_body:
+                body = post_result.response_body
+                if isinstance(body, dict):
+                    # 直接 id がある場合
+                    if id_field in body:
+                        created_id = body[id_field]
+                    else:
+                        # リソースキー配下の最初の要素から取得
+                        for val in body.values():
+                            if isinstance(val, list) and val:
+                                if isinstance(val[0], dict) and id_field in val[0]:
+                                    created_id = val[0][id_field]
+                                    break
+                            elif isinstance(val, dict) and id_field in val:
+                                created_id = val[id_field]
+                                break
+
+            if created_id is None:
+                print(f"  [SKIP] ID 抽出失敗 - 後続ステップをスキップ")
+                return results
+
+            # Step 2: GET（作成確認）
+            get_url = delete_url_pattern.format(url_path=tc.url_path, id=created_id)
+            get_tc = TestCase(
+                name=f"crud-chain-{resource_name}-get-verify",
+                pattern="crud_chain",
+                api=tc.api,
+                method="GET",
+                url_path=get_url,
+                query_params={},
+                use_auth=True,
+                expected_status=200,
+            )
+            get_result = self.client.execute(get_tc)
+            self._print_result(get_result)
+            results.append(get_result)
+
+        finally:
+            # Step 3: DELETE（削除）— try/finally で teardown 保証
+            if created_id is not None:
+                del_url = delete_url_pattern.format(url_path=tc.url_path, id=created_id)
+                del_tc = TestCase(
+                    name=f"crud-chain-{resource_name}-delete",
+                    pattern="crud_chain",
+                    api=tc.api,
+                    method="DELETE",
+                    url_path=del_url,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=delete_status,
+                )
+                del_result = self.client.execute(del_tc)
+                self._print_result(del_result)
+                results.append(del_result)
+
+                # Step 4: GET（削除確認）
+                verify_tc = TestCase(
+                    name=f"crud-chain-{resource_name}-get-deleted",
+                    pattern="crud_chain",
+                    api=tc.api,
+                    method="GET",
+                    url_path=del_url,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=verify_delete_status,
+                )
+                verify_result = self.client.execute(verify_tc)
+                self._print_result(verify_result)
+                results.append(verify_result)
+
+        # JSON 保存
+        for r in results:
+            if r.response_body is not None:
+                output_file = run_dir / f"{r.test_case.name}.json"
+                with open(output_file, "w", encoding="utf-8", newline="\n") as f:
+                    json.dump(r.response_body, f,
+                              indent=self.json_indent, ensure_ascii=False)
+                    f.write("\n")
+                r.output_file = str(output_file)
+
+        print()
+        return results
 
     @staticmethod
     def _validate_schema(result: TestResult) -> None:
@@ -613,6 +831,61 @@ class TestRunner:
                         "'missing_values', 'errors' のいずれもありません "
                         f"(keys: {list(body.keys())})")
 
+    def _validate_response_body(self, result: TestResult) -> None:
+        """レスポンスボディの内容を検証し、警告を result.schema_warnings に追加.
+
+        - 空ボディ検知: 200 で body が null/空/{} → WARN
+        - pagination 件数チェック: limit=N なら結果が N件以下か
+        - レスポンス要素キー一貫性: リソース配列の各要素で同じキーが存在するか
+        """
+        rv_config = self.config.get("test", {}).get("response_validation", {})
+        if not rv_config.get("enabled", False):
+            return
+
+        tc = result.test_case
+        # PASS + api あり + 200 期待のみ対象
+        if not result.passed or tc.api is None or tc.expected_status != 200:
+            return
+
+        body = result.response_body
+        resource = tc.api.resource if tc.api else None
+
+        # 空ボディ検知
+        if body is None or body == {} or body == []:
+            result.schema_warnings.append(
+                "response_validation: 200 レスポンスボディが空です")
+            return
+
+        if not isinstance(body, dict) or not resource:
+            return
+
+        items = body.get(resource)
+        if not isinstance(items, list):
+            return
+
+        # pagination 件数チェック
+        if rv_config.get("pagination_count_check", True):
+            limit = tc.query_params.get("limit")
+            if limit is not None and isinstance(limit, int) and limit > 0:
+                if len(items) > limit:
+                    result.schema_warnings.append(
+                        f"response_validation: limit={limit} だが {len(items)} 件返却")
+
+        # キー一貫性チェック
+        if rv_config.get("required_fields_check", True) and len(items) >= 2:
+            all_keys = set()
+            for item in items:
+                if isinstance(item, dict):
+                    all_keys |= set(item.keys())
+            for i, item in enumerate(items):
+                if isinstance(item, dict):
+                    missing = all_keys - set(item.keys())
+                    if missing:
+                        result.schema_warnings.append(
+                            f"response_validation: {resource}[{i}] にキー欠損: "
+                            f"{sorted(missing)}")
+                        break  # 1件目の不一致で終了
+
     @staticmethod
     def _print_result(result: TestResult) -> None:
         """テスト結果を1行表示."""
@@ -653,6 +926,10 @@ class TestRunner:
             return f"DELETE /{tc.url_path} normal - expect {tc.expected_status}"
         elif tc.pattern == "patch_normal":
             return f"PATCH /{tc.url_path} normal - expect {tc.expected_status}"
+        elif tc.pattern == "crud_chain":
+            return f"CRUD chain /{tc.url_path} (POST→GET→DELETE→GET)"
+        elif tc.pattern == "invalid_body":
+            return f"{tc.method} /{tc.url_path} invalid body - expect {tc.expected_status}"
         elif tc.pattern == "custom":
             extras = []
             if tc.query_params:

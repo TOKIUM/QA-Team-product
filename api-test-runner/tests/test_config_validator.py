@@ -283,6 +283,67 @@ class TestValidateApiOverrides:
         assert any("post_normal.api_overrides" in e and "辞書型" in e for e in errors)
 
 
+class TestValidateCrudChain:
+    def test_valid(self):
+        config = {"test": {"crud_chain": {
+            "enabled": False, "id_field": "id",
+            "post_expected_status": 200, "delete_expected_status": 200,
+        }}}
+        errors = validate_config(config)
+        assert not any("crud_chain" in e for e in errors)
+
+    def test_enabled_not_bool(self):
+        config = {"test": {"crud_chain": {"enabled": "yes"}}}
+        errors = validate_config(config)
+        assert any("crud_chain.enabled" in e and "真偽値" in e for e in errors)
+
+    def test_status_not_int(self):
+        config = {"test": {"crud_chain": {"post_expected_status": "200"}}}
+        errors = validate_config(config)
+        assert any("post_expected_status" in e and "整数" in e for e in errors)
+
+    def test_api_overrides_not_dict(self):
+        config = {"test": {"crud_chain": {"api_overrides": "bad"}}}
+        errors = validate_config(config)
+        assert any("crud_chain.api_overrides" in e and "辞書型" in e for e in errors)
+
+
+class TestValidateResponseValidation:
+    def test_valid(self):
+        config = {"test": {"response_validation": {
+            "enabled": True, "pagination_count_check": True, "required_fields_check": True,
+        }}}
+        errors = validate_config(config)
+        assert not any("response_validation" in e for e in errors)
+
+    def test_enabled_not_bool(self):
+        config = {"test": {"response_validation": {"enabled": "yes"}}}
+        errors = validate_config(config)
+        assert any("response_validation.enabled" in e and "真偽値" in e for e in errors)
+
+    def test_sub_option_not_bool(self):
+        config = {"test": {"response_validation": {"pagination_count_check": 1}}}
+        errors = validate_config(config)
+        assert any("pagination_count_check" in e and "真偽値" in e for e in errors)
+
+
+class TestValidateInvalidBody:
+    def test_valid(self):
+        config = {"test": {"invalid_body": {"expected_status": 400, "api_overrides": {}}}}
+        errors = validate_config(config)
+        assert not any("invalid_body" in e for e in errors)
+
+    def test_expected_status_not_int(self):
+        config = {"test": {"invalid_body": {"expected_status": "bad"}}}
+        errors = validate_config(config)
+        assert any("invalid_body.expected_status" in e and "整数" in e for e in errors)
+
+    def test_api_overrides_not_dict(self):
+        config = {"test": {"invalid_body": {"api_overrides": "invalid"}}}
+        errors = validate_config(config)
+        assert any("invalid_body.api_overrides" in e and "辞書型" in e for e in errors)
+
+
 class TestNonDictRoot:
     def test_non_dict(self):
         errors = validate_config("not a dict")  # type: ignore

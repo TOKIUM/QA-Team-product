@@ -6,6 +6,7 @@ VALID_METHODS = {"GET", "POST", "PUT", "DELETE", "PATCH"}
 VALID_PATTERNS = {
     "auth", "pagination", "search", "boundary", "missing_required",
     "post_normal", "put_normal", "delete_normal", "patch_normal",
+    "invalid_body", "crud_chain",
 }
 KNOWN_TOP_KEYS = {"api", "test", "output", "custom_tests", "notification"}
 
@@ -150,6 +151,62 @@ def validate_config(config: dict) -> list[str]:
                             if not isinstance(rval, dict):
                                 errors.append(
                                     f"test.{pattern_key}.api_overrides.{rname} は辞書型で指定してください")
+
+        # response_validation
+        rv = test.get("response_validation")
+        if rv is not None and isinstance(rv, dict):
+            rv_enabled = rv.get("enabled")
+            if rv_enabled is not None and not isinstance(rv_enabled, bool):
+                errors.append("test.response_validation.enabled は真偽値で指定してください")
+            for key in ("pagination_count_check", "required_fields_check"):
+                val = rv.get(key)
+                if val is not None and not isinstance(val, bool):
+                    errors.append(f"test.response_validation.{key} は真偽値で指定してください")
+
+        # invalid_body
+        invalid_body = test.get("invalid_body")
+        if invalid_body is not None and isinstance(invalid_body, dict):
+            ib_status = invalid_body.get("expected_status")
+            if ib_status is not None:
+                if not isinstance(ib_status, int) or isinstance(ib_status, bool):
+                    errors.append("test.invalid_body.expected_status は整数で指定してください")
+            ib_overrides = invalid_body.get("api_overrides")
+            if ib_overrides is not None:
+                if not isinstance(ib_overrides, dict):
+                    errors.append("test.invalid_body.api_overrides は辞書型で指定してください")
+                else:
+                    for rname, rval in ib_overrides.items():
+                        if not isinstance(rval, dict):
+                            errors.append(
+                                f"test.invalid_body.api_overrides.{rname} は辞書型で指定してください")
+
+        # crud_chain
+        crud_chain = test.get("crud_chain")
+        if crud_chain is not None and isinstance(crud_chain, dict):
+            cc_enabled = crud_chain.get("enabled")
+            if cc_enabled is not None and not isinstance(cc_enabled, bool):
+                errors.append("test.crud_chain.enabled は真偽値で指定してください")
+            cc_id_field = crud_chain.get("id_field")
+            if cc_id_field is not None and not isinstance(cc_id_field, str):
+                errors.append("test.crud_chain.id_field は文字列で指定してください")
+            cc_del_url = crud_chain.get("delete_url_pattern")
+            if cc_del_url is not None and not isinstance(cc_del_url, str):
+                errors.append("test.crud_chain.delete_url_pattern は文字列で指定してください")
+            for status_key in ("post_expected_status", "delete_expected_status",
+                               "verify_delete_expected_status"):
+                val = crud_chain.get(status_key)
+                if val is not None:
+                    if not isinstance(val, int) or isinstance(val, bool):
+                        errors.append(f"test.crud_chain.{status_key} は整数で指定してください")
+            cc_overrides = crud_chain.get("api_overrides")
+            if cc_overrides is not None:
+                if not isinstance(cc_overrides, dict):
+                    errors.append("test.crud_chain.api_overrides は辞書型で指定してください")
+                else:
+                    for rname, rval in cc_overrides.items():
+                        if not isinstance(rval, dict):
+                            errors.append(
+                                f"test.crud_chain.api_overrides.{rname} は辞書型で指定してください")
 
         # retry
         retry = test.get("retry")

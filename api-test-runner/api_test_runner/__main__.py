@@ -44,6 +44,20 @@ def load_env(env_path: Path) -> dict[str, str]:
     return env
 
 
+def resolve_env_file(project_root: Path, env_name: str | None = None) -> Path:
+    """環境名から .env ファイルパスを解決する.
+
+    --env staging → .env.staging を読む。未指定時は .env（後方互換）。
+    """
+    if env_name:
+        env_path = project_root / f".env.{env_name}"
+        if not env_path.exists():
+            print(f"Warning: .env.{env_name} not found, falling back to .env")
+            return project_root / ".env"
+        return env_path
+    return project_root / ".env"
+
+
 def load_config(config_path: Path) -> dict:
     """config.yaml を読み込む."""
     if not config_path.exists():
@@ -109,7 +123,8 @@ def cmd_check(args: argparse.Namespace, project_root: Path) -> int:
     """check サブコマンド: テスト実行前のプリフライトチェック."""
     config_path = project_root / args.config
     config = load_config(config_path)
-    env = load_env(project_root / ".env")
+    env_name = getattr(args, "env", None)
+    env = load_env(resolve_env_file(project_root, env_name))
     base_url, api_key = resolve_settings(config, env)
 
     if not base_url:
@@ -154,7 +169,8 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     """run サブコマンド: CSV 解析 → テスト実行 → 結果保存 → レポート."""
     config_path = project_root / args.config
     config = load_config(config_path)
-    env = load_env(project_root / ".env")
+    env_name = getattr(args, "env", None)
+    env = load_env(resolve_env_file(project_root, env_name))
     base_url, api_key = resolve_settings(config, env)
 
     # 設定バリデーション
@@ -386,6 +402,8 @@ def main() -> int:
                             help="前回 FAIL のテストのみ再実行")
     run_parser.add_argument("--dry-run", action="store_true",
                             help="テスト一覧を表示するのみ（実行しない）")
+    run_parser.add_argument("--env", "-e", default=None,
+                            help="環境名 (例: staging → .env.staging を読み込み)")
 
     # parse
     parse_parser = subparsers.add_parser("parse", help="CSV 解析のみ（一覧表示）")
@@ -398,6 +416,8 @@ def main() -> int:
                               help="CSV ディレクトリ (default: document)")
     check_parser.add_argument("--config", "-c", default="config.yaml",
                               help="設定ファイル (default: config.yaml)")
+    check_parser.add_argument("--env", "-e", default=None,
+                              help="環境名 (例: staging → .env.staging を読み込み)")
 
     # gui
     subparsers.add_parser("gui", help="GUI モードで起動")
@@ -410,6 +430,8 @@ def main() -> int:
                               help="比較先タイムスタンプ (省略時は latest)")
     diff_parser.add_argument("--config", "-c", default="config.yaml",
                               help="設定ファイル (default: config.yaml)")
+    diff_parser.add_argument("--env", "-e", default=None,
+                              help="環境名 (例: staging → .env.staging を読み込み)")
 
     # web
     web_parser = subparsers.add_parser("web", help="Web UI モードで起動")
@@ -424,6 +446,8 @@ def main() -> int:
                               help="分析する過去の実行回数 (default: 10)")
     trend_parser.add_argument("--config", "-c", default="config.yaml",
                               help="設定ファイル (default: config.yaml)")
+    trend_parser.add_argument("--env", "-e", default=None,
+                              help="環境名 (例: staging → .env.staging を読み込み)")
 
     args = parser.parse_args()
 

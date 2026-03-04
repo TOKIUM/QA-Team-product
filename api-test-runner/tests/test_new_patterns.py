@@ -551,6 +551,84 @@ class TestApiOverrides:
         assert normal.expected_status == 200
 
 
+class TestInvalidBodyPattern:
+    def _make_runner(self, patterns: list[str], **kwargs) -> TestRunner:
+        config = {
+            "test": {
+                "patterns": patterns,
+                "pagination": {"offset": 0, "limit": 5},
+                **kwargs,
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        return TestRunner(config, None, Path("/tmp"))
+
+    def test_generates_empty_body_case(self, sample_post_spec):
+        runner = self._make_runner(["invalid_body"])
+        cases = runner.generate_test_cases([sample_post_spec])
+        empty = [c for c in cases if c.name.endswith("-empty")]
+        assert len(empty) == 1
+        assert empty[0].request_body == {}
+        assert empty[0].expected_status == 400
+
+    def test_generates_wrong_type_cases(self, sample_post_spec):
+        runner = self._make_runner(["invalid_body"])
+        cases = runner.generate_test_cases([sample_post_spec])
+        wrong_type = [c for c in cases if "wrong-type" in c.name]
+        assert len(wrong_type) >= 1
+        assert all(c.pattern == "invalid_body" for c in wrong_type)
+
+    def test_skips_get_apis(self, sample_spec):
+        runner = self._make_runner(["invalid_body"])
+        cases = runner.generate_test_cases([sample_spec])
+        assert len(cases) == 0
+
+    def test_custom_expected_status(self, sample_post_spec):
+        runner = self._make_runner(
+            ["invalid_body"],
+            invalid_body={"expected_status": 422},
+        )
+        cases = runner.generate_test_cases([sample_post_spec])
+        assert all(c.expected_status == 422 for c in cases)
+
+    def test_api_overrides(self, sample_post_spec):
+        runner = self._make_runner(
+            ["invalid_body"],
+            invalid_body={
+                "expected_status": 400,
+                "api_overrides": {
+                    "members-bulk_create_job": {"expected_status": 422},
+                },
+            },
+        )
+        cases = runner.generate_test_cases([sample_post_spec])
+        assert all(c.expected_status == 422 for c in cases)
+
+    def test_put_patch_also_generate(self, sample_put_spec, sample_patch_spec):
+        runner = self._make_runner(["invalid_body"])
+        cases = runner.generate_test_cases([sample_put_spec, sample_patch_spec])
+        methods = {c.method for c in cases}
+        assert "PUT" in methods
+        assert "PATCH" in methods
+
+
+class TestInvalidValueForType:
+    def test_string_returns_int(self):
+        assert TestRunner._invalid_value_for_type("文字列") == 999
+
+    def test_int_returns_string(self):
+        assert TestRunner._invalid_value_for_type("整数") == "abc"
+
+    def test_bool_returns_string(self):
+        assert TestRunner._invalid_value_for_type("真偽値") == "invalid"
+
+    def test_array_returns_string(self):
+        assert TestRunner._invalid_value_for_type("配列") == "not_an_array"
+
+    def test_unknown_returns_none(self):
+        assert TestRunner._invalid_value_for_type("不明な型") is None
+
+
 class TestTestDescription:
     def test_boundary_description(self):
         tc = TestCase(
@@ -582,6 +660,22 @@ class TestTestDescription:
         )
         desc = TestRunner._test_description(tc)
         assert "missing required" in desc
+        assert "400" in desc
+
+    def test_invalid_body_description(self):
+        tc = TestCase(
+            name="invalid-body-members-empty",
+            pattern="invalid_body",
+            api=None,
+            method="POST",
+            url_path="members.json",
+            query_params={},
+            use_auth=True,
+            expected_status=400,
+            request_body={},
+        )
+        desc = TestRunner._test_description(tc)
+        assert "invalid body" in desc
         assert "400" in desc
 
     def test_post_normal_description(self):

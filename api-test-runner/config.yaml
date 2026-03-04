@@ -50,6 +50,21 @@ test:
   search:
     overrides:                # パラメータ名ごとのテスト値を上書き（環境依存値など）
       department_id: "90980a77-cdab-4db8-b845-0ea3d27e1954"
+  crud_chain:
+    enabled: false                # デフォルト無効（POST を伴うため）
+    id_field: "id"
+    delete_url_pattern: "{url_path}/{id}"
+    post_expected_status: 200
+    delete_expected_status: 200
+    verify_delete_expected_status: 404
+    api_overrides: {}
+  response_validation:
+    enabled: true                 # レスポンスボディ検証（WARN 判定）
+    pagination_count_check: true  # limit=N のとき結果が N件以下か
+    required_fields_check: true   # リソース配列の各要素で同じキーが存在するか
+  invalid_body:
+    expected_status: 400          # 型不正値の期待ステータス
+    api_overrides: {}
   error_body_validation: true  # エラーレスポンスボディの構造検証（400/401）
   timeout: 30                 # HTTP タイムアウト秒
   concurrency: 3              # 同時実行数（1=逐次, 2以上=並行）

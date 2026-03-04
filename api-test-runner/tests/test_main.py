@@ -12,6 +12,7 @@ from api_test_runner.__main__ import (
     _filter_failed_only,
     load_config,
     load_env,
+    resolve_env_file,
     resolve_settings,
 )
 from api_test_runner.models import TestCase
@@ -47,6 +48,28 @@ class TestLoadEnv:
         env_file.write_text("  KEY  =  value  \n", encoding="utf-8")
         result = load_env(env_file)
         assert result["KEY"] == "value"
+
+
+class TestResolveEnvFile:
+    def test_staging_reads_env_staging(self, tmp_path):
+        (tmp_path / ".env.staging").write_text("BASE_URL=https://staging.example.com\n",
+                                                encoding="utf-8")
+        result = resolve_env_file(tmp_path, "staging")
+        assert result == tmp_path / ".env.staging"
+
+    def test_nonexistent_env_falls_back_to_default(self, tmp_path):
+        (tmp_path / ".env").write_text("BASE_URL=https://dev.example.com\n",
+                                       encoding="utf-8")
+        result = resolve_env_file(tmp_path, "production")
+        assert result == tmp_path / ".env"
+
+    def test_none_env_uses_default(self, tmp_path):
+        result = resolve_env_file(tmp_path, None)
+        assert result == tmp_path / ".env"
+
+    def test_backward_compatible_no_arg(self, tmp_path):
+        result = resolve_env_file(tmp_path)
+        assert result == tmp_path / ".env"
 
 
 class TestLoadConfig:
