@@ -39,7 +39,11 @@ test:
           - "projects[0].type"
   post_normal:
     expected_status: 200          # POST 正常系の期待ステータス（200 or 201）
-    api_overrides: {}             # resource_name → {expected_status: N}
+    api_overrides:
+      projects-bulk_update_job:
+        expected_status: 400      # id フィールドが UUID 形式必須（"test_value" は不正）
+      members-bulk_create_job:
+        expected_status: 400      # authorities の必須サブキーが不足（空オブジェクト不可）
   pagination:
     offset: 0
     limit: 5
