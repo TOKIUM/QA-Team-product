@@ -6,7 +6,9 @@ Usage:
     python -m api_test_runner run [csv_dir] --api groups,members
     python -m api_test_runner run [csv_dir] --failed-only
     python -m api_test_runner parse [csv_dir]
+    python -m api_test_runner check [csv_dir] [--config config.yaml]
     python -m api_test_runner gui
+    python -m api_test_runner web [--host 127.0.0.1] [--port 8000]
 """
 
 from __future__ import annotations
@@ -101,6 +103,29 @@ def cmd_parse(args: argparse.Namespace, project_root: Path) -> int:
 
     print(f"Total: {len(specs)} APIs, {total_params} parameters")
     return 0
+
+
+def cmd_check(args: argparse.Namespace, project_root: Path) -> int:
+    """check サブコマンド: テスト実行前のプリフライトチェック."""
+    config_path = project_root / args.config
+    config = load_config(config_path)
+    env = load_env(project_root / ".env")
+    base_url, api_key = resolve_settings(config, env)
+
+    if not base_url:
+        print("Error: BASE_URL not set (.env or config.yaml)")
+        return 1
+    if not api_key:
+        print("Error: API_KEY not set (.env or config.yaml)")
+        return 1
+
+    csv_dir = project_root / args.csv_dir
+
+    from .preflight import PreflightChecker, print_preflight_result
+    checker = PreflightChecker(base_url, api_key, config, csv_dir)
+    result = checker.run_all()
+    print_preflight_result(result)
+    return 0 if result.ok else 1
 
 
 def _filter_failed_only(test_cases: list, results_dir: Path) -> list:
@@ -367,6 +392,13 @@ def main() -> int:
     parse_parser.add_argument("csv_dir", nargs="?", default="document",
                               help="CSV ディレクトリ (default: document)")
 
+    # check
+    check_parser = subparsers.add_parser("check", help="プリフライトチェック（接続・認証・設定値検証）")
+    check_parser.add_argument("csv_dir", nargs="?", default="document",
+                              help="CSV ディレクトリ (default: document)")
+    check_parser.add_argument("--config", "-c", default="config.yaml",
+                              help="設定ファイル (default: config.yaml)")
+
     # gui
     subparsers.add_parser("gui", help="GUI モードで起動")
 
@@ -378,6 +410,13 @@ def main() -> int:
                               help="比較先タイムスタンプ (省略時は latest)")
     diff_parser.add_argument("--config", "-c", default="config.yaml",
                               help="設定ファイル (default: config.yaml)")
+
+    # web
+    web_parser = subparsers.add_parser("web", help="Web UI モードで起動")
+    web_parser.add_argument("--host", default="127.0.0.1",
+                            help="ホスト (default: 127.0.0.1)")
+    web_parser.add_argument("--port", "-p", type=int, default=8000,
+                            help="ポート (default: 8000)")
 
     # trend
     trend_parser = subparsers.add_parser("trend", help="パフォーマンストレンド分析")
@@ -399,9 +438,17 @@ def main() -> int:
         return cmd_run(args, project_root)
     elif args.command == "parse":
         return cmd_parse(args, project_root)
+    elif args.command == "check":
+        return cmd_check(args, project_root)
     elif args.command == "gui":
         from .gui import launch
         return launch(project_root)
+    elif args.command == "web":
+        from .web.app import create_app
+        import uvicorn
+        app = create_app(project_root)
+        uvicorn.run(app, host=args.host, port=args.port)
+        return 0
     elif args.command == "diff":
         return cmd_diff(args, project_root)
     elif args.command == "trend":

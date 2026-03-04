@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Runner{% block title_suffix %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav>
+        <span class="brand">API Test Runner</span>
+        <a href="/run" class="{% if tab == 'run' %}active{% endif %}">テスト実行</a>
+        <a href="/response" class="{% if tab == 'response' %}active{% endif %}">レスポンス</a>
+        <a href="/settings" class="{% if tab == 'settings' %}active{% endif %}">設定</a>
+        <a href="/history" class="{% if tab == 'history' %}active{% endif %}">履歴</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="/static/js/app.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

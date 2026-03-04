@@ -2,18 +2,18 @@
 {% block title_suffix %} - テスト実行{% endblock %}
 {% block content %}
 <div class="card">
-    <h3>CSV ファイル一覧 <span id="csvCount" style="font-weight:normal;color:var(--text-secondary)"></span></h3>
+    <h3>CSV ファイル一覧 <span id="csvCount" class="fw-normal text-secondary"></span></h3>
     <div class="toolbar">
-        <label style="font-size:13px">CSV ディレクトリ:
+        <label class="text-sm">CSV ディレクトリ:
             <input type="text" id="csvDir" value="document" style="max-width:200px">
         </label>
         <button class="btn btn-secondary btn-sm" onclick="refreshCsv()">更新</button>
-        <span style="flex:1"></span>
+        <span class="flex-spacer"></span>
         <button class="btn btn-secondary btn-sm" onclick="selectAllCsv(true)">全選択</button>
         <button class="btn btn-secondary btn-sm" onclick="selectAllCsv(false)">全解除</button>
-        <span id="selectedCount" style="font-size:12px;color:var(--text-secondary)"></span>
+        <span id="selectedCount" class="text-secondary"></span>
     </div>
-    <div style="margin-bottom:8px">
+    <div class="mb-sm">
         <input type="text" id="csvSearch" placeholder="API名で検索..." oninput="filterCsvList()" style="max-width:300px;padding:6px 10px;font-size:13px">
     </div>
     <div id="csvFiles" style="max-height:260px;overflow:auto">
@@ -24,7 +24,7 @@
 <div class="card">
     <h3>テスト実行</h3>
     <div style="margin-bottom:12px">
-        <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px">パターン: <span id="patternStatus" style="font-weight:normal"></span></div>
+        <div class="text-sm-500" style="color:var(--text-secondary);margin-bottom:6px">パターン: <span id="patternStatus" class="fw-normal"></span></div>
         <div class="filter-group" id="patternChecks">
             <button class="filter-btn active" data-pat="auth" onclick="togglePattern(this)">auth</button>
             <button class="filter-btn active" data-pat="pagination" onclick="togglePattern(this)">pagination</button>
@@ -38,10 +38,24 @@
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(true)" style="margin-left:8px">全選択</button>
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(false)">全解除</button>
         </div>
+        <details class="pattern-legend">
+            <summary>各パターンの説明</summary>
+            <table class="pattern-desc-table">
+                <tr><td class="pat-name">auth</td><td>認証あり/なしで 200/401 を確認</td></tr>
+                <tr><td class="pat-name">pagination</td><td>offset/limit によるページネーション検証</td></tr>
+                <tr><td class="pat-name">search</td><td>各パラメータでの検索（overrides 値使用）</td></tr>
+                <tr><td class="pat-name">boundary</td><td>limit/offset の境界値（負数/ゼロ/上限超過）</td></tr>
+                <tr><td class="pat-name">missing_required</td><td>必須パラメータ欠損で 400 を期待</td></tr>
+                <tr><td class="pat-name">post_normal</td><td>POST 正常系リクエスト</td></tr>
+                <tr><td class="pat-name">put_normal</td><td>PUT 正常系リクエスト</td></tr>
+                <tr><td class="pat-name">delete_normal</td><td>DELETE 正常系リクエスト</td></tr>
+                <tr><td class="pat-name">patch_normal</td><td>PATCH 正常系リクエスト</td></tr>
+            </table>
+        </details>
     </div>
     <div class="toolbar">
         <button id="runBtn" class="btn btn-primary" onclick="startRun()">&#9654; テスト実行</button>
-        <span id="runTarget" style="font-size:12px;color:var(--text-secondary)"></span>
+        <span id="runTarget" class="text-secondary"></span>
         <div id="statusBar" class="status-bar" style="display:none">
             <div class="spinner"></div>
             <span id="statusText">実行中...</span>
@@ -62,14 +76,14 @@
 
 <div id="resultsSection" style="display:none">
     <div class="card">
-        <h3>結果一覧 <span id="resultsCount" style="font-weight:normal;color:var(--text-secondary)"></span></h3>
+        <h3>結果一覧 <span id="resultsCount" class="fw-normal text-secondary"></span></h3>
         <div class="filter-group" id="resultFilters"></div>
-        <div style="max-height:500px;overflow:auto">
+        <div class="table-scroll" style="max-height:500px">
             <table>
                 <thead>
                     <tr>
                         <th class="sortable" data-col="name" onclick="sortResults('name')">テスト名 <span class="sort-icon">▲</span></th>
-                        <th class="sortable" data-col="pattern" onclick="sortResults('pattern')">パターン <span class="sort-icon">▲</span></th>
+                        <th class="sortable" data-col="description" onclick="sortResults('description')">検証内容 <span class="sort-icon">▲</span></th>
                         <th>期待</th>
                         <th>実際</th>
                         <th class="sortable" data-col="elapsed_ms" onclick="sortResults('elapsed_ms')">時間 <span class="sort-icon">▲</span></th>

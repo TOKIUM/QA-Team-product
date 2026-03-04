@@ -17,7 +17,7 @@ function extractApiName(filename) {
 
 /** 選択中のCSVファイル名を取得 */
 function getSelectedCsvFiles() {
-    const checked = document.querySelectorAll("#csvFiles input[type=checkbox]:checked");
+    const checked = document.querySelectorAll("#csvFiles tbody input[type=checkbox]:checked");
     return [...checked].map(cb => cb.value);
 }
 
@@ -137,7 +137,7 @@ async function refreshCsv() {
         const apiName = extractApiName(f);
         html += `<tr>
             <td><input type="checkbox" value="${escapeHtml(f)}" checked onchange="updateSelectedCount()"></td>
-            <td style="color:var(--text-secondary);font-size:12px">${i + 1}</td>
+            <td class="text-secondary">${i + 1}</td>
             <td style="font-weight:500" title="${escapeHtml(f)}">${escapeHtml(apiName)}</td>
         </tr>`;
     }
@@ -244,22 +244,10 @@ function showResults(state) {
 
     document.getElementById("summarySection").style.display = "block";
     document.getElementById("summaryCards").innerHTML = `
-        <div class="summary-card">
-            <div class="value">${s.total}</div>
-            <div class="label">Total</div>
-        </div>
-        <div class="summary-card">
-            <div class="value" style="color:var(--pass)">${s.passed}</div>
-            <div class="label">Passed</div>
-        </div>
-        <div class="summary-card">
-            <div class="value" style="color:var(--fail)">${s.failed}</div>
-            <div class="label">Failed</div>
-        </div>
-        <div class="summary-card">
-            <div class="value" style="color:var(--warn)">${s.warn || 0}</div>
-            <div class="label">Warn</div>
-        </div>
+        <div class="summary-card"><div class="value">${s.total}</div><div class="label">Total</div></div>
+        <div class="summary-card"><div class="value" style="color:var(--pass)">${s.passed}</div><div class="label">Passed</div></div>
+        <div class="summary-card"><div class="value" style="color:var(--fail)">${s.failed}</div><div class="label">Failed</div></div>
+        <div class="summary-card"><div class="value" style="color:var(--warn)">${s.warn || 0}</div><div class="label">Warn</div></div>
     `;
 
     const passCount = allResults.filter(r => r.label === "PASS").length;
@@ -339,9 +327,10 @@ function renderResultsTable(results) {
         tr.className = "clickable";
         if (r.label === "FAIL") tr.classList.add("row-fail");
         else if (r.label === "WARN") tr.classList.add("row-warn");
+        const descText = r.description || r.pattern;
         tr.innerHTML = `
-            <td>${escapeHtml(r.name)}</td>
-            <td><span style="font-size:12px;color:var(--text-secondary)">${escapeHtml(r.pattern)}</span></td>
+            <td class="col-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}</td>
+            <td class="col-desc" title="${escapeHtml(descText)}"><span class="text-sm">${escapeHtml(descText)}</span></td>
             <td>${r.expected_status}</td>
             <td>${r.actual_status}</td>
             <td style="font-variant-numeric:tabular-nums">${r.elapsed_ms}ms</td>
@@ -354,35 +343,45 @@ function renderResultsTable(results) {
 
 function showDetail(r) {
     const panel = document.getElementById("detailPanel");
-    let lines = [];
-    lines.push(`${r.method} ${r.request_url || r.url_path}`);
-    lines.push("");
+    let html = '';
+
+    if (r.description) {
+        html += `<div class="detail-section-label">検証内容</div>`;
+        html += `<div class="detail-section-content">${escapeHtml(r.description)}</div>`;
+    }
+
+    html += `<div class="detail-section-label">リクエスト</div>`;
+    html += `<div class="detail-section-content">${escapeHtml(r.method)} ${escapeHtml(r.request_url || r.url_path)}</div>`;
 
     if (r.request_headers && Object.keys(r.request_headers).length) {
+        html += `<div class="detail-section-label">ヘッダー</div>`;
+        let headerLines = [];
         for (const [k, v] of Object.entries(r.request_headers)) {
             const display = k.toLowerCase() === "authorization" ? v.slice(0, 12) + "***" : v;
-            lines.push(`${k}: ${display}`);
+            headerLines.push(`${escapeHtml(k)}: ${escapeHtml(display)}`);
         }
+        html += `<div class="detail-section-content">${headerLines.join('\n')}</div>`;
     }
 
     if (r.query_params && Object.keys(r.query_params).length) {
-        lines.push("");
-        lines.push("Query Parameters:");
+        html += `<div class="detail-section-label">パラメータ</div>`;
+        let paramLines = [];
         for (const [k, v] of Object.entries(r.query_params)) {
-            lines.push(`  ${k} = ${v}`);
+            paramLines.push(`  ${escapeHtml(k)} = ${escapeHtml(String(v))}`);
         }
+        html += `<div class="detail-section-content">${paramLines.join('\n')}</div>`;
     }
 
-    lines.push("");
-    lines.push(`Status: ${r.actual_status} (expected ${r.expected_status}) [${r.label}] - ${r.elapsed_ms}ms`);
+    html += `<div class="detail-section-label">結果</div>`;
+    html += `<div class="detail-section-content">Status: ${r.actual_status} (expected ${r.expected_status}) [${r.label}] - ${r.elapsed_ms}ms</div>`;
 
     if (r.schema_warnings && r.schema_warnings.length) {
-        lines.push("");
-        lines.push("Schema Warnings:");
-        for (const w of r.schema_warnings) lines.push(`  - ${w}`);
+        html += `<div class="detail-section-label">Schema Warnings</div>`;
+        let warnLines = r.schema_warnings.map(w => `  - ${escapeHtml(w)}`);
+        html += `<div class="detail-section-content">${warnLines.join('\n')}</div>`;
     }
 
-    panel.textContent = lines.join("\n");
+    panel.innerHTML = html;
     document.getElementById("detailSection").style.display = "block";
 }
 

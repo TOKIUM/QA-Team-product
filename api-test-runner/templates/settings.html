@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title_suffix %} - 設定{% endblock %}
+{% block content %}
+<div id="msgArea"></div>
+
+<div class="card">
+    <h3>接続設定</h3>
+    <div class="form-group">
+        <label>Base URL</label>
+        <input type="text" id="baseUrl" placeholder="https://dev.keihi.com/api/v2">
+    </div>
+    <div class="form-group">
+        <label>API Key</label>
+        <div style="display:flex;gap:8px;align-items:center;max-width:400px">
+            <input type="password" id="apiKey" style="flex:1;max-width:none">
+            <button class="btn btn-secondary btn-sm" onclick="toggleKey()">表示/隠す</button>
+        </div>
+    </div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div class="form-group">
+            <label>Timeout (秒)</label>
+            <input type="number" id="timeout" min="1" max="120" style="max-width:100px">
+        </div>
+        <div class="form-group">
+            <label>Concurrency</label>
+            <input type="number" id="concurrency" min="1" max="20" style="max-width:100px">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>テストパターン</h3>
+    <div class="checkbox-group" id="patternChecks">
+        <label><input type="checkbox" value="auth"> auth (認証)</label>
+        <label><input type="checkbox" value="pagination"> pagination</label>
+        <label><input type="checkbox" value="search"> search</label>
+        <label><input type="checkbox" value="boundary"> boundary</label>
+        <label><input type="checkbox" value="missing_required"> missing_required</label>
+        <label><input type="checkbox" value="post_normal"> post_normal</label>
+        <label><input type="checkbox" value="put_normal"> put_normal</label>
+        <label><input type="checkbox" value="delete_normal"> delete_normal</label>
+        <label><input type="checkbox" value="patch_normal"> patch_normal</label>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+        <div class="form-group" style="margin:0">
+            <label>Pagination Offset</label>
+            <input type="number" id="pagOffset" min="0" style="max-width:100px">
+        </div>
+        <div class="form-group" style="margin:0">
+            <label>Pagination Limit</label>
+            <input type="number" id="pagLimit" min="1" style="max-width:100px">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>通知設定</h3>
+    <div class="form-group">
+        <label>Slack Webhook URL</label>
+        <input type="text" id="slackUrl" placeholder="https://hooks.slack.com/...">
+    </div>
+    <div class="checkbox-group">
+        <label><input type="checkbox" id="slackFailOnly"> FAIL 時のみ通知</label>
+    </div>
+</div>
+
+<button class="btn btn-primary" onclick="saveSettings()">保存</button>
+{% endblock %}
+{% block scripts %}<script src="/static/js/settings.js"></script>{% endblock %}

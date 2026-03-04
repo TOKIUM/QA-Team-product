@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title_suffix %} - 履歴{% endblock %}
+{% block content %}
+<div class="split-pane">
+    <div class="left">
+        <div class="card" style="padding:0">
+            <div class="panel-header-flex">
+                過去の実行
+                <span id="histCount" class="fw-normal text-secondary"></span>
+            </div>
+            <div id="historyList" class="file-list" style="max-height:calc(100vh - 280px)"></div>
+        </div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+            <button class="btn btn-secondary btn-sm" onclick="compareRuns()">比較 (2つ選択)</button>
+            <button class="btn btn-secondary btn-sm" onclick="showTrend()">トレンド</button>
+        </div>
+    </div>
+    <div class="right">
+        <div id="historyContent">
+            <div class="card">
+                <div class="empty-state">
+                    <div class="icon">📊</div>
+                    <p>左の一覧から実行を選択してください</p>
+                    <p class="text-secondary" style="margin-top:4px">2つ選択すると比較できます</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="compareSection" style="display:none">
+            <div class="card">
+                <h3>比較結果</h3>
+                <div id="compareContent"></div>
+            </div>
+        </div>
+
+        <div id="trendSection" style="display:none">
+            <div class="card">
+                <h3>パフォーマンストレンド</h3>
+                <div id="trendContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/history.js"></script>{% endblock %}

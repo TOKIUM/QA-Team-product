@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title_suffix %} - レスポンス{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="toolbar">
+        <label class="text-sm-500">実行結果:
+            <select id="respTimestamp" onchange="onTimestampChange()" style="max-width:260px"></select>
+        </label>
+        <span id="respFileCount" class="text-secondary"></span>
+    </div>
+</div>
+
+<div class="split-pane">
+    <div class="left">
+        <div class="card" style="padding:0">
+            <div class="panel-header">ファイル一覧</div>
+            <div id="fileList" class="file-list" style="max-height:calc(100vh - 220px)"></div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="card" style="padding:0">
+            <div class="tab-bar">
+                <button class="btn btn-sm" onclick="showTab('req')" id="tabReq" style="border-radius:10px 0 0 0;border:none;border-right:1px solid var(--border)">リクエスト</button>
+                <button class="btn btn-sm" onclick="showTab('res')" id="tabRes" style="border:none">レスポンス</button>
+            </div>
+            <div class="pad-content">
+                <div id="reqPanel" class="detail-panel" style="display:none">(ファイルを選択してください)</div>
+                <div id="resPanel" class="json-view" style="display:none">(ファイルを選択してください)</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/response.js"></script>{% endblock %}
