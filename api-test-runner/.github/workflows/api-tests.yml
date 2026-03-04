@@ -1,13 +1,13 @@
 name: API Tests
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  schedule:
-    - cron: "0 0 * * *"  # 毎日 UTC 0:00（JST 9:00）に定期実行
-  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+  # schedule:
+  #   - cron: "0 0 * * *"  # 毎日 UTC 0:00（JST 9:00）に定期実行
+  workflow_dispatch:  # 手動実行のみ（自動実行は協議中のため無効化）
     inputs:
       include_post_normal:
         description: "POST 正常系テスト (post_normal) を含める"
