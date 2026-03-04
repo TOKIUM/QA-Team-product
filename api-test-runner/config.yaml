@@ -12,12 +12,41 @@ test:
     - auth                    # 認証あり(200) + 認証なし(401)
     - pagination              # offset/limit テスト
     - search                  # パラメータ検索テスト
+    - boundary                # limit 境界値テスト（負数/ゼロ/上限/上限超過）
+    - missing_required        # 必須パラメータ欠損テスト（400 を期待）
+    # - post_normal           # POST 正常系テスト（デフォルトOFF: 実データ登録のためテスト環境でのみ有効化）
+  boundary:
+    overflow_expected_status: 400  # 上限超過時の期待ステータス（API により 200 の場合あり）
+    offset_negative_expected_status: 400  # offset 負数の期待ステータス
+    offset_large_value: 999999            # offset 巨大値テストの値
+    offset_large_expected_status: 200     # offset 巨大値の期待ステータス（空配列）
+    api_overrides:
+      members:
+        overflow_expected_status: 200     # members は limit 上限超過を許容（200 返却）
+      groups:
+        negative_expected_status: 500     # groups は limit=-1 で 500
+        offset_negative_expected_status: 500  # groups は offset=-1 で 500
+      posts:
+        zero_expected_status: 400         # posts は limit=0 を拒否（400）
+      projects:
+        zero_expected_status: 400         # projects は limit=0 を拒否（400）
+  missing_required:
+    expected_status: 400          # グローバルデフォルト
+    api_overrides:
+      projects-bulk_create_job:
+        skip_fields:              # 作成時に不要なフィールド（CSV上は必須だがAPI実装では任意）
+          - "projects[0].id"
+          - "projects[0].type"
+  post_normal:
+    expected_status: 200          # POST 正常系の期待ステータス（200 or 201）
+    api_overrides: {}             # resource_name → {expected_status: N}
   pagination:
     offset: 0
     limit: 5
   search:
     overrides:                # パラメータ名ごとのテスト値を上書き（環境依存値など）
       department_id: "738161cd-c180-40d3-b93d-c2a6a90dc711"
+  error_body_validation: true  # エラーレスポンスボディの構造検証（400/401）
   timeout: 30                 # HTTP タイムアウト秒
   concurrency: 3              # 同時実行数（1=逐次, 2以上=並行）
   retry:

@@ -19,7 +19,54 @@ def sample_spec():
         params=[
             Parameter("部署名", "name", "文字列", "", ""),
             Parameter("オフセット", "offset", "整数", "", ""),
+            Parameter("取得件数", "limit", "整数", "", "最大1000", max_value=1000),
+        ],
+    )
+
+
+@pytest.fixture
+def sample_spec_no_max():
+    """max_value なしの ApiSpec（部署API等）."""
+    return ApiSpec(
+        number="4",
+        name="役職取得API",
+        url="/api/v2/positions.json",
+        method="GET",
+        resource="positions",
+        params=[
+            Parameter("役職名", "name", "文字列", "", ""),
+            Parameter("オフセット", "offset", "整数", "", ""),
             Parameter("取得件数", "limit", "整数", "", ""),
+        ],
+    )
+
+
+@pytest.fixture
+def sample_post_spec():
+    """POST API 用の ApiSpec（ネスト構造あり）."""
+    return ApiSpec(
+        number="9",
+        name="従業員登録用バッチジョブ登録API",
+        url="/api/v2/members/bulk_create_job.json",
+        method="POST",
+        resource="bulk_create_job",
+        params=[
+            Parameter(
+                "従業員情報", "members", "配列", "〇", "下記参照",
+                children=[
+                    Parameter("従業員名", "name", "文字列", "〇", ""),
+                    Parameter("メールアドレス", "email", "文字列", "〇", ""),
+                    Parameter("従業員番号", "employee_id", "文字列", "", ""),
+                    Parameter(
+                        "権限情報", "authorities", "オブジェクト", "〇", "下記参照",
+                        children=[
+                            Parameter("管理者権限", "is_admin", "真偽値", "", ""),
+                            Parameter("集計者権限", "is_accountant", "真偽値", "", ""),
+                        ],
+                    ),
+                    Parameter("パスワード", "password", "文字列", "〇", "最低8文字"),
+                ],
+            ),
         ],
     )
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 VALID_METHODS = {"GET", "POST", "PUT", "DELETE"}
-VALID_PATTERNS = {"auth", "pagination", "search"}
+VALID_PATTERNS = {"auth", "pagination", "search", "boundary", "missing_required", "post_normal"}
 KNOWN_TOP_KEYS = {"api", "test", "output", "custom_tests", "notification"}
 
 
@@ -88,6 +88,51 @@ def validate_config(config: dict) -> list[str]:
                     errors.append("test.pagination.limit は整数で指定してください")
                 elif limit < 1:
                     errors.append("test.pagination.limit は 1 以上で指定してください")
+
+        # boundary settings
+        boundary = test.get("boundary")
+        if boundary is not None and isinstance(boundary, dict):
+            offset_large = boundary.get("offset_large_value")
+            if offset_large is not None:
+                if not isinstance(offset_large, int) or isinstance(offset_large, bool):
+                    errors.append("test.boundary.offset_large_value は整数で指定してください")
+                elif offset_large < 1:
+                    errors.append("test.boundary.offset_large_value は 1 以上で指定してください")
+            b_overrides = boundary.get("api_overrides")
+            if b_overrides is not None:
+                if not isinstance(b_overrides, dict):
+                    errors.append("test.boundary.api_overrides は辞書型で指定してください")
+                else:
+                    for rname, rval in b_overrides.items():
+                        if not isinstance(rval, dict):
+                            errors.append(
+                                f"test.boundary.api_overrides.{rname} は辞書型で指定してください")
+
+        # missing_required.api_overrides
+        missing_req = test.get("missing_required")
+        if missing_req is not None and isinstance(missing_req, dict):
+            mr_overrides = missing_req.get("api_overrides")
+            if mr_overrides is not None:
+                if not isinstance(mr_overrides, dict):
+                    errors.append("test.missing_required.api_overrides は辞書型で指定してください")
+                else:
+                    for rname, rval in mr_overrides.items():
+                        if not isinstance(rval, dict):
+                            errors.append(
+                                f"test.missing_required.api_overrides.{rname} は辞書型で指定してください")
+
+        # post_normal.api_overrides
+        post_normal = test.get("post_normal")
+        if post_normal is not None and isinstance(post_normal, dict):
+            pn_overrides = post_normal.get("api_overrides")
+            if pn_overrides is not None:
+                if not isinstance(pn_overrides, dict):
+                    errors.append("test.post_normal.api_overrides は辞書型で指定してください")
+                else:
+                    for rname, rval in pn_overrides.items():
+                        if not isinstance(rval, dict):
+                            errors.append(
+                                f"test.post_normal.api_overrides.{rname} は辞書型で指定してください")
 
         # retry
         retry = test.get("retry")

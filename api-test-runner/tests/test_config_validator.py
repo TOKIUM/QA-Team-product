@@ -217,6 +217,68 @@ class TestUnknownTopLevelKeys:
         assert not any("未知" in e for e in errors)
 
 
+class TestValidateOffsetBoundary:
+    def test_valid_offset_large_value(self):
+        config = {"test": {"boundary": {"offset_large_value": 999999}}}
+        errors = validate_config(config)
+        assert not any("offset_large_value" in e for e in errors)
+
+    def test_offset_large_value_not_int(self):
+        config = {"test": {"boundary": {"offset_large_value": "big"}}}
+        errors = validate_config(config)
+        assert any("offset_large_value" in e and "整数" in e for e in errors)
+
+    def test_offset_large_value_zero(self):
+        config = {"test": {"boundary": {"offset_large_value": 0}}}
+        errors = validate_config(config)
+        assert any("offset_large_value" in e and "1 以上" in e for e in errors)
+
+
+class TestValidateApiOverrides:
+    """api_overrides のバリデーションテスト."""
+
+    def test_boundary_api_overrides_valid(self):
+        config = {"test": {"boundary": {"api_overrides": {
+            "groups": {"negative_expected_status": 200},
+        }}}}
+        errors = validate_config(config)
+        assert not any("api_overrides" in e for e in errors)
+
+    def test_boundary_api_overrides_not_dict(self):
+        config = {"test": {"boundary": {"api_overrides": "invalid"}}}
+        errors = validate_config(config)
+        assert any("boundary.api_overrides" in e and "辞書型" in e for e in errors)
+
+    def test_boundary_api_overrides_entry_not_dict(self):
+        config = {"test": {"boundary": {"api_overrides": {"groups": 123}}}}
+        errors = validate_config(config)
+        assert any("groups" in e and "辞書型" in e for e in errors)
+
+    def test_missing_required_api_overrides_valid(self):
+        config = {"test": {"missing_required": {"api_overrides": {
+            "members": {"expected_status": 422},
+        }}}}
+        errors = validate_config(config)
+        assert not any("api_overrides" in e for e in errors)
+
+    def test_missing_required_api_overrides_not_dict(self):
+        config = {"test": {"missing_required": {"api_overrides": [1, 2]}}}
+        errors = validate_config(config)
+        assert any("missing_required.api_overrides" in e and "辞書型" in e for e in errors)
+
+    def test_post_normal_api_overrides_valid(self):
+        config = {"test": {"post_normal": {"api_overrides": {
+            "members": {"expected_status": 201},
+        }}}}
+        errors = validate_config(config)
+        assert not any("api_overrides" in e for e in errors)
+
+    def test_post_normal_api_overrides_not_dict(self):
+        config = {"test": {"post_normal": {"api_overrides": True}}}
+        errors = validate_config(config)
+        assert any("post_normal.api_overrides" in e and "辞書型" in e for e in errors)
+
+
 class TestNonDictRoot:
     def test_non_dict(self):
         errors = validate_config("not a dict")  # type: ignore

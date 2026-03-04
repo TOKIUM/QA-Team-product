@@ -14,6 +14,8 @@ class Parameter:
     data_type: str       # "文字列"
     required: str        # "〇" | ""
     remarks: str         # 備考
+    max_value: int | None = None           # 備考欄「最大N」から抽出した上限値
+    children: list[Parameter] = field(default_factory=list)  # ネスト構造の子パラメータ
 
 
 @dataclass

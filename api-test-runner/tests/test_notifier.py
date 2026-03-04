@@ -90,6 +90,33 @@ class TestBuildPayload:
         text = payload["text"]
         assert "Failed Tests" not in text
 
+    def test_schema_warnings_included(self, notifier):
+        """スキーマ警告がペイロードに含まれる."""
+        tc = TestCase(
+            name="boundary-groups-limit-negative", pattern="boundary",
+            api=None, method="GET", url_path="groups.json",
+            query_params={"limit": -1}, use_auth=True,
+            expected_status=400,
+        )
+        result = TestResult(
+            test_case=tc, status_code=400,
+            response_body={"error": "bad"}, elapsed_ms=100, passed=True,
+            schema_warnings=["400 レスポンスに 'message' キーがありません (keys: ['error'])"],
+        )
+        payload = notifier.build_payload([result])
+        text = payload["text"]
+        assert ":warning:" in text
+        assert "1 warnings" in text
+        assert "Schema Warnings" in text
+        assert "message" in text
+
+    def test_no_warnings_section_when_clean(self, notifier, all_pass_results):
+        """警告なし時は Schema Warnings セクションなし."""
+        payload = notifier.build_payload(all_pass_results)
+        text = payload["text"]
+        assert "Schema Warnings" not in text
+        assert ":warning:" not in text
+
 
 class TestNotify:
     def test_empty_url_returns_false(self, notifier, all_pass_results):

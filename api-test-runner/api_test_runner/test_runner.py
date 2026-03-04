@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from .http_client import ApiClient
-from .models import ApiSpec, TestCase, TestResult
+from .models import ApiSpec, Parameter, TestCase, TestResult
 
 
 class TestRunner:
@@ -133,6 +133,178 @@ class TestRunner:
                         expected_status=200,
                     ))
 
+        # --- boundary パターン（limit の境界値テスト）---
+        if "boundary" in patterns:
+            boundary_config = test_config.get("boundary", {})
+            overflow_status = boundary_config.get("overflow_expected_status", 400)
+            api_overrides_map = boundary_config.get("api_overrides", {})
+            for spec in get_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                overrides_b = api_overrides_map.get(resource_name, {})
+                limit_params = [
+                    p for p in spec.params if p.param_name == "limit"
+                ]
+                for param in limit_params:
+                    # 負数: デフォルト400、api_overrides で上書き可
+                    cases.append(TestCase(
+                        name=f"boundary-{resource_name}-limit-negative",
+                        pattern="boundary",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={"limit": -1},
+                        use_auth=True,
+                        expected_status=overrides_b.get(
+                            "negative_expected_status", 400),
+                    ))
+                    # ゼロ: デフォルト200、api_overrides で上書き可
+                    cases.append(TestCase(
+                        name=f"boundary-{resource_name}-limit-zero",
+                        pattern="boundary",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={"limit": 0},
+                        use_auth=True,
+                        expected_status=overrides_b.get(
+                            "zero_expected_status", 200),
+                    ))
+                    # max_value がある場合のみ上限系テスト
+                    if param.max_value is not None:
+                        # 上限値: 200 を期待
+                        cases.append(TestCase(
+                            name=f"boundary-{resource_name}-limit-max",
+                            pattern="boundary",
+                            api=spec,
+                            method=spec.method,
+                            url_path=url_path,
+                            query_params={"limit": param.max_value},
+                            use_auth=True,
+                            expected_status=200,
+                        ))
+                        # 上限超過: グローバル or api_overrides で設定可
+                        cases.append(TestCase(
+                            name=f"boundary-{resource_name}-limit-overflow",
+                            pattern="boundary",
+                            api=spec,
+                            method=spec.method,
+                            url_path=url_path,
+                            query_params={"limit": param.max_value + 1},
+                            use_auth=True,
+                            expected_status=overrides_b.get(
+                                "overflow_expected_status", overflow_status),
+                        ))
+
+                # offset 境界値テスト
+                offset_params = [
+                    p for p in spec.params if p.param_name == "offset"
+                ]
+                if offset_params:
+                    offset_neg_status = overrides_b.get(
+                        "offset_negative_expected_status",
+                        boundary_config.get("offset_negative_expected_status", 400),
+                    )
+                    offset_large_val = overrides_b.get(
+                        "offset_large_value",
+                        boundary_config.get("offset_large_value", 999999),
+                    )
+                    offset_large_status = overrides_b.get(
+                        "offset_large_expected_status",
+                        boundary_config.get("offset_large_expected_status", 200),
+                    )
+                    # offset 負数
+                    cases.append(TestCase(
+                        name=f"boundary-{resource_name}-offset-negative",
+                        pattern="boundary",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={"offset": -1},
+                        use_auth=True,
+                        expected_status=offset_neg_status,
+                    ))
+                    # offset 巨大値（空配列を期待）
+                    cases.append(TestCase(
+                        name=f"boundary-{resource_name}-offset-large",
+                        pattern="boundary",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={"offset": offset_large_val},
+                        use_auth=True,
+                        expected_status=offset_large_status,
+                    ))
+
+        # --- missing_required パターン（必須パラメータ欠損テスト）---
+        if "missing_required" in patterns:
+            overrides = test_config.get("search", {}).get("overrides", {})
+            mr_config = test_config.get("missing_required", {})
+            mr_default_status = mr_config.get("expected_status", 400)
+            mr_api_overrides = mr_config.get("api_overrides", {})
+            # GET API: 必須パラメータを1つずつ省略
+            for spec in get_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                mr_status = mr_api_overrides.get(
+                    resource_name, {}).get(
+                    "expected_status", mr_default_status)
+                required_params = [
+                    p for p in spec.params
+                    if p.required in ("\u25cb", "\u3007")
+                    and p.param_name not in ("offset", "limit", "fields")
+                ]
+                if not required_params:
+                    continue
+                # 全必須パラメータ入りのベースクエリ
+                base_query = {}
+                for p in required_params:
+                    if p.param_name in overrides:
+                        base_query[p.param_name] = overrides[p.param_name]
+                    else:
+                        base_query[p.param_name] = self._search_test_value(
+                            p.data_type, p.param_name, p.remarks,
+                        )
+                for omit in required_params:
+                    query = {k: v for k, v in base_query.items() if k != omit.param_name}
+                    cases.append(TestCase(
+                        name=f"missing-required-{resource_name}-no-{omit.param_name}",
+                        pattern="missing_required",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params=query,
+                        use_auth=True,
+                        expected_status=mr_status,
+                    ))
+            # POST API: 必須フィールドを1つずつ省略
+            for spec in post_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                mr_res_overrides = mr_api_overrides.get(resource_name, {})
+                mr_status = mr_res_overrides.get(
+                    "expected_status", mr_default_status)
+                skip_fields = set(mr_res_overrides.get("skip_fields", []))
+                base_body = self._build_minimal_body(spec.params, overrides)
+                if not base_body:
+                    continue
+                required_paths = self._collect_required_paths(spec.params, "")
+                for path_key, display_name in required_paths:
+                    if path_key in skip_fields:
+                        continue
+                    body = self._omit_field(base_body, path_key)
+                    if body == base_body:
+                        continue
+                    safe_name = display_name.replace(".", "-").replace("[0]", "")
+                    cases.append(TestCase(
+                        name=f"missing-required-{resource_name}-no-{safe_name}",
+                        pattern="missing_required",
+                        api=spec,
+                        method=spec.method,
+                        url_path=url_path,
+                        query_params={},
+                        use_auth=True,
+                        expected_status=mr_status,
+                        request_body=body,
+                    ))
+
         # --- POST API テストケース ---
         if "auth" in patterns:
             for spec in post_specs:
@@ -147,6 +319,45 @@ class TestRunner:
                     query_params={},
                     use_auth=False,
                     expected_status=401,
+                ))
+
+        # --- post_normal パターン（POST 正常系テスト）---
+        if "post_normal" in patterns:
+            overrides = test_config.get("search", {}).get("overrides", {})
+            post_normal_config = test_config.get("post_normal", {})
+            success_status = post_normal_config.get("expected_status", 200)
+            pn_api_overrides = post_normal_config.get("api_overrides", {})
+            for spec in post_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                pn_overrides = pn_api_overrides.get(resource_name, {})
+                api_success_status = pn_overrides.get(
+                    "expected_status", success_status)
+                body = self._build_minimal_body(spec.params, overrides)
+                if not body:
+                    continue
+                # 最小ボディ正常系
+                cases.append(TestCase(
+                    name=f"post-{resource_name}-normal",
+                    pattern="post_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=api_success_status,
+                    request_body=body,
+                ))
+                # 認証なし
+                cases.append(TestCase(
+                    name=f"post-{resource_name}-normal-no-auth",
+                    pattern="post_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=False,
+                    expected_status=401,
+                    request_body=body,
                 ))
 
         return cases
@@ -169,10 +380,14 @@ class TestRunner:
         else:
             raw_results = self._run_sequential(test_cases)
 
-        # スキーマ検証 + JSON 保存
+        # スキーマ検証 + エラーボディ検証 + JSON 保存
+        error_body_enabled = self.config.get("test", {}).get(
+            "error_body_validation", False)
         results: list[TestResult] = []
         for tc, result in zip(test_cases, raw_results):
             self._validate_schema(result)
+            if error_body_enabled:
+                self._validate_error_body(result)
             if result.response_body is not None:
                 output_file = run_dir / f"{tc.name}.json"
                 with open(output_file, "w", encoding="utf-8", newline="\n") as f:
@@ -247,6 +462,43 @@ class TestRunner:
             )
 
     @staticmethod
+    def _validate_error_body(result: TestResult) -> None:
+        """エラーレスポンス（400/401）のボディ構造を検証し、警告を追加."""
+        if not result.passed:
+            return
+        tc = result.test_case
+        body = result.response_body
+
+        if tc.expected_status == 401:
+            if body is None or body == {}:
+                result.schema_warnings.append(
+                    "401 レスポンスボディが空です")
+            return
+
+        if tc.expected_status == 400:
+            if body is None:
+                result.schema_warnings.append(
+                    "400 レスポンスボディが空です")
+                return
+            if not isinstance(body, dict):
+                result.schema_warnings.append(
+                    f"400 レスポンスが dict ではなく {type(body).__name__} です")
+                return
+            if "message" not in body:
+                result.schema_warnings.append(
+                    "400 レスポンスに 'message' キーがありません "
+                    f"(keys: {list(body.keys())})")
+            if tc.pattern == "missing_required":
+                has_detail = any(
+                    k in body for k in ("param", "missing_values", "errors")
+                )
+                if not has_detail:
+                    result.schema_warnings.append(
+                        "missing_required 400 レスポンスに 'param', "
+                        "'missing_values', 'errors' のいずれもありません "
+                        f"(keys: {list(body.keys())})")
+
+    @staticmethod
     def _print_result(result: TestResult) -> None:
         """テスト結果を1行表示."""
         tc = result.test_case
@@ -270,6 +522,16 @@ class TestRunner:
         elif tc.pattern == "search":
             params_str = "&".join(f"{k}={v}" for k, v in tc.query_params.items())
             return f"GET /{tc.url_path} with search ({params_str})"
+        elif tc.pattern == "boundary":
+            params_str = "&".join(f"{k}={v}" for k, v in tc.query_params.items())
+            return f"GET /{tc.url_path} boundary ({params_str}) - expect {tc.expected_status}"
+        elif tc.pattern == "missing_required":
+            suffix = ""
+            if tc.request_body is not None:
+                suffix = " with body"
+            return f"{tc.method} /{tc.url_path} missing required{suffix} - expect {tc.expected_status}"
+        elif tc.pattern == "post_normal":
+            return f"POST /{tc.url_path} normal - expect {tc.expected_status}"
         elif tc.pattern == "custom":
             extras = []
             if tc.query_params:
@@ -319,3 +581,147 @@ class TestRunner:
         if "真偽" in data_type:
             return "true"
         return "test"
+
+    @staticmethod
+    def _post_test_value(
+        param: Parameter, overrides: dict | None = None,
+    ) -> str | int | bool | list | dict:
+        """POST 用テスト値を自動推定する."""
+        if overrides and param.param_name in overrides:
+            return overrides[param.param_name]
+
+        data_type = param.data_type
+
+        # 配列型: 子の必須フィールドを再帰的に生成し要素1個の配列
+        if "\u914d\u5217" in data_type:
+            if param.children:
+                child_obj = TestRunner._build_minimal_object(param.children, overrides)
+                return [child_obj] if child_obj else [{}]
+            return [{}]
+
+        # オブジェクト型: 子の必須フィールドを再帰的に生成
+        if "\u30aa\u30d6\u30b8\u30a7\u30af\u30c8" in data_type:
+            if param.children:
+                return TestRunner._build_minimal_object(param.children, overrides)
+            return {}
+
+        # 真偽値
+        if "\u771f\u507d" in data_type:
+            return False
+
+        # 整数値
+        if "\u6574\u6570" in data_type:
+            return 1
+
+        # 文字列: email 系なら email 形式
+        if "email" in param.param_name.lower():
+            import time
+            return f"test_{int(time.time())}@example.com"
+
+        # パスワード
+        if param.param_name == "password":
+            return "Test1234!"
+
+        return "test_value"
+
+    @staticmethod
+    def _build_minimal_object(
+        params: list[Parameter], overrides: dict | None = None,
+    ) -> dict:
+        """パラメータリストから必須フィールドのみの最小オブジェクトを生成."""
+        obj: dict = {}
+        for p in params:
+            if p.required in ("\u25cb", "\u3007"):
+                obj[p.param_name] = TestRunner._post_test_value(p, overrides)
+        return obj
+
+    @staticmethod
+    def _build_minimal_body(
+        params: list[Parameter], overrides: dict | None = None,
+    ) -> dict:
+        """API の全パラメータから必須フィールドのみの最小リクエストボディを生成."""
+        body: dict = {}
+        for p in params:
+            if p.required in ("\u25cb", "\u3007"):
+                body[p.param_name] = TestRunner._post_test_value(p, overrides)
+        return body
+
+    @staticmethod
+    def _collect_required_paths(
+        params: list[Parameter], prefix: str,
+    ) -> list[tuple[str, str]]:
+        """必須パラメータのパスを再帰的に収集する.
+
+        Returns:
+            list of (dot_path, display_name) tuples.
+            例: [("members[0].name", "members.name"), ("members[0].authorities.is_admin", "members.authorities.is_admin")]
+        """
+        paths: list[tuple[str, str]] = []
+        for p in params:
+            if p.required not in ("\u25cb", "\u3007"):
+                continue
+            if prefix:
+                dot_path = f"{prefix}.{p.param_name}"
+            else:
+                dot_path = p.param_name
+
+            # 配列/オブジェクトで子がある場合は子のパスを再帰収集
+            if p.children and "\u914d\u5217" in p.data_type:
+                child_paths = TestRunner._collect_required_paths(
+                    p.children, f"{dot_path}[0]",
+                )
+                paths.extend(child_paths)
+                # 親自体も省略テスト対象
+                paths.append((dot_path, dot_path))
+            elif p.children and "\u30aa\u30d6\u30b8\u30a7\u30af\u30c8" in p.data_type:
+                child_paths = TestRunner._collect_required_paths(
+                    p.children, dot_path,
+                )
+                paths.extend(child_paths)
+                paths.append((dot_path, dot_path))
+            else:
+                paths.append((dot_path, dot_path))
+        return paths
+
+    @staticmethod
+    def _omit_field(body: dict, dot_path: str) -> dict:
+        """ドットパスで指定されたフィールドを省略したコピーを返す.
+
+        例: _omit_field({"members": [{"name": "a", "email": "b"}]}, "members[0].name")
+            → {"members": [{"email": "b"}]}
+        """
+        import copy
+        result = copy.deepcopy(body)
+
+        parts = []
+        for part in dot_path.split("."):
+            # "members[0]" → ("members", 0)
+            m = re.match(r"^(.+)\[(\d+)\]$", part)
+            if m:
+                parts.append(m.group(1))
+                parts.append(int(m.group(2)))
+            else:
+                parts.append(part)
+
+        # Navigate to parent and delete the target key
+        obj = result
+        for i, part in enumerate(parts[:-1]):
+            if isinstance(part, int):
+                if not isinstance(obj, list) or part >= len(obj):
+                    return body  # パスが不正 → 元のまま返す
+                obj = obj[part]
+            else:
+                if not isinstance(obj, dict) or part not in obj:
+                    return body
+                obj = obj[part]
+
+        last = parts[-1]
+        if isinstance(last, int):
+            if isinstance(obj, list) and last < len(obj):
+                del obj[last]
+        elif isinstance(obj, dict) and last in obj:
+            del obj[last]
+        else:
+            return body
+
+        return result
