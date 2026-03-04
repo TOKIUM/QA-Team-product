@@ -56,6 +56,9 @@ class TestRunner:
 
         get_specs = [s for s in specs if s.method == "GET"]
         post_specs = [s for s in specs if s.method == "POST"]
+        put_specs = [s for s in specs if s.method == "PUT"]
+        delete_specs = [s for s in specs if s.method == "DELETE"]
+        patch_specs = [s for s in specs if s.method == "PATCH"]
 
         # --- GET API テストケース ---
         for spec in get_specs:
@@ -275,51 +278,58 @@ class TestRunner:
                         use_auth=True,
                         expected_status=mr_status,
                     ))
-            # POST API: 必須フィールドを1つずつ省略
-            for spec in post_specs:
-                url_path, resource_name = self._resolve_paths(spec, base_path)
-                mr_res_overrides = mr_api_overrides.get(resource_name, {})
-                mr_status = mr_res_overrides.get(
-                    "expected_status", mr_default_status)
-                skip_fields = set(mr_res_overrides.get("skip_fields", []))
-                base_body = self._build_minimal_body(spec.params, overrides)
-                if not base_body:
-                    continue
-                required_paths = self._collect_required_paths(spec.params, "")
-                for path_key, display_name in required_paths:
-                    if path_key in skip_fields:
+            # POST/PUT/PATCH API: 必須フィールドを1つずつ省略
+            for body_specs in [post_specs, put_specs, patch_specs]:
+                for spec in body_specs:
+                    url_path, resource_name = self._resolve_paths(spec, base_path)
+                    mr_res_overrides = mr_api_overrides.get(resource_name, {})
+                    mr_status = mr_res_overrides.get(
+                        "expected_status", mr_default_status)
+                    skip_fields = set(mr_res_overrides.get("skip_fields", []))
+                    base_body = self._build_minimal_body(spec.params, overrides)
+                    if not base_body:
                         continue
-                    body = self._omit_field(base_body, path_key)
-                    if body == base_body:
-                        continue
-                    safe_name = display_name.replace(".", "-").replace("[0]", "")
+                    required_paths = self._collect_required_paths(spec.params, "")
+                    for path_key, display_name in required_paths:
+                        if path_key in skip_fields:
+                            continue
+                        body = self._omit_field(base_body, path_key)
+                        if body == base_body:
+                            continue
+                        safe_name = display_name.replace(".", "-").replace("[0]", "")
+                        cases.append(TestCase(
+                            name=f"missing-required-{resource_name}-no-{safe_name}",
+                            pattern="missing_required",
+                            api=spec,
+                            method=spec.method,
+                            url_path=url_path,
+                            query_params={},
+                            use_auth=True,
+                            expected_status=mr_status,
+                            request_body=body,
+                        ))
+
+        # --- POST/PUT/DELETE/PATCH API no-auth テストケース ---
+        if "auth" in patterns:
+            for method_prefix, method_specs in [
+                ("post", post_specs),
+                ("put", put_specs),
+                ("delete", delete_specs),
+                ("patch", patch_specs),
+            ]:
+                for spec in method_specs:
+                    url_path, resource_name = self._resolve_paths(spec, base_path)
+                    # no_auth のみ自動生成（401 検証、安全）
                     cases.append(TestCase(
-                        name=f"missing-required-{resource_name}-no-{safe_name}",
-                        pattern="missing_required",
+                        name=f"{method_prefix}-{resource_name}-no-auth",
+                        pattern="no_auth",
                         api=spec,
                         method=spec.method,
                         url_path=url_path,
                         query_params={},
-                        use_auth=True,
-                        expected_status=mr_status,
-                        request_body=body,
+                        use_auth=False,
+                        expected_status=401,
                     ))
-
-        # --- POST API テストケース ---
-        if "auth" in patterns:
-            for spec in post_specs:
-                url_path, resource_name = self._resolve_paths(spec, base_path)
-                # no_auth のみ自動生成（401 検証、安全）
-                cases.append(TestCase(
-                    name=f"post-{resource_name}-no-auth",
-                    pattern="no_auth",
-                    api=spec,
-                    method=spec.method,
-                    url_path=url_path,
-                    query_params={},
-                    use_auth=False,
-                    expected_status=401,
-                ))
 
         # --- post_normal パターン（POST 正常系テスト）---
         if "post_normal" in patterns:
@@ -351,6 +361,111 @@ class TestRunner:
                 cases.append(TestCase(
                     name=f"post-{resource_name}-normal-no-auth",
                     pattern="post_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=False,
+                    expected_status=401,
+                    request_body=body,
+                ))
+
+        # --- put_normal パターン（PUT 正常系テスト）---
+        if "put_normal" in patterns:
+            overrides = test_config.get("search", {}).get("overrides", {})
+            put_normal_config = test_config.get("put_normal", {})
+            success_status = put_normal_config.get("expected_status", 200)
+            pn_api_overrides = put_normal_config.get("api_overrides", {})
+            for spec in put_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                pn_overrides = pn_api_overrides.get(resource_name, {})
+                api_success_status = pn_overrides.get(
+                    "expected_status", success_status)
+                body = self._build_minimal_body(spec.params, overrides)
+                if not body:
+                    continue
+                cases.append(TestCase(
+                    name=f"put-{resource_name}-normal",
+                    pattern="put_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=api_success_status,
+                    request_body=body,
+                ))
+                cases.append(TestCase(
+                    name=f"put-{resource_name}-normal-no-auth",
+                    pattern="put_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=False,
+                    expected_status=401,
+                    request_body=body,
+                ))
+
+        # --- delete_normal パターン（DELETE 正常系テスト）---
+        if "delete_normal" in patterns:
+            delete_normal_config = test_config.get("delete_normal", {})
+            success_status = delete_normal_config.get("expected_status", 200)
+            dn_api_overrides = delete_normal_config.get("api_overrides", {})
+            for spec in delete_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                dn_overrides = dn_api_overrides.get(resource_name, {})
+                api_success_status = dn_overrides.get(
+                    "expected_status", success_status)
+                cases.append(TestCase(
+                    name=f"delete-{resource_name}-normal",
+                    pattern="delete_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=api_success_status,
+                ))
+                cases.append(TestCase(
+                    name=f"delete-{resource_name}-normal-no-auth",
+                    pattern="delete_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=False,
+                    expected_status=401,
+                ))
+
+        # --- patch_normal パターン（PATCH 正常系テスト）---
+        if "patch_normal" in patterns:
+            overrides = test_config.get("search", {}).get("overrides", {})
+            patch_normal_config = test_config.get("patch_normal", {})
+            success_status = patch_normal_config.get("expected_status", 200)
+            pn_api_overrides = patch_normal_config.get("api_overrides", {})
+            for spec in patch_specs:
+                url_path, resource_name = self._resolve_paths(spec, base_path)
+                pn_overrides = pn_api_overrides.get(resource_name, {})
+                api_success_status = pn_overrides.get(
+                    "expected_status", success_status)
+                body = self._build_minimal_body(spec.params, overrides)
+                if not body:
+                    continue
+                cases.append(TestCase(
+                    name=f"patch-{resource_name}-normal",
+                    pattern="patch_normal",
+                    api=spec,
+                    method=spec.method,
+                    url_path=url_path,
+                    query_params={},
+                    use_auth=True,
+                    expected_status=api_success_status,
+                    request_body=body,
+                ))
+                cases.append(TestCase(
+                    name=f"patch-{resource_name}-normal-no-auth",
+                    pattern="patch_normal",
                     api=spec,
                     method=spec.method,
                     url_path=url_path,
@@ -532,6 +647,12 @@ class TestRunner:
             return f"{tc.method} /{tc.url_path} missing required{suffix} - expect {tc.expected_status}"
         elif tc.pattern == "post_normal":
             return f"POST /{tc.url_path} normal - expect {tc.expected_status}"
+        elif tc.pattern == "put_normal":
+            return f"PUT /{tc.url_path} normal - expect {tc.expected_status}"
+        elif tc.pattern == "delete_normal":
+            return f"DELETE /{tc.url_path} normal - expect {tc.expected_status}"
+        elif tc.pattern == "patch_normal":
+            return f"PATCH /{tc.url_path} normal - expect {tc.expected_status}"
         elif tc.pattern == "custom":
             extras = []
             if tc.query_params:

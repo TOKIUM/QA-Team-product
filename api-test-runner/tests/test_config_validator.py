@@ -97,13 +97,17 @@ class TestValidateTestConcurrency:
 
 class TestValidateTestMethods:
     def test_valid(self):
-        config = {"test": {"methods": ["GET", "POST", "PUT", "DELETE"]}}
+        config = {"test": {"methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]}}
         assert validate_config(config) == []
 
     def test_invalid_method(self):
-        config = {"test": {"methods": ["GET", "PATCH"]}}
+        config = {"test": {"methods": ["GET", "INVALID"]}}
         errors = validate_config(config)
-        assert any("PATCH" in e for e in errors)
+        assert any("INVALID" in e for e in errors)
+
+    def test_patch_is_valid(self):
+        config = {"test": {"methods": ["GET", "PATCH"]}}
+        assert validate_config(config) == []
 
     def test_not_list(self):
         config = {"test": {"methods": "GET"}}

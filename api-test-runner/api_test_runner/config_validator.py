@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-VALID_METHODS = {"GET", "POST", "PUT", "DELETE"}
-VALID_PATTERNS = {"auth", "pagination", "search", "boundary", "missing_required", "post_normal"}
+VALID_METHODS = {"GET", "POST", "PUT", "DELETE", "PATCH"}
+VALID_PATTERNS = {
+    "auth", "pagination", "search", "boundary", "missing_required",
+    "post_normal", "put_normal", "delete_normal", "patch_normal",
+}
 KNOWN_TOP_KEYS = {"api", "test", "output", "custom_tests", "notification"}
 
 
@@ -133,6 +136,20 @@ def validate_config(config: dict) -> list[str]:
                         if not isinstance(rval, dict):
                             errors.append(
                                 f"test.post_normal.api_overrides.{rname} は辞書型で指定してください")
+
+        # put_normal / delete_normal / patch_normal の api_overrides
+        for pattern_key in ("put_normal", "delete_normal", "patch_normal"):
+            pattern_cfg = test.get(pattern_key)
+            if pattern_cfg is not None and isinstance(pattern_cfg, dict):
+                p_overrides = pattern_cfg.get("api_overrides")
+                if p_overrides is not None:
+                    if not isinstance(p_overrides, dict):
+                        errors.append(f"test.{pattern_key}.api_overrides は辞書型で指定してください")
+                    else:
+                        for rname, rval in p_overrides.items():
+                            if not isinstance(rval, dict):
+                                errors.append(
+                                    f"test.{pattern_key}.api_overrides.{rname} は辞書型で指定してください")
 
         # retry
         retry = test.get("retry")

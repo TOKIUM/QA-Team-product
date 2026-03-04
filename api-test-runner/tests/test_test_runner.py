@@ -225,3 +225,137 @@ class TestValidateSchema:
         result = self._make_result(api=None, body={"data": []})
         TestRunner._validate_schema(result)
         assert result.schema_warnings == []
+
+
+class TestPutDeletePatchPatterns:
+    """PUT/DELETE/PATCH パターンのテストケース生成テスト."""
+
+    def _make_runner(self, patterns: list[str]) -> TestRunner:
+        config = {
+            "test": {
+                "patterns": patterns,
+                "pagination": {"offset": 0, "limit": 5},
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        return TestRunner(config, None, Path("/tmp"))
+
+    def test_put_normal_generates_normal_and_no_auth(self, sample_put_spec):
+        runner = self._make_runner(["put_normal"])
+        cases = runner.generate_test_cases([sample_put_spec])
+
+        assert len(cases) == 2
+        assert cases[0].name == "put-members-update-normal"
+        assert cases[0].pattern == "put_normal"
+        assert cases[0].method == "PUT"
+        assert cases[0].use_auth is True
+        assert cases[0].request_body is not None
+        assert cases[0].expected_status == 200
+        assert cases[1].name == "put-members-update-normal-no-auth"
+        assert cases[1].use_auth is False
+        assert cases[1].expected_status == 401
+
+    def test_delete_normal_generates_normal_and_no_auth(self, sample_delete_spec):
+        runner = self._make_runner(["delete_normal"])
+        cases = runner.generate_test_cases([sample_delete_spec])
+
+        assert len(cases) == 2
+        assert cases[0].name == "delete-members-delete-normal"
+        assert cases[0].pattern == "delete_normal"
+        assert cases[0].method == "DELETE"
+        assert cases[0].use_auth is True
+        assert cases[0].request_body is None
+        assert cases[0].expected_status == 200
+        assert cases[1].name == "delete-members-delete-normal-no-auth"
+        assert cases[1].use_auth is False
+        assert cases[1].expected_status == 401
+
+    def test_patch_normal_generates_normal_and_no_auth(self, sample_patch_spec):
+        runner = self._make_runner(["patch_normal"])
+        cases = runner.generate_test_cases([sample_patch_spec])
+
+        assert len(cases) == 2
+        assert cases[0].name == "patch-members-patch-normal"
+        assert cases[0].pattern == "patch_normal"
+        assert cases[0].method == "PATCH"
+        assert cases[0].use_auth is True
+        assert cases[0].request_body is not None
+        assert cases[0].expected_status == 200
+        assert cases[1].name == "patch-members-patch-normal-no-auth"
+        assert cases[1].use_auth is False
+        assert cases[1].expected_status == 401
+
+    def test_auth_generates_no_auth_for_put_delete_patch(
+        self, sample_put_spec, sample_delete_spec, sample_patch_spec,
+    ):
+        runner = self._make_runner(["auth"])
+        cases = runner.generate_test_cases([
+            sample_put_spec, sample_delete_spec, sample_patch_spec,
+        ])
+
+        assert len(cases) == 3
+        methods = [c.method for c in cases]
+        assert "PUT" in methods
+        assert "DELETE" in methods
+        assert "PATCH" in methods
+        assert all(c.pattern == "no_auth" for c in cases)
+        assert all(c.expected_status == 401 for c in cases)
+
+    def test_missing_required_for_put_spec(self, sample_put_spec):
+        runner = self._make_runner(["missing_required"])
+        cases = runner.generate_test_cases([sample_put_spec])
+
+        assert len(cases) == 2  # name, email の2フィールド
+        assert all(c.pattern == "missing_required" for c in cases)
+        assert all(c.method == "PUT" for c in cases)
+        assert all(c.request_body is not None for c in cases)
+
+    def test_missing_required_for_patch_spec(self, sample_patch_spec):
+        runner = self._make_runner(["missing_required"])
+        cases = runner.generate_test_cases([sample_patch_spec])
+
+        assert len(cases) == 1  # name の1フィールド
+        assert cases[0].pattern == "missing_required"
+        assert cases[0].method == "PATCH"
+
+    def test_delete_not_in_missing_required(self, sample_delete_spec):
+        """DELETE は body なしなので missing_required のbody省略テスト対象外."""
+        runner = self._make_runner(["missing_required"])
+        cases = runner.generate_test_cases([sample_delete_spec])
+        assert len(cases) == 0
+
+    def test_put_normal_with_api_overrides(self, sample_put_spec):
+        config = {
+            "test": {
+                "patterns": ["put_normal"],
+                "put_normal": {
+                    "expected_status": 200,
+                    "api_overrides": {
+                        "members-update": {"expected_status": 204},
+                    },
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_put_spec])
+
+        assert cases[0].expected_status == 204
+
+    def test_delete_normal_with_api_overrides(self, sample_delete_spec):
+        config = {
+            "test": {
+                "patterns": ["delete_normal"],
+                "delete_normal": {
+                    "expected_status": 200,
+                    "api_overrides": {
+                        "members-delete": {"expected_status": 204},
+                    },
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_delete_spec])
+
+        assert cases[0].expected_status == 204

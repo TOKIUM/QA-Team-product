@@ -72,6 +72,50 @@ def sample_post_spec():
 
 
 @pytest.fixture
+def sample_put_spec():
+    """PUT API 用の ApiSpec."""
+    return ApiSpec(
+        number="10",
+        name="従業員更新API",
+        url="/api/v2/members/update.json",
+        method="PUT",
+        resource="member",
+        params=[
+            Parameter("従業員名", "name", "文字列", "〇", ""),
+            Parameter("メールアドレス", "email", "文字列", "〇", ""),
+        ],
+    )
+
+
+@pytest.fixture
+def sample_delete_spec():
+    """DELETE API 用の ApiSpec."""
+    return ApiSpec(
+        number="11",
+        name="従業員削除API",
+        url="/api/v2/members/delete.json",
+        method="DELETE",
+        resource="member",
+        params=[],
+    )
+
+
+@pytest.fixture
+def sample_patch_spec():
+    """PATCH API 用の ApiSpec."""
+    return ApiSpec(
+        number="12",
+        name="従業員部分更新API",
+        url="/api/v2/members/patch.json",
+        method="PATCH",
+        resource="member",
+        params=[
+            Parameter("従業員名", "name", "文字列", "〇", ""),
+        ],
+    )
+
+
+@pytest.fixture
 def sample_test_case():
     """テスト用の TestCase."""
     return TestCase(

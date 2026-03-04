@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title_suffix %} - テスト実行{% endblock %}
+{% block content %}
+<div class="card">
+    <h3>CSV ファイル一覧 <span id="csvCount" style="font-weight:normal;color:var(--text-secondary)"></span></h3>
+    <div class="toolbar">
+        <label style="font-size:13px">CSV ディレクトリ:
+            <input type="text" id="csvDir" value="document" style="max-width:200px">
+        </label>
+        <button class="btn btn-secondary btn-sm" onclick="refreshCsv()">更新</button>
+        <span style="flex:1"></span>
+        <button class="btn btn-secondary btn-sm" onclick="selectAllCsv(true)">全選択</button>
+        <button class="btn btn-secondary btn-sm" onclick="selectAllCsv(false)">全解除</button>
+        <span id="selectedCount" style="font-size:12px;color:var(--text-secondary)"></span>
+    </div>
+    <div style="margin-bottom:8px">
+        <input type="text" id="csvSearch" placeholder="API名で検索..." oninput="filterCsvList()" style="max-width:300px;padding:6px 10px;font-size:13px">
+    </div>
+    <div id="csvFiles" style="max-height:260px;overflow:auto">
+        <div class="empty-state"><div class="icon">...</div><p>読み込み中</p></div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>テスト実行</h3>
+    <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px">パターン: <span id="patternStatus" style="font-weight:normal"></span></div>
+        <div class="filter-group" id="patternChecks">
+            <button class="filter-btn active" data-pat="auth" onclick="togglePattern(this)">auth</button>
+            <button class="filter-btn active" data-pat="pagination" onclick="togglePattern(this)">pagination</button>
+            <button class="filter-btn active" data-pat="search" onclick="togglePattern(this)">search</button>
+            <button class="filter-btn active" data-pat="boundary" onclick="togglePattern(this)">boundary</button>
+            <button class="filter-btn active" data-pat="missing_required" onclick="togglePattern(this)">missing_required</button>
+            <button class="filter-btn active" data-pat="post_normal" onclick="togglePattern(this)">post_normal</button>
+            <button class="filter-btn active" data-pat="put_normal" onclick="togglePattern(this)">put_normal</button>
+            <button class="filter-btn active" data-pat="delete_normal" onclick="togglePattern(this)">delete_normal</button>
+            <button class="filter-btn active" data-pat="patch_normal" onclick="togglePattern(this)">patch_normal</button>
+            <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(true)" style="margin-left:8px">全選択</button>
+            <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(false)">全解除</button>
+        </div>
+    </div>
+    <div class="toolbar">
+        <button id="runBtn" class="btn btn-primary" onclick="startRun()">&#9654; テスト実行</button>
+        <span id="runTarget" style="font-size:12px;color:var(--text-secondary)"></span>
+        <div id="statusBar" class="status-bar" style="display:none">
+            <div class="spinner"></div>
+            <span id="statusText">実行中...</span>
+        </div>
+    </div>
+    <div id="progressWrap" style="display:none">
+        <div class="progress-bar"><div id="progressFill" class="fill" style="width:0%"></div></div>
+        <div class="progress-detail">
+            <span id="progressLabel"></span>
+            <span id="progressTime"></span>
+        </div>
+    </div>
+</div>
+
+<div id="summarySection" style="display:none">
+    <div class="summary-cards" id="summaryCards"></div>
+</div>
+
+<div id="resultsSection" style="display:none">
+    <div class="card">
+        <h3>結果一覧 <span id="resultsCount" style="font-weight:normal;color:var(--text-secondary)"></span></h3>
+        <div class="filter-group" id="resultFilters"></div>
+        <div style="max-height:500px;overflow:auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sortable" data-col="name" onclick="sortResults('name')">テスト名 <span class="sort-icon">▲</span></th>
+                        <th class="sortable" data-col="pattern" onclick="sortResults('pattern')">パターン <span class="sort-icon">▲</span></th>
+                        <th>期待</th>
+                        <th>実際</th>
+                        <th class="sortable" data-col="elapsed_ms" onclick="sortResults('elapsed_ms')">時間 <span class="sort-icon">▲</span></th>
+                        <th class="sortable" data-col="label" onclick="sortResults('label')">結果 <span class="sort-icon">▲</span></th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="detailSection" style="display:none">
+    <div class="card">
+        <h3>リクエスト詳細</h3>
+        <div id="detailPanel" class="detail-panel"></div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/run.js"></script>{% endblock %}
