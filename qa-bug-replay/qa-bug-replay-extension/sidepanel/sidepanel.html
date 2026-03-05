@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Bug Replay</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<div class="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">🐛</div>
+    <div class="header-text">
+      <h1>QA Bug Replay <span>v1.0</span></h1>
+      <p>動画 + Console + Network を自動保存</p>
+    </div>
+  </div>
+
+  <!-- Guide banner (shown when idle) -->
+  <div class="guide-banner" id="guideBanner">
+    💡 対象のWebページでツールバーの拡張アイコンをクリックするとキャプチャが自動で開始されます
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-left">
+      <div class="status-dot idle" id="statusDot"></div>
+      <span class="status-label" id="statusLabel">待機中</span>
+    </div>
+    <div class="buffer-indicator">
+      <span id="bufferTime">0s / 30s</span>
+      <div class="buffer-bar">
+        <div class="buffer-fill" id="bufferFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-stop" id="btnStop" disabled>■ 停止</button>
+    <button class="btn btn-bug" id="btnBug" disabled>🐛 バグ発見！</button>
+  </div>
+
+  <div class="shortcut-hint">
+    <kbd>Ctrl</kbd>+<kbd>B</kbd> でバグ保存
+  </div>
+
+  <!-- Notification banner (save completion) -->
+  <div class="notify-banner hidden" id="notifyBanner"></div>
+
+  <!-- Console / Network tabs -->
+  <div class="log-tabs">
+    <button class="log-tab active" id="tabConsole" data-tab="console">
+      Console <span class="badge" id="consoleBadge">0</span>
+    </button>
+    <button class="log-tab" id="tabNetwork" data-tab="network">
+      Network <span class="badge" id="networkBadge">0</span>
+    </button>
+    <div class="log-tab-actions">
+      <button class="tab-action-btn" id="btnFilter" title="エラーのみ表示">Errors only</button>
+      <button class="tab-action-btn" id="btnCopyLog" title="ログをコピー">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- Console log panel -->
+  <div class="log-panel" id="consolePanel"></div>
+
+  <!-- Network log panel -->
+  <div class="log-panel hidden" id="networkPanel"></div>
+
+  <!-- Saved clips -->
+  <div class="section-title">💾 保存済みクリップ</div>
+  <div class="saved-list" id="savedList">
+    <div class="empty-state">まだクリップはありません</div>
+  </div>
+
+  <!-- Activity log -->
+  <div class="section-title" style="margin-top: 12px;">📋 アクティビティ</div>
+  <div class="activity-log" id="activityLog"></div>
+</div>
+
+<script src="sidepanel.js"></script>
+</body>
+</html>

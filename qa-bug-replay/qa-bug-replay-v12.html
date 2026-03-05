@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Bug Replay v12 — 30秒リプレイバッファ</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface-hover: #1a2332;
+    --border: #1e2a3a;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --accent: #f43f5e;
+    --accent-glow: rgba(244, 63, 94, 0.3);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.3);
+    --yellow: #f59e0b;
+    --yellow-glow: rgba(245, 158, 11, 0.3);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Noto Sans JP', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(30,42,58,0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,42,58,0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .app {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto; padding: 32px 24px;
+  }
+  .header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+  .logo {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--accent), #e11d48);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 24px var(--accent-glow);
+    flex-shrink: 0;
+  }
+  .header-text h1 { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .header-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .tip-banner {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 12px; color: var(--green);
+    font-family: var(--mono); margin-bottom: 20px; line-height: 1.6;
+  }
+  .status-bar {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+  }
+  .status-left { display: flex; align-items: center; gap: 12px; }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--text-muted); transition: all 0.3s;
+  }
+  .status-dot.idle { background: var(--text-muted); }
+  .status-dot.recording {
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green-glow);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .status-dot.ready {
+    background: var(--green);
+    box-shadow: 0 0 16px var(--green-glow);
+  }
+  .status-dot.saving {
+    background: var(--yellow);
+    box-shadow: 0 0 12px var(--yellow-glow);
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  .status-label { font-family: var(--mono); font-size: 14px; font-weight: 600; }
+  .buffer-indicator {
+    font-family: var(--mono); font-size: 13px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .buffer-bar { width: 120px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .buffer-fill { height: 100%; width: 0%; background: var(--green); border-radius: 2px; transition: width 0.5s linear; }
+  .preview-container {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+    aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .preview-container video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .preview-placeholder { text-align: center; color: var(--text-muted); }
+  .preview-placeholder .icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
+  .preview-placeholder p { font-size: 14px; }
+  .rec-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(244, 63, 94, 0.9); color: white;
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 4px;
+    display: none; align-items: center; gap: 6px; letter-spacing: 1px;
+  }
+  .rec-badge.show { display: flex; }
+  .rec-badge::before {
+    content: ''; width: 6px; height: 6px; background: white;
+    border-radius: 50%; animation: pulse 1s ease-in-out infinite;
+  }
+  .controls { display: flex; gap: 12px; margin-bottom: 24px; }
+  .btn {
+    flex: 1; padding: 14px 20px; border: 1px solid var(--border);
+    border-radius: 10px; font-family: var(--mono); font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-start { background: var(--green); color: #000; border-color: var(--green); }
+  .btn-start:hover { box-shadow: 0 0 20px var(--green-glow); transform: translateY(-1px); }
+  .btn-start:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-stop { background: var(--surface); color: var(--text); }
+  .btn-stop:hover { background: var(--surface-hover); }
+  .btn-stop:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-bug { background: var(--accent); color: white; border-color: var(--accent); flex: 1.5; font-size: 15px; }
+  .btn-bug:hover { box-shadow: 0 0 24px var(--accent-glow); transform: translateY(-1px); }
+  .btn-bug:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+  .shortcut-hint {
+    text-align: center; font-family: var(--mono); font-size: 12px;
+    color: var(--text-muted); margin-bottom: 24px;
+  }
+  kbd {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 6px; font-family: var(--mono); font-size: 11px;
+  }
+  .saved-section h3, .log-section h3 {
+    font-family: var(--mono); font-size: 13px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;
+  }
+  .saved-list { display: flex; flex-direction: column; gap: 8px; }
+  .saved-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.2s; flex-wrap: wrap; gap: 8px;
+  }
+  .saved-item:hover { background: var(--surface-hover); }
+  .saved-info { font-family: var(--mono); font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .saved-actions { display: flex; gap: 8px; }
+  .btn-small {
+    padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface-hover); color: var(--text);
+    font-family: var(--mono); font-size: 11px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-small:hover { border-color: var(--green); color: var(--green); }
+  .empty-state {
+    text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px;
+    background: var(--surface); border: 1px dashed var(--border); border-radius: 8px;
+  }
+  .log {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    max-height: 200px; overflow-y: auto;
+    font-family: var(--mono); font-size: 12px; line-height: 1.8; color: var(--text-muted);
+  }
+  .log::-webkit-scrollbar { width: 4px; }
+  .log::-webkit-scrollbar-track { background: transparent; }
+  .log::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .log-entry { display: flex; gap: 10px; }
+  .log-time { color: var(--text-muted); opacity: 0.6; flex-shrink: 0; }
+  .log-msg { color: var(--text); }
+  .log-msg.success { color: var(--green); }
+  .log-msg.warn { color: var(--yellow); }
+  .log-msg.error { color: var(--accent); }
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; width: 90%; max-width: 800px; overflow: hidden;
+  }
+  .modal-content video { width: 100%; display: block; }
+  .modal-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
+  .modal-title { font-family: var(--mono); font-size: 13px; color: var(--text-muted); }
+  .modal-close {
+    background: none; border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); padding: 6px 14px; font-family: var(--mono); font-size: 12px; cursor: pointer;
+  }
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">🐛</div>
+    <div class="header-text">
+      <h1>QA Bug Replay <span style="font-size:13px;color:var(--text-muted);font-weight:400;">v12</span></h1>
+      <p>バグ発見時に直近30秒の操作を自動保存</p>
+    </div>
+  </div>
+
+  <div class="tip-banner" id="tipBanner">
+    💡 保存される .webm ファイルは Chrome ブラウザにドラッグ＆ドロップ または VLC で再生してください
+  </div>
+
+  <div class="status-bar">
+    <div class="status-left">
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-label" id="statusLabel">待機中</span>
+    </div>
+    <div class="buffer-indicator">
+      <span id="bufferTime">0s / 30s</span>
+      <div class="buffer-bar">
+        <div class="buffer-fill" id="bufferFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-container">
+    <div class="preview-placeholder" id="placeholder">
+      <div class="icon">🖥️</div>
+      <p>「キャプチャ開始」でタブを選択してください</p>
+    </div>
+    <video id="preview" autoplay muted style="display:none;"></video>
+    <div class="rec-badge" id="recBadge">REC</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-start" id="btnStart" onclick="startCapture()">▶ キャプチャ開始</button>
+    <button class="btn btn-stop" id="btnStop" onclick="stopCapture()" disabled>■ 停止</button>
+    <button class="btn btn-bug" id="btnBug" onclick="saveBugClip()" disabled>🐛 バグ発見！保存</button>
+  </div>
+
+  <div class="shortcut-hint">
+    ショートカット: <kbd>Ctrl</kbd> + <kbd>B</kbd> でバグ保存 ／ 最初の30秒バッファが溜まるとボタンが有効になります
+  </div>
+
+  <div class="saved-section">
+    <h3>💾 保存済みクリップ</h3>
+    <div class="saved-list" id="savedList">
+      <div class="empty-state">まだクリップはありません</div>
+    </div>
+  </div>
+
+  <div class="log-section" style="margin-top: 24px;">
+    <h3>📋 ログ</h3>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-content">
+    <video id="modalVideo" controls></video>
+    <div class="modal-bar">
+      <span class="modal-title" id="modalTitle"></span>
+      <button class="modal-close" onclick="closeModal()">✕ 閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===========================================================================
+  // v12: v6ベース + MP4→WebM強制 + ボタン修正
+  //
+  // 画質修正（根本原因解消）:
+  //   - Chrome の MP4 MediaRecorder がビットレート設定を無視する問題を回避
+  //   - WebM (VP8) を強制使用（WebM は videoBitsPerSecond が確実に効く）
+  //   - ビットレート 20Mbps（30秒で約75MBのファイル）
+  //   - contentHint='detail' でUI/テキスト優先
+  //   - 映像制約を最小化（ブラウザネイティブ品質）
+  //   - ファイルサイズログで実際のビットレートを診断可能
+  // ボタン修正:
+  //   - rotateRecorder から isSaving ガード除去
+  //   - onstop のボタン有効化を毎回実行
+  //   - saveBugClip のボタン復帰を同期処理化
+  // ===========================================================================
+
+  const SEGMENT_MS = 30_000;
+
+  let mediaStream = null;
+  let activeRecorder = null;   // 現在録画中の MediaRecorder
+  let activeChunks = [];
+  let activeStartTime = null;
+  let completedSegments = [];  // { blob, duration }[] — 完了済み。最大2つ保持
+  let isCapturing = false;
+  let isSaving = false;
+  let rotateTimer = null;
+  let displayTimer = null;
+  let elapsedSec = 0;
+  let hasBufferReady = false;  // 最初の30秒セグメントが完了したか
+  let savedClips = [];
+
+  const $ = id => document.getElementById(id);
+
+  // --- Mime detection ---
+  // Chrome の MP4 MediaRecorder はビットレート設定を無視する既知の問題あり
+  // WebM を強制使用する
+  function getMimeType() {
+    if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) return 'video/webm;codecs=vp8';
+    if (MediaRecorder.isTypeSupported('video/webm')) return 'video/webm';
+    // MP4 はフォールバックのみ
+    if (MediaRecorder.isTypeSupported('video/mp4')) return 'video/mp4';
+    return '';
+  }
+  const MIME = getMimeType();
+  const EXT = MIME.includes('mp4') ? 'mp4' : 'webm';
+
+  // --- Logging ---
+  function log(msg, type = '') {
+    const t = new Date().toLocaleTimeString('ja-JP');
+    const el = document.createElement('div');
+    el.className = 'log-entry';
+    el.innerHTML = `<span class="log-time">${t}</span><span class="log-msg ${type}">${msg}</span>`;
+    $('log').appendChild(el);
+    $('log').scrollTop = $('log').scrollHeight;
+  }
+
+  function setStatus(s, label) {
+    $('statusDot').className = 'status-dot ' + s;
+    $('statusLabel').textContent = label || {
+      idle: '待機中',
+      recording: 'バッファ中（30秒待機）',
+      ready: 'バッファ済み ✓ 保存可能',
+      saving: '保存中...'
+    }[s] || '';
+  }
+
+  function updateBufferDisplay(sec) {
+    $('bufferTime').textContent = `${sec}s / 30s`;
+    $('bufferFill').style.width = `${(sec / 30) * 100}%`;
+  }
+
+  // --- Recorder helpers ---
+
+  function createAndStartRecorder() {
+    const chunks = [];
+    const startTime = Date.now();
+
+    const recOpts = { mimeType: MIME };
+    // WebM では videoBitsPerSecond が確実に効く
+    recOpts.videoBitsPerSecond = 20_000_000;  // 20Mbps
+
+    const rec = new MediaRecorder(mediaStream, recOpts);
+    log(`MediaRecorder作成: ${MIME}, 指定=${(recOpts.videoBitsPerSecond/1000000)}Mbps, 実際のBPS=${rec.videoBitsPerSecond || '不明'}`, '');
+
+    rec.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
+
+    rec.onstop = () => {
+      const blob = new Blob(chunks, { type: MIME });
+      const duration = Math.round((Date.now() - startTime) / 1000);
+      if (blob.size > 0 && duration >= 2) {
+        completedSegments.push({ blob, duration });
+        while (completedSegments.length > 2) completedSegments.shift();
+        hasBufferReady = true;
+
+        // セグメント完了のたびにボタン状態を再評価
+        if (isCapturing && !isSaving) {
+          $('btnBug').disabled = false;
+          setStatus('ready');
+        }
+        log(`セグメント完了: ${duration}秒, ${(blob.size/1024/1024).toFixed(1)}MB (20Mbpsなら期待値: ~75MB)`, 'success');
+        // 画質診断: 30秒で5MB未満なら明らかにビットレートが低すぎる
+        if (duration >= 25 && blob.size < 5 * 1024 * 1024) {
+          log(`⚠ ファイルサイズが小さすぎます — ビットレート設定が反映されていません`, 'error');
+        }
+      }
+      chunks.length = 0;
+    };
+
+    rec.start();
+    activeRecorder = rec;
+    activeChunks = chunks;
+    activeStartTime = startTime;
+    return rec;
+  }
+
+  // セグメント切り替え: stop → 即 start
+  // isSaving 中でもローテーションは必ず実行（新セグメント生成を止めない）
+  function rotateRecorder() {
+    if (!isCapturing || !mediaStream?.active) return;
+
+    const oldRecorder = activeRecorder;
+
+    // 1. 古いレコーダーを停止（onstop で completedSegments に追加される）
+    if (oldRecorder && oldRecorder.state === 'recording') {
+      oldRecorder.stop();
+    }
+
+    // 2. 即座に新しいレコーダーを開始（同時エンコードを避ける）
+    createAndStartRecorder();
+
+    log('セグメント切り替え', '');
+  }
+
+  // --- Main controls ---
+
+  async function startCapture() {
+    try {
+      // 制約を最小限に: ブラウザに完全に任せる
+      mediaStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: false
+      });
+
+      // エンコーダーにUI/テキスト優先を指示
+      const track = mediaStream.getVideoTracks()[0];
+      try { track.contentHint = 'detail'; } catch(e) {}
+
+      track.addEventListener('ended', () => {
+        log('画面共有が停止されました', 'warn');
+        stopCapture();
+      });
+
+      $('preview').srcObject = mediaStream;
+      $('preview').style.display = 'block';
+      $('placeholder').style.display = 'none';
+      $('recBadge').classList.add('show');
+
+      completedSegments = [];
+      hasBufferReady = false;
+      isCapturing = true;
+
+      // 最初のレコーダー開始
+      createAndStartRecorder();
+
+      // 30秒ごとにセグメント切り替え
+      rotateTimer = setInterval(rotateRecorder, SEGMENT_MS);
+
+      // バッファ表示更新
+      elapsedSec = 0;
+      displayTimer = setInterval(() => {
+        if (!isCapturing) return;
+        elapsedSec = Math.min(elapsedSec + 1, 30);
+        if (hasBufferReady) {
+          updateBufferDisplay(30);
+        } else {
+          updateBufferDisplay(elapsedSec);
+        }
+      }, 1000);
+
+      // UI
+      setStatus('recording');
+      $('btnStart').disabled = true;
+      $('btnStop').disabled = false;
+      // バグ発見ボタンは最初の30秒バッファが完了するまで無効
+      $('btnBug').disabled = true;
+
+      if (EXT === 'webm') {
+        $('tipBanner').innerHTML = '💡 .webm ファイルは <b>Chrome にドラッグ＆ドロップ</b> または <b>VLC</b> で再生してください';
+      } else {
+        $('tipBanner').innerHTML = '💡 .mp4 はどのプレーヤーでも再生可（ただし画質が低い場合あり）';
+      }
+
+      log(`キャプチャ開始 (${MIME}) — 30秒後にバグ発見ボタンが有効になります`, 'success');
+      const settings = mediaStream.getVideoTracks()[0].getSettings();
+      log(`解像度: ${settings.width}x${settings.height} @ ${Math.round(settings.frameRate || 0)}fps`, '');
+      log(`contentHint: ${mediaStream.getVideoTracks()[0].contentHint || '未設定'}`, '');
+      log(`設定ビットレート: 20Mbps (WebM) — 30秒あたり約75MBのファイルが生成されます`, '');
+
+    } catch (err) {
+      if (err.name === 'NotAllowedError') {
+        log('キャプチャがキャンセルされました', 'warn');
+      } else {
+        log(`エラー: ${err.message}`, 'error');
+      }
+    }
+  }
+
+  function stopCapture() {
+    isCapturing = false;
+    hasBufferReady = false;
+    clearInterval(rotateTimer);
+    clearInterval(displayTimer);
+
+    if (activeRecorder?.state === 'recording') activeRecorder.stop();
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(t => t.stop());
+      mediaStream = null;
+    }
+
+    $('preview').style.display = 'none';
+    $('preview').srcObject = null;
+    $('placeholder').style.display = '';
+    $('recBadge').classList.remove('show');
+    setStatus('idle');
+    $('btnStart').disabled = false;
+    $('btnStop').disabled = true;
+    $('btnBug').disabled = true;
+    updateBufferDisplay(0);
+    completedSegments = [];
+
+    log('キャプチャ停止', 'warn');
+  }
+
+  function saveBugClip() {
+    if (!isCapturing || isSaving || completedSegments.length === 0) return;
+    isSaving = true;
+    setStatus('saving');
+    $('btnBug').disabled = true;
+
+    // 完了済みの最新セグメント（きっちり30秒）を保存
+    // ※ 現在録画中のレコーダーには触れない
+    const seg = completedSegments[completedSegments.length - 1];
+
+    const now = new Date();
+    const ts = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, '0'),
+      String(now.getDate()).padStart(2, '0'),
+      String(now.getHours()).padStart(2, '0'),
+      String(now.getMinutes()).padStart(2, '0'),
+      String(now.getSeconds()).padStart(2, '0'),
+    ].join('-');
+    const filename = `bug-replay_${ts}.${EXT}`;
+    const url = URL.createObjectURL(seg.blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    savedClips.push({ filename, url, seconds: seg.duration, size: (seg.blob.size/1024/1024).toFixed(1), time: now.toLocaleTimeString('ja-JP') });
+    renderSavedList();
+
+    log(`✅ 保存完了: ${filename} (${seg.duration}秒, ${(seg.blob.size/1024/1024).toFixed(1)}MB)`, 'success');
+
+    // 同期的に解除（setTimeout だとタイミング問題が起きる）
+    isSaving = false;
+    if (isCapturing && completedSegments.length > 0) {
+      setStatus('ready');
+      $('btnBug').disabled = false;
+    } else if (isCapturing) {
+      setStatus('recording');
+      // 次の onstop でボタンが有効化される
+    }
+  }
+
+  // --- Saved clips UI ---
+
+  function renderSavedList() {
+    if (savedClips.length === 0) {
+      $('savedList').innerHTML = '<div class="empty-state">まだクリップはありません</div>';
+      return;
+    }
+    $('savedList').innerHTML = savedClips.map((c, i) => `
+      <div class="saved-item">
+        <div class="saved-info">
+          <span>🎬</span>
+          <span>${c.filename}</span>
+          <span style="color:var(--text-muted)">（${c.seconds}秒 / ${c.size || '?'}MB）</span>
+        </div>
+        <div class="saved-actions">
+          <button class="btn-small" onclick="playClip(${i})">▶ 再生</button>
+          <button class="btn-small" onclick="downloadClip(${i})">⬇ DL</button>
+        </div>
+      </div>
+    `).reverse().join('');
+  }
+
+  function playClip(i) {
+    const c = savedClips[i];
+    if (!c) return;
+    $('modalTitle').textContent = c.filename;
+    $('modalVideo').src = c.url;
+    $('modal').classList.add('show');
+    $('modalVideo').play();
+  }
+
+  function closeModal() {
+    $('modalVideo').pause();
+    $('modalVideo').src = '';
+    $('modal').classList.remove('show');
+  }
+
+  $('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+  function downloadClip(i) {
+    const c = savedClips[i];
+    if (!c) return;
+    const a = document.createElement('a');
+    a.href = c.url; a.download = c.filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+  // --- Keyboard shortcuts ---
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'b') {
+      e.preventDefault();
+      if (isCapturing && !isSaving && completedSegments.length > 0) saveBugClip();
+    }
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // --- Init ---
+  log('QA Bug Replay v12 準備完了', 'success');
+  log(`録画形式: ${MIME} (.${EXT})`, '');
+</script>
+</body>
+</html>
