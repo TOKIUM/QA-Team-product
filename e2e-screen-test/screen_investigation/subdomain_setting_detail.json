@@ -1,0 +1,78 @@
+{
+  "url": "https://th-01.dev.keihi.com/preferences/security/subdomain",
+  "all_text": "システム設定\n智片拓海　TH連携ユーザー\nTH-898検証\nikeda_n+th3@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\nセキュリティ\nIPアクセス制限\nシングルサインオン\nサブドメイン\nSAML設定\nSAML連携アカウント\nサブドメイン\n概要\nサブドメイン\nログインURL\n編集する\n許可ログイン方法\nEメールとパスワード\n編集する\nサブドメインの利用を停止する",
+  "inputs": [
+    {
+      "type": "search",
+      "name": "",
+      "value": "",
+      "placeholder": "テナント名で検索",
+      "id": "",
+      "checked": false,
+      "disabled": false
+    },
+    {
+      "type": "text",
+      "name": "",
+      "value": "th-01",
+      "placeholder": "",
+      "id": "",
+      "checked": false,
+      "disabled": true
+    },
+    {
+      "type": "text",
+      "name": "",
+      "value": "https://th-01.dev.keihi.com/subdomains/sign_in",
+      "placeholder": "",
+      "id": "",
+      "checked": false,
+      "disabled": true
+    },
+    {
+      "type": "checkbox",
+      "name": "",
+      "value": "None",
+      "placeholder": "",
+      "id": "checkbox-5",
+      "checked": true,
+      "disabled": true
+    }
+  ],
+  "buttons": [
+    {
+      "text": "システム設定",
+      "disabled": false
+    },
+    {
+      "text": "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "disabled": false
+    },
+    {
+      "text": "新規",
+      "disabled": false
+    },
+    {
+      "text": "編集する",
+      "disabled": false
+    },
+    {
+      "text": "編集する",
+      "disabled": false
+    },
+    {
+      "text": "サブドメインの利用を停止する",
+      "disabled": false
+    }
+  ],
+  "labels": [
+    "サブドメイン",
+    "ログインURL",
+    "",
+    ""
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "url": "https://dev.keihi.com/users/sign_in",
+  "text": "ログインはこちらから\nログイン\nパスワードを忘れた方はこちら\n\nまたは\n\nGoogleでログイン\nMicrosoft 365でログイン\nサブドメインを入力\n\nTOKIUMシリーズ各詳細はこちら",
+  "inputs": [
+    {
+      "type": "hidden",
+      "name": "authenticity_token",
+      "placeholder": "",
+      "id": "",
+      "value": "wtSpt6UOAAdraCIXDvjI_EluNpnbKAOJtqNcEGksAWNFI-NtL97NoveTVKmY-XY1eX_MlEMJjNbH0trGpZr_qw"
+    },
+    {
+      "type": "text",
+      "name": "user[remember_me]",
+      "placeholder": "",
+      "id": "",
+      "value": "true"
+    },
+    {
+      "type": "email",
+      "name": "user[email]",
+      "placeholder": "ログインID (メールアドレス)",
+      "id": "",
+      "value": ""
+    },
+    {
+      "type": "password",
+      "name": "user[password]",
+      "placeholder": "パスワード",
+      "id": "",
+      "value": ""
+    },
+    {
+      "type": "hidden",
+      "name": "authenticity_token",
+      "placeholder": "",
+      "id": "",
+      "value": "wtSpt6UOAAdraCIXDvjI_EluNpnbKAOJtqNcEGksAWNFI-NtL97NoveTVKmY-XY1eX_MlEMJjNbH0trGpZr_qw"
+    },
+    {
+      "type": "hidden",
+      "name": "authenticity_token",
+      "placeholder": "",
+      "id": "",
+      "value": "wtSpt6UOAAdraCIXDvjI_EluNpnbKAOJtqNcEGksAWNFI-NtL97NoveTVKmY-XY1eX_MlEMJjNbH0trGpZr_qw"
+    },
+    {
+      "type": "hidden",
+      "name": "authenticity_token",
+      "placeholder": "",
+      "id": "",
+      "value": "wtSpt6UOAAdraCIXDvjI_EluNpnbKAOJtqNcEGksAWNFI-NtL97NoveTVKmY-XY1eX_MlEMJjNbH0trGpZr_qw"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "ログイン",
+      "href": "",
+      "type": "button"
+    },
+    {
+      "text": "Googleでログイン",
+      "href": "",
+      "type": "submit"
+    },
+    {
+      "text": "Microsoft 365でログイン",
+      "href": "",
+      "type": "submit"
+    },
+    {
+      "text": "サブドメインを入力",
+      "href": "",
+      "type": "submit"
+    }
+  ],
+  "links": [
+    {
+      "text": "パスワードを忘れた方はこちら",
+      "href": "/users/password/new"
+    },
+    {
+      "text": "",
+      "href": "https://www.keihi.com/"
+    },
+    {
+      "text": "",
+      "href": "https://www.keihi.com/invoice/"
+    },
+    {
+      "text": "",
+      "href": "https://www.keihi.com/denshichobo/"
+    }
+  ]
+}

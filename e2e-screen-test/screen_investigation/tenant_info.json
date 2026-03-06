@@ -1,0 +1,157 @@
+{
+  "header": {
+    "header_text": "システム設定\n智片拓海　TH連携ユーザー\nTH-898検証\nikeda_n+th3@tokium.jp",
+    "all_buttons": [
+      "システム設定",
+      "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+      ""
+    ],
+    "all_links": [
+      {
+        "text": "",
+        "href": "/"
+      },
+      {
+        "text": "従業員",
+        "href": "/members"
+      },
+      {
+        "text": "役職",
+        "href": "/posts"
+      },
+      {
+        "text": "部署",
+        "href": "/groups"
+      },
+      {
+        "text": "参加者",
+        "href": "/companions"
+      },
+      {
+        "text": "支払口座",
+        "href": "/preferences/company_expense_accounts"
+      },
+      {
+        "text": "申請フォーム",
+        "href": "/request_types"
+      },
+      {
+        "text": "申請フロー",
+        "href": "/approval_flows"
+      },
+      {
+        "text": "プロジェクト",
+        "href": "/preferences/projects"
+      },
+      {
+        "text": "外貨",
+        "href": "/preferences/currencies"
+      },
+      {
+        "text": "会計データ出力形式",
+        "href": "/preferences/export"
+      },
+      {
+        "text": "科目",
+        "href": "/root_categories"
+      },
+      {
+        "text": "税区分",
+        "href": "/preferences/tax_categories"
+      },
+      {
+        "text": "自動入力科目",
+        "href": "/preferences/business_categories"
+      },
+      {
+        "text": "経費入力・レポート",
+        "href": "/preferences/reports"
+      },
+      {
+        "text": "日当・手当",
+        "href": "/preferences/allowances"
+      },
+      {
+        "text": "アラート",
+        "href": "/preferences/alert_rules"
+      },
+      {
+        "text": "IC乗車券オプション",
+        "href": "/preferences/ic_card_option"
+      },
+      {
+        "text": "付加情報",
+        "href": "/preferences/metadata"
+      },
+      {
+        "text": "締め日",
+        "href": "/closing_dates"
+      },
+      {
+        "text": "会計データ出力",
+        "href": "/preferences/analyses_config"
+      },
+      {
+        "text": "電子帳簿保存法",
+        "href": "/e_doc_options"
+      },
+      {
+        "text": "一覧表示",
+        "href": "/preferences/list_options"
+      },
+      {
+        "text": "法人カード",
+        "href": "/preferences/corporate_cards"
+      },
+      {
+        "text": "仕訳フォーマット",
+        "href": "/journal_entries"
+      },
+      {
+        "text": "セキュリティ",
+        "href": "/preferences/security"
+      },
+      {
+        "text": "ログ",
+        "href": "/activity_logs"
+      },
+      {
+        "text": "契約",
+        "href": "/payment"
+      },
+      {
+        "text": "会計データ定期出力",
+        "href": "/accounting_data_scheduled_exports"
+      },
+      {
+        "text": "汎用マスタ",
+        "href": "/generic_fields/data_sets"
+      },
+      {
+        "text": "組織変更の予約",
+        "href": "/kernels/organizations/reorganizations/changes"
+      },
+      {
+        "text": "",
+        "href": "/notifications"
+      },
+      {
+        "text": "",
+        "href": "/support_page?redirect_to=https://support.keihi.com"
+      },
+      {
+        "text": "別のテナントに切替",
+        "href": "#"
+      },
+      {
+        "text": "個人設定",
+        "href": "/users/edit"
+      },
+      {
+        "text": "ログアウト",
+        "href": "#"
+      }
+    ]
+  },
+  "full_text_excerpt": "システム設定\n智片拓海　TH連携ユーザー\nTH-898検証\nikeda_n+th3@tokium.jp\n智片拓海　TH連携ユーザー\n別のテナントに切替\n個人設定\nログアウト\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n ログインしました。\n経費\n検索条件\n経費を登録する\n申請する\n表示項目設定\n\t\n\t\n利用日\n\t\nラベル\n\t\n電子領収書\n\t\n支払先/訪問先\n\t\n金額\n\t\n経費科目\n\t\n税区分\n\t\n所属部署\n\t\n経費申請書名\n\t\nステータス\n\t\n登録日\n\t\n登録番号\n\t\n適格請求書\n\nデータがありません"
+}

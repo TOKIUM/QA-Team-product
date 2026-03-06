@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-03-06 09:56:54",
+  "target_url": "https://ti-saml.dev-ti.keihi.com",
+  "security_url": "https://ti-saml.dev-ti.keihi.com/preferences/security/ip_restriction",
+  "final_url": "https://ti-saml.dev-ti.keihi.com/subdomains/sign_in",
+  "page_info": {
+    "url": "https://ti-saml.dev-ti.keihi.com/subdomains/sign_in",
+    "title": "TOKIUM",
+    "headings": [],
+    "labels": [],
+    "inputs": [
+      {
+        "type": "text",
+        "name": "user[remember_me]",
+        "value": "true",
+        "placeholder": "",
+        "id": ""
+      },
+      {
+        "type": "email",
+        "name": "user[email]",
+        "value": "",
+        "placeholder": "ログインID (メールアドレス)",
+        "id": ""
+      },
+      {
+        "type": "password",
+        "name": "user[password]",
+        "value": "",
+        "placeholder": "パスワード",
+        "id": ""
+      }
+    ],
+    "buttons": [
+      "ログイン",
+      "Googleでログイン",
+      "Microsoft 365でログイン",
+      "テスト作成2"
+    ],
+    "links": [],
+    "tabs": [],
+    "text_content": [
+      "サブドメイン入力に戻る"
+    ]
+  },
+  "security_links": [
+    {
+      "text": "サブドメイン入力に戻る",
+      "href": "https://dev-ti.keihi.com/subdomains/input"
+    }
+  ]
+}

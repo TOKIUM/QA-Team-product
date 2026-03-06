@@ -20,3 +20,12 @@ nul
 # E2Eテスト競合制御（実行時生成）
 .e2e_lock.json
 .e2e_queue.json
+
+# 環境変数（認証情報）
+.env
+
+# 実行ログ
+*.log
+
+# デバッグ用スクリーンショット
+ログイン/tokium_id_debug.png

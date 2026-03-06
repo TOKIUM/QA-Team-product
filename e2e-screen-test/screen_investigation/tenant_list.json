@@ -1,0 +1,380 @@
+{
+  "url": "https://th-01.dev.keihi.com/transactions",
+  "tenants": [
+    {
+      "text": "システム設定従業員役職部署参加者支払口座申請フォーム申請フロープロジェクト外貨会計データ出力形式科目税区分自動入力科目経費入力・レポート日当・手当アラートIC乗車券オプション付加情報締め日会計データ出力電子帳簿保存法一覧表示法人カード仕訳フォーマットセキュリティログ契約会計データ定期出力汎用マスタ組",
+      "href": "/members"
+    },
+    {
+      "text": "支払口座",
+      "href": "/preferences/company_expense_accounts"
+    },
+    {
+      "text": "申請フォーム",
+      "href": "/request_types"
+    },
+    {
+      "text": "申請フロー",
+      "href": "/approval_flows"
+    },
+    {
+      "text": "プロジェクト",
+      "href": "/preferences/projects"
+    },
+    {
+      "text": "会計データ出力形式",
+      "href": "/preferences/export"
+    },
+    {
+      "text": "自動入力科目",
+      "href": "/preferences/business_categories"
+    },
+    {
+      "text": "経費入力・レポート",
+      "href": "/preferences/reports"
+    },
+    {
+      "text": "日当・手当",
+      "href": "/preferences/allowances"
+    },
+    {
+      "text": "アラート",
+      "href": "/preferences/alert_rules"
+    },
+    {
+      "text": "IC乗車券オプション",
+      "href": "/preferences/ic_card_option"
+    },
+    {
+      "text": "付加情報",
+      "href": "/preferences/metadata"
+    },
+    {
+      "text": "会計データ出力",
+      "href": "/preferences/analyses_config"
+    },
+    {
+      "text": "電子帳簿保存法",
+      "href": "/e_doc_options"
+    },
+    {
+      "text": "一覧表示",
+      "href": "/preferences/list_options"
+    },
+    {
+      "text": "法人カード",
+      "href": "/preferences/corporate_cards"
+    },
+    {
+      "text": "仕訳フォーマット",
+      "href": "/journal_entries"
+    },
+    {
+      "text": "セキュリティ",
+      "href": "/preferences/security"
+    },
+    {
+      "text": "会計データ定期出力",
+      "href": "/accounting_data_scheduled_exports"
+    },
+    {
+      "text": "汎用マスタ",
+      "href": "/generic_fields/data_sets"
+    },
+    {
+      "text": "組織変更の予約",
+      "href": "/kernels/organizations/reorganizations/changes"
+    },
+    {
+      "text": "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp智片拓海　TH連携ユーザー別のテナントに切替 個人設定ログアウト",
+      "href": "#"
+    },
+    {
+      "text": "別のテナントに切替",
+      "href": "#"
+    },
+    {
+      "text": "個人設定",
+      "href": "/users/edit"
+    },
+    {
+      "text": "ログアウト",
+      "href": "#"
+    },
+    {
+      "text": "カード明細",
+      "href": "/aggregation_results"
+    },
+    {
+      "text": "請求書発行",
+      "href": "https://invoicing-staging.keihi.com/auth-redirect?subdomain=th-01"
+    },
+    {
+      "text": "ログインしました。",
+      "href": ""
+    },
+    {
+      "text": "ログインしました。",
+      "href": ""
+    },
+    {
+      "text": "交通費入力",
+      "href": "#"
+    },
+    {
+      "text": "自動入力",
+      "href": "/receipt_images/new"
+    },
+    {
+      "text": "利用日ラベル電子領収書支払先/訪問先金額経費科目税区分所属部署経費申請書名ステータス登録日登録番号適格請求書",
+      "href": ""
+    },
+    {
+      "text": "データがありません",
+      "href": ""
+    }
+  ],
+  "all_links": [
+    {
+      "text": "システム設定",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "従業員",
+      "href": "/members",
+      "tag": "A"
+    },
+    {
+      "text": "役職",
+      "href": "/posts",
+      "tag": "A"
+    },
+    {
+      "text": "部署",
+      "href": "/groups",
+      "tag": "A"
+    },
+    {
+      "text": "参加者",
+      "href": "/companions",
+      "tag": "A"
+    },
+    {
+      "text": "支払口座",
+      "href": "/preferences/company_expense_accounts",
+      "tag": "A"
+    },
+    {
+      "text": "申請フォーム",
+      "href": "/request_types",
+      "tag": "A"
+    },
+    {
+      "text": "申請フロー",
+      "href": "/approval_flows",
+      "tag": "A"
+    },
+    {
+      "text": "プロジェクト",
+      "href": "/preferences/projects",
+      "tag": "A"
+    },
+    {
+      "text": "外貨",
+      "href": "/preferences/currencies",
+      "tag": "A"
+    },
+    {
+      "text": "会計データ出力形式",
+      "href": "/preferences/export",
+      "tag": "A"
+    },
+    {
+      "text": "科目",
+      "href": "/root_categories",
+      "tag": "A"
+    },
+    {
+      "text": "税区分",
+      "href": "/preferences/tax_categories",
+      "tag": "A"
+    },
+    {
+      "text": "自動入力科目",
+      "href": "/preferences/business_categories",
+      "tag": "A"
+    },
+    {
+      "text": "経費入力・レポート",
+      "href": "/preferences/reports",
+      "tag": "A"
+    },
+    {
+      "text": "日当・手当",
+      "href": "/preferences/allowances",
+      "tag": "A"
+    },
+    {
+      "text": "アラート",
+      "href": "/preferences/alert_rules",
+      "tag": "A"
+    },
+    {
+      "text": "IC乗車券オプション",
+      "href": "/preferences/ic_card_option",
+      "tag": "A"
+    },
+    {
+      "text": "付加情報",
+      "href": "/preferences/metadata",
+      "tag": "A"
+    },
+    {
+      "text": "締め日",
+      "href": "/closing_dates",
+      "tag": "A"
+    },
+    {
+      "text": "会計データ出力",
+      "href": "/preferences/analyses_config",
+      "tag": "A"
+    },
+    {
+      "text": "電子帳簿保存法",
+      "href": "/e_doc_options",
+      "tag": "A"
+    },
+    {
+      "text": "一覧表示",
+      "href": "/preferences/list_options",
+      "tag": "A"
+    },
+    {
+      "text": "法人カード",
+      "href": "/preferences/corporate_cards",
+      "tag": "A"
+    },
+    {
+      "text": "仕訳フォーマット",
+      "href": "/journal_entries",
+      "tag": "A"
+    },
+    {
+      "text": "セキュリティ",
+      "href": "/preferences/security",
+      "tag": "A"
+    },
+    {
+      "text": "ログ",
+      "href": "/activity_logs",
+      "tag": "A"
+    },
+    {
+      "text": "契約",
+      "href": "/payment",
+      "tag": "A"
+    },
+    {
+      "text": "会計データ定期出力",
+      "href": "/accounting_data_scheduled_exports",
+      "tag": "A"
+    },
+    {
+      "text": "汎用マスタ",
+      "href": "/generic_fields/data_sets",
+      "tag": "A"
+    },
+    {
+      "text": "組織変更の予約",
+      "href": "/kernels/organizations/reorganizations/changes",
+      "tag": "A"
+    },
+    {
+      "text": "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "別のテナントに切替",
+      "href": "#",
+      "tag": "A"
+    },
+    {
+      "text": "個人設定",
+      "href": "/users/edit",
+      "tag": "A"
+    },
+    {
+      "text": "ログアウト",
+      "href": "#",
+      "tag": "A"
+    },
+    {
+      "text": "新規",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "申請",
+      "href": "/requests",
+      "tag": "A"
+    },
+    {
+      "text": "経費",
+      "href": "/transactions",
+      "tag": "A"
+    },
+    {
+      "text": "カード明細",
+      "href": "/aggregation_results",
+      "tag": "A"
+    },
+    {
+      "text": "集計",
+      "href": "/analyses",
+      "tag": "A"
+    },
+    {
+      "text": "請求書発行",
+      "href": "https://invoicing-staging.keihi.com/auth-redirect?subdomain=th-01",
+      "tag": "A"
+    },
+    {
+      "text": "検索条件",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "経費を登録する",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "手入力",
+      "href": "#",
+      "tag": "A"
+    },
+    {
+      "text": "交通費入力",
+      "href": "#",
+      "tag": "A"
+    },
+    {
+      "text": "自動入力",
+      "href": "/receipt_images/new",
+      "tag": "A"
+    },
+    {
+      "text": "申請する",
+      "href": "",
+      "tag": "BUTTON"
+    },
+    {
+      "text": "表示項目設定",
+      "href": "",
+      "tag": "DIV"
+    }
+  ],
+  "all_buttons": []
+}

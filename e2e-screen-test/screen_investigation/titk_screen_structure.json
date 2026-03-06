@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-03-06 14:36:09",
+  "tenants": [
+    {
+      "subdomain": "titk",
+      "base_url": "https://dev.keihi.com",
+      "header": "",
+      "sidebar": [],
+      "user_screens": [],
+      "admin_screens": []
+    }
+  ]
+}

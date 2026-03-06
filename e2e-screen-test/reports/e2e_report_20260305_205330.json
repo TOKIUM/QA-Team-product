@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-03-05T20:53:30.133807",
+  "overall_status": "FAILURE",
+  "total_passed": 11,
+  "total_failed": 1,
+  "total_tests": 12,
+  "total_duration": 45.6,
+  "screens": [
+    {
+      "name": "ログイン",
+      "status": "fail",
+      "passed": 11,
+      "failed": 1,
+      "total": 12,
+      "duration": 45.6,
+      "error": "FAILED [ 58%]\nFAILED generated_tests/test_tokium_login.py::test_tokium_idログイン成功[chromium] - AssertionError: Locator expected to be visible"
+    }
+  ]
+}

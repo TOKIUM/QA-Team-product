@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-03-05T22:20:29.733124",
+  "overall_status": "ALL PASS",
+  "total_passed": 122,
+  "total_failed": 0,
+  "total_tests": 153,
+  "total_duration": 1304.3,
+  "screens": [
+    {
+      "name": "ログイン",
+      "status": "pass",
+      "passed": 12,
+      "failed": 0,
+      "total": 12,
+      "duration": 32.7,
+      "error": null
+    },
+    {
+      "name": "取引先",
+      "status": "pass",
+      "passed": 19,
+      "failed": 0,
+      "total": 19,
+      "duration": 74.8,
+      "error": null
+    },
+    {
+      "name": "帳票レイアウト",
+      "status": "pass",
+      "passed": 20,
+      "failed": 0,
+      "total": 20,
+      "duration": 317.6,
+      "error": null
+    },
+    {
+      "name": "請求書一覧",
+      "status": "pass",
+      "passed": 17,
+      "failed": 0,
+      "total": 17,
+      "duration": 39.6,
+      "error": null
+    },
+    {
+      "name": "請求書詳細",
+      "status": "pass",
+      "passed": 15,
+      "failed": 0,
+      "total": 15,
+      "duration": 38.2,
+      "error": null
+    },
+    {
+      "name": "一括添付",
+      "status": "pass",
+      "passed": 7,
+      "failed": 0,
+      "total": 38,
+      "duration": 284.4,
+      "error": null
+    },
+    {
+      "name": "CSV請求書作成",
+      "status": "pass",
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "duration": 118.8,
+      "error": null
+    },
+    {
+      "name": "PDF取り込み",
+      "status": "pass",
+      "passed": 27,
+      "failed": 0,
+      "total": 27,
+      "duration": 398.2,
+      "error": null
+    }
+  ]
+}

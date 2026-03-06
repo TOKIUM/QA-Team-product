@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-03-05T21:29:50.869187",
+  "overall_status": "ALL PASS",
+  "total_passed": 12,
+  "total_failed": 0,
+  "total_tests": 12,
+  "total_duration": 32.2,
+  "screens": [
+    {
+      "name": "ログイン",
+      "status": "pass",
+      "passed": 12,
+      "failed": 0,
+      "total": 12,
+      "duration": 32.2,
+      "error": null
+    }
+  ]
+}

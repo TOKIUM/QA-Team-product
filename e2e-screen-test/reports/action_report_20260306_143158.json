@@ -1,0 +1,1828 @@
+{
+  "generated_at": "2026-03-06 14:31:58",
+  "summary": {
+    "total_tests": 131,
+    "passed": 131,
+    "failed": 0,
+    "total_duration_seconds": 823.3,
+    "total_steps": 1303,
+    "actions": {
+      "ページ遷移": 275,
+      "入力": 297,
+      "クリック": 253,
+      "選択": 35,
+      "イベント発火": 57,
+      "チェック": 7
+    }
+  },
+  "screens": {
+    "取引先": {
+      "total": 34,
+      "passed": 34,
+      "failed": 0,
+      "duration_seconds": 142.0,
+      "total_steps": 381,
+      "actions": {
+        "ページ遷移": 68,
+        "入力": 80,
+        "クリック": 92,
+        "選択": 15,
+        "イベント発火": 26
+      }
+    },
+    "請求書一覧": {
+      "total": 36,
+      "passed": 36,
+      "failed": 0,
+      "duration_seconds": 107.8,
+      "total_steps": 368,
+      "actions": {
+        "ページ遷移": 79,
+        "入力": 91,
+        "クリック": 42,
+        "イベント発火": 31,
+        "選択": 17,
+        "チェック": 7
+      }
+    },
+    "請求書詳細": {
+      "total": 23,
+      "passed": 23,
+      "failed": 0,
+      "duration_seconds": 53.1,
+      "total_steps": 230,
+      "actions": {
+        "ページ遷移": 47,
+        "入力": 50,
+        "クリック": 64,
+        "選択": 3
+      }
+    },
+    "PDF取り込み": {
+      "total": 38,
+      "passed": 38,
+      "failed": 0,
+      "duration_seconds": 520.4,
+      "total_steps": 324,
+      "actions": {
+        "ページ遷移": 81,
+        "入力": 76,
+        "クリック": 55
+      }
+    }
+  },
+  "tests": [
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL01",
+      "test_name": " test_一覧ページの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.24,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL02",
+      "test_name": " test_サイドバーナビゲーションの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.33,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL03",
+      "test_name": " test_テーブルヘッダーの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.25,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL04",
+      "test_name": " test_テーブルデータの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.34,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL05",
+      "test_name": " test_ページネーションの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.34,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL06",
+      "test_name": " test_表示件数の切替[chromium]",
+      "result": "PASS",
+      "duration": 4.27,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL07",
+      "test_name": " test_検索フォームの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.85,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL08",
+      "test_name": " test_取引先コードで検索[chromium]",
+      "result": "PASS",
+      "duration": 4.88,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL09",
+      "test_name": " test_取引先名で検索[chromium]",
+      "result": "PASS",
+      "duration": 4.9,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL10",
+      "test_name": " test_送付方法で絞り込み検索[chromium]",
+      "result": "PASS",
+      "duration": 4.94,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2,
+        "選択": 1,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL11",
+      "test_name": " test_検索リセット[chromium]",
+      "result": "PASS",
+      "duration": 4.92,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL12",
+      "test_name": " test_その他の操作メニューの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 1.32,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL13",
+      "test_name": " test_取引先クリックで更新モーダルが開く[chromium]",
+      "result": "PASS",
+      "duration": 1.69,
+      "step_count": 11,
+      "actions": {
+        "クリック": 5,
+        "ページ遷移": 2,
+        "入力": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL14",
+      "test_name": " test_更新モーダル_取引先項目タブの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 1.64,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL15",
+      "test_name": " test_更新モーダル_Web送付設定タブの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 2.69,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 5
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL16",
+      "test_name": " test_新規追加モーダルの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 1.08,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL17",
+      "test_name": " test_新規追加モーダル_キャンセルで閉じる[chromium]",
+      "result": "PASS",
+      "duration": 0.97,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL18",
+      "test_name": " test_更新モーダル_バツボタンで閉じる[chromium]",
+      "result": "PASS",
+      "duration": 2.15,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL19",
+      "test_name": " test_ページネーション_次ページに遷移[chromium]",
+      "result": "PASS",
+      "duration": 4.03,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL20",
+      "test_name": " test_表示件数の境界値_10件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.34,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL21",
+      "test_name": " test_表示件数の境界値_50件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.35,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL22",
+      "test_name": " test_ページネーション_最終ページの境界値検証[chromium]",
+      "result": "PASS",
+      "duration": 24.34,
+      "step_count": 20,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 12,
+        "選択": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL23",
+      "test_name": " test_表示件数の境界値_20件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.32,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL24",
+      "test_name": " test_異常系_存在しない取引先コードで検索[chromium]",
+      "result": "PASS",
+      "duration": 4.84,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL25",
+      "test_name": " test_異常系_存在しない取引先名で検索[chromium]",
+      "result": "PASS",
+      "duration": 4.95,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL26",
+      "test_name": " test_異常系_特殊文字で検索[chromium]",
+      "result": "PASS",
+      "duration": 7.32,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL27",
+      "test_name": " test_異常系_新規追加モーダル_必須項目未入力で保存[chromium]",
+      "result": "PASS",
+      "duration": 3.08,
+      "step_count": 11,
+      "actions": {
+        "入力": 3,
+        "ページ遷移": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL28",
+      "test_name": " test_異常系_検索フォーム_全フィールド空で検索[chromium]",
+      "result": "PASS",
+      "duration": 2.87,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL29",
+      "test_name": " test_状態遷移_モーダル開閉を繰り返しても正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 4.85,
+      "step_count": 17,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 10
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL30",
+      "test_name": " test_状態遷移_検索後リセット後再検索で正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 8.96,
+      "step_count": 15,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 2,
+        "イベント発火": 4
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL31",
+      "test_name": " test_冪等性_検索ボタン連打で結果が安定する[chromium]",
+      "result": "PASS",
+      "duration": 6.94,
+      "step_count": 14,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 2,
+        "イベント発火": 4
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL32",
+      "test_name": " test_冪等性_表示件数を連続切替しても正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 10.45,
+      "step_count": 13,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 5
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL33",
+      "test_name": " test_エラーリカバリ_存在しない検索後に条件修正で正常結果に復帰[chromium]",
+      "result": "PASS",
+      "duration": 6.86,
+      "step_count": 14,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 2,
+        "イベント発火": 3
+      }
+    },
+    {
+      "screen": "取引先",
+      "th_id": " TH-PL34",
+      "test_name": " test_データ整合性_一覧の取引先コードとモーダルの取引先コードが一致する[chromium]",
+      "result": "PASS",
+      "duration": 1.67,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL01",
+      "test_name": " test_一覧ページの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.27,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL02",
+      "test_name": " test_サイドバーナビゲーションの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.26,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL03",
+      "test_name": " test_検索フォームの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.76,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL04",
+      "test_name": " test_取引先名で検索[chromium]",
+      "result": "PASS",
+      "duration": 1.25,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL05",
+      "test_name": " test_検索条件のリセット[chromium]",
+      "result": "PASS",
+      "duration": 0.9,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL06",
+      "test_name": " test_送付方法セレクトの選択肢確認[chromium]",
+      "result": "PASS",
+      "duration": 0.21,
+      "step_count": 8,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL07",
+      "test_name": " test_承認状況セレクトの選択肢確認[chromium]",
+      "result": "PASS",
+      "duration": 0.22,
+      "step_count": 8,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL08",
+      "test_name": " test_テーブルヘッダーのカラム確認[chromium]",
+      "result": "PASS",
+      "duration": 0.31,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL09",
+      "test_name": " test_一括操作ボタンの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.42,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL10",
+      "test_name": " test_テーブル行クリックで詳細画面に遷移[chromium]",
+      "result": "PASS",
+      "duration": 0.67,
+      "step_count": 9,
+      "actions": {
+        "クリック": 3,
+        "ページ遷移": 2,
+        "入力": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL11",
+      "test_name": " test_ステータスチェックボックスで絞り込み[chromium]",
+      "result": "PASS",
+      "duration": 1.43,
+      "step_count": 16,
+      "actions": {
+        "チェック": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "イベント発火": 8
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL12",
+      "test_name": " test_送付方法セレクトで絞り込み[chromium]",
+      "result": "PASS",
+      "duration": 1.19,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL13",
+      "test_name": " test_チェックボックスで行を選択[chromium]",
+      "result": "PASS",
+      "duration": 0.46,
+      "step_count": 10,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "チェック": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL14",
+      "test_name": " test_全選択チェックボックス[chromium]",
+      "result": "PASS",
+      "duration": 0.48,
+      "step_count": 10,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "チェック": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL15",
+      "test_name": " test_ページネーション件数表示の確認[chromium]",
+      "result": "PASS",
+      "duration": 0.42,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL16",
+      "test_name": " test_請求日の日付範囲フィールドの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.24,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL17",
+      "test_name": " test_支払期日の日付範囲フィールドの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.25,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL18",
+      "test_name": " test_異常系_存在しない取引先名で検索[chromium]",
+      "result": "PASS",
+      "duration": 3.03,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL19",
+      "test_name": " test_異常系_特殊文字で検索[chromium]",
+      "result": "PASS",
+      "duration": 4.13,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL20",
+      "test_name": " test_異常系_日付範囲_終了日が開始日より前[chromium]",
+      "result": "PASS",
+      "duration": 2.98,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL21",
+      "test_name": " test_異常系_行未選択で一括送付ボタンクリック[chromium]",
+      "result": "PASS",
+      "duration": 1.6,
+      "step_count": 10,
+      "actions": {
+        "クリック": 2,
+        "ページ遷移": 2,
+        "入力": 2,
+        "チェック": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL22",
+      "test_name": " test_異常系_全フィールド空で検索[chromium]",
+      "result": "PASS",
+      "duration": 4.13,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL23",
+      "test_name": " test_異常系_SQLインジェクション文字列で検索[chromium]",
+      "result": "PASS",
+      "duration": 12.09,
+      "step_count": 17,
+      "actions": {
+        "ページ遷移": 5,
+        "入力": 5,
+        "クリック": 1,
+        "イベント発火": 3
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL24",
+      "test_name": " test_異常系_XSSスクリプトタグで検索[chromium]",
+      "result": "PASS",
+      "duration": 12.03,
+      "step_count": 17,
+      "actions": {
+        "ページ遷移": 5,
+        "入力": 5,
+        "クリック": 1,
+        "イベント発火": 3
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL25",
+      "test_name": " test_異常系_長文字列で検索[chromium]",
+      "result": "PASS",
+      "duration": 4.06,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL26",
+      "test_name": " test_表示件数の境界値_10件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.34,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL27",
+      "test_name": " test_表示件数の境界値_50件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.39,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL28",
+      "test_name": " test_ページネーション_最終ページの境界値検証[chromium]",
+      "result": "PASS",
+      "duration": 5.48,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 3,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 1
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL29",
+      "test_name": " test_表示件数の境界値_20件表示時の行数検証[chromium]",
+      "result": "PASS",
+      "duration": 4.32,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL30",
+      "test_name": " test_状態遷移_検索後リセット後再検索で正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 7.84,
+      "step_count": 13,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 1,
+        "イベント発火": 3
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL31",
+      "test_name": " test_状態遷移_詳細画面から戻っても一覧状態が維持される[chromium]",
+      "result": "PASS",
+      "duration": 5.34,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL32",
+      "test_name": " test_冪等性_検索ボタン連打で結果が安定する[chromium]",
+      "result": "PASS",
+      "duration": 4.89,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 1,
+        "イベント発火": 3
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL33",
+      "test_name": " test_冪等性_表示件数を連続切替しても正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 10.86,
+      "step_count": 13,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1,
+        "選択": 5
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL34",
+      "test_name": " test_エラーリカバリ_存在しない取引先名検索後に条件修正で復帰[chromium]",
+      "result": "PASS",
+      "duration": 5.04,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 4,
+        "クリック": 1,
+        "イベント発火": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL35",
+      "test_name": " test_データ整合性_一覧の取引先名が詳細画面と一致する[chromium]",
+      "result": "PASS",
+      "duration": 0.8,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書一覧",
+      "th_id": " TH-IL36",
+      "test_name": " test_データ整合性_一覧の件数と詳細画面のページ送り総数が一致する[chromium]",
+      "result": "PASS",
+      "duration": 0.68,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID01",
+      "test_name": " test_詳細ページの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.59,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID02",
+      "test_name": " test_パンくずナビゲーションの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.63,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID03",
+      "test_name": " test_アクションボタンの表示確認[chromium]",
+      "result": "PASS",
+      "duration": 0.89,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID04",
+      "test_name": " test_タブナビゲーションの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.82,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID05",
+      "test_name": " test_取引先情報セクションの確認[chromium]",
+      "result": "PASS",
+      "duration": 1.0,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID06",
+      "test_name": " test_送付先情報セクションの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.93,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID07",
+      "test_name": " test_帳票項目セクションの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.95,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID08",
+      "test_name": " test_基本情報セクションの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.87,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID09",
+      "test_name": " test_メモフォームの確認[chromium]",
+      "result": "PASS",
+      "duration": 0.92,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID10",
+      "test_name": " test_添付ファイルタブへの切替[chromium]",
+      "result": "PASS",
+      "duration": 0.84,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID11",
+      "test_name": " test_戻るボタンで一覧に戻る[chromium]",
+      "result": "PASS",
+      "duration": 0.64,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID12",
+      "test_name": " test_次の請求書ボタンでページ送り[chromium]",
+      "result": "PASS",
+      "duration": 1.0,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID13",
+      "test_name": " test_パンくずリンクで一覧に戻る[chromium]",
+      "result": "PASS",
+      "duration": 1.11,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID14",
+      "test_name": " test_取引先選択ダイアログの表示[chromium]",
+      "result": "PASS",
+      "duration": 0.83,
+      "step_count": 10,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID15",
+      "test_name": " test_前の請求書ボタンでページ戻り[chromium]",
+      "result": "PASS",
+      "duration": 1.17,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID16",
+      "test_name": " test_異常系_存在しないUUIDで直接アクセス[chromium]",
+      "result": "PASS",
+      "duration": 3.84,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID17",
+      "test_name": " test_異常系_メモに特殊文字を入力して保存[chromium]",
+      "result": "PASS",
+      "duration": 7.27,
+      "step_count": 13,
+      "actions": {
+        "入力": 5,
+        "ページ遷移": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID18",
+      "test_name": " test_異常系_取引先選択ダイアログで存在しない名前を検索[chromium]",
+      "result": "PASS",
+      "duration": 4.06,
+      "step_count": 13,
+      "actions": {
+        "選択": 1,
+        "ページ遷移": 2,
+        "入力": 3,
+        "クリック": 5
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID19",
+      "test_name": " test_境界値_1件目で前の請求書ボタンがdisabled[chromium]",
+      "result": "PASS",
+      "duration": 0.88,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID20",
+      "test_name": " test_境界値_最終件で次の請求書ボタンがdisabled[chromium]",
+      "result": "PASS",
+      "duration": 6.37,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 3,
+        "入力": 2,
+        "クリック": 2,
+        "選択": 1
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID21",
+      "test_name": " test_状態遷移_タブ切替を繰り返しても正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 7.01,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 5
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID22",
+      "test_name": " test_状態遷移_ページ送り後ブラウザバックで元の請求書に戻る[chromium]",
+      "result": "PASS",
+      "duration": 5.4,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 3
+      }
+    },
+    {
+      "screen": "請求書詳細",
+      "th_id": " TH-ID23",
+      "test_name": " test_冪等性_ページ送りボタン連打で安定する[chromium]",
+      "result": "PASS",
+      "duration": 5.11,
+      "step_count": 12,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 5
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO01",
+      "test_name": " test_ファイル分割モードにURL直接アクセスできる[chromium]",
+      "result": "PASS",
+      "duration": 11.35,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO02",
+      "test_name": " test_pdf_organizerリダイレクト[chromium]",
+      "result": "PASS",
+      "duration": 3.48,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO03",
+      "test_name": " test_ファイル分割モードの見出し[chromium]",
+      "result": "PASS",
+      "duration": 11.24,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO04",
+      "test_name": " test_ファイル分割モードのパンくず[chromium]",
+      "result": "PASS",
+      "duration": 11.57,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO05",
+      "test_name": " test_ファイル分割モードのモード切替リンク[chromium]",
+      "result": "PASS",
+      "duration": 17.55,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO06",
+      "test_name": " test_ファイルリネームモードにURL直接アクセスできる[chromium]",
+      "result": "PASS",
+      "duration": 11.25,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO07",
+      "test_name": " test_ファイルリネームモードの見出し[chromium]",
+      "result": "PASS",
+      "duration": 12.85,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO08",
+      "test_name": " test_ファイルリネームモードのパンくず[chromium]",
+      "result": "PASS",
+      "duration": 11.17,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO09",
+      "test_name": " test_ファイルリネームモードのモード切替リンク[chromium]",
+      "result": "PASS",
+      "duration": 11.19,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO10",
+      "test_name": " test_分割モードからリネームモードに切替できる[chromium]",
+      "result": "PASS",
+      "duration": 11.46,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO11",
+      "test_name": " test_リネームモードから分割モードに切替できる[chromium]",
+      "result": "PASS",
+      "duration": 11.29,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO12",
+      "test_name": " test_パンくず請求書リンクで一覧画面に遷移[chromium]",
+      "result": "PASS",
+      "duration": 11.46,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO13",
+      "test_name": " test_パンくずPDFを取り込むリンクで遷移[chromium]",
+      "result": "PASS",
+      "duration": 11.15,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO14",
+      "test_name": " test_ヘッダーが表示される[chromium]",
+      "result": "PASS",
+      "duration": 11.17,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO15",
+      "test_name": " test_サイドバーが表示される[chromium]",
+      "result": "PASS",
+      "duration": 11.28,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO16",
+      "test_name": " test_サイドバーから請求書画面に遷移できる[chromium]",
+      "result": "PASS",
+      "duration": 11.15,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO17",
+      "test_name": " test_organizer_iframeが存在する_分割モード[chromium]",
+      "result": "PASS",
+      "duration": 11.5,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO18",
+      "test_name": " test_organizer_iframeが存在する_リネームモード[chromium]",
+      "result": "PASS",
+      "duration": 11.79,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO19",
+      "test_name": " test_organizer_iframeのsrcが正しい[chromium]",
+      "result": "PASS",
+      "duration": 11.04,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO20",
+      "test_name": " test_分割モードのステッパー表示[chromium]",
+      "result": "PASS",
+      "duration": 14.39,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO21",
+      "test_name": " test_分割モードの案内テキスト[chromium]",
+      "result": "PASS",
+      "duration": 17.82,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO22",
+      "test_name": " test_分割モードのキャンセルボタン[chromium]",
+      "result": "PASS",
+      "duration": 14.07,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO23",
+      "test_name": " test_分割モードの次へボタン[chromium]",
+      "result": "PASS",
+      "duration": 14.2,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO24",
+      "test_name": " test_リネームモードのステッパー表示[chromium]",
+      "result": "PASS",
+      "duration": 19.1,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO25",
+      "test_name": " test_リネームモードの案内テキスト[chromium]",
+      "result": "PASS",
+      "duration": 14.17,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO26",
+      "test_name": " test_リネームモードのキャンセルボタン[chromium]",
+      "result": "PASS",
+      "duration": 14.19,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO27",
+      "test_name": " test_リネームモードの次へボタン[chromium]",
+      "result": "PASS",
+      "duration": 14.47,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO28",
+      "test_name": " test_異常系_存在しないサブパスにアクセス[chromium]",
+      "result": "PASS",
+      "duration": 7.47,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO29",
+      "test_name": " test_異常系_XSSペイロードをURLに含めてアクセス[chromium]",
+      "result": "PASS",
+      "duration": 7.66,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 4,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO30",
+      "test_name": " test_異常系_SQLインジェクションをURLに含めてアクセス[chromium]",
+      "result": "PASS",
+      "duration": 7.68,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 4,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO31",
+      "test_name": " test_異常系_モード連続切替で画面が安定する[chromium]",
+      "result": "PASS",
+      "duration": 21.08,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO32",
+      "test_name": " test_異常系_ブラウザバックでモード切替が正常動作する[chromium]",
+      "result": "PASS",
+      "duration": 21.18,
+      "step_count": 9,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO33",
+      "test_name": " test_境界値_分割モードのステッパーが正確に3ステップ[chromium]",
+      "result": "PASS",
+      "duration": 14.37,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO34",
+      "test_name": " test_境界値_リネームモードのステッパーが正確に2ステップ[chromium]",
+      "result": "PASS",
+      "duration": 14.05,
+      "step_count": 8,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 1
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO35",
+      "test_name": " test_境界値_分割モードの次へボタンはファイル未選択でdisabledかつクリック不可[chromium]",
+      "result": "PASS",
+      "duration": 16.16,
+      "step_count": 9,
+      "actions": {
+        "クリック": 3,
+        "ページ遷移": 2,
+        "入力": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO36",
+      "test_name": " test_境界値_リネームモードの次へボタンはファイル未選択でdisabledかつクリック不可[chromium]",
+      "result": "PASS",
+      "duration": 16.27,
+      "step_count": 9,
+      "actions": {
+        "クリック": 3,
+        "ページ遷移": 2,
+        "入力": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO37",
+      "test_name": " test_状態遷移_キャンセル後に再度画面にアクセスできる[chromium]",
+      "result": "PASS",
+      "duration": 30.9,
+      "step_count": 10,
+      "actions": {
+        "ページ遷移": 3,
+        "入力": 2,
+        "クリック": 2
+      }
+    },
+    {
+      "screen": "PDF取り込み",
+      "th_id": " TH-PO38",
+      "test_name": " test_冪等性_モード切替リンク連打で安定する[chromium]",
+      "result": "PASS",
+      "duration": 26.21,
+      "step_count": 11,
+      "actions": {
+        "ページ遷移": 2,
+        "入力": 2,
+        "クリック": 4
+      }
+    }
+  ]
+}

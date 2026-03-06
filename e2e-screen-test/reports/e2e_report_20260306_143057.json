@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-03-06T14:30:57.256382",
+  "overall_status": "FAILURE",
+  "total_passed": 2,
+  "total_failed": 0,
+  "total_tests": 2,
+  "total_duration": 608.1,
+  "screens": [
+    {
+      "name": "帳票レイアウト",
+      "status": "pass",
+      "passed": 1,
+      "failed": 0,
+      "total": 1,
+      "duration": 4.6,
+      "error": null
+    },
+    {
+      "name": "請求書一覧",
+      "status": "pass",
+      "passed": 1,
+      "failed": 0,
+      "total": 1,
+      "duration": 3.5,
+      "error": null
+    },
+    {
+      "name": "PDF取り込み",
+      "status": "timeout",
+      "passed": 0,
+      "failed": 0,
+      "total": 0,
+      "duration": 600,
+      "error": "タイムアウト（10分）"
+    }
+  ]
+}

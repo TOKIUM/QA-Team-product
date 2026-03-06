@@ -1,0 +1,29 @@
+{
+  "url": "https://th-02.dev.keihi.com/subdomains/sign_in",
+  "text": "ログインはこちらから\nログイン\nパスワードを忘れた方はこちら\nサブドメイン入力に戻る\n\nTOKIUMシリーズ各詳細はこちら",
+  "inputs": [
+    {
+      "type": "text",
+      "value": "true",
+      "disabled": false,
+      "checked": false
+    },
+    {
+      "type": "email",
+      "value": "",
+      "disabled": false,
+      "checked": false
+    },
+    {
+      "type": "password",
+      "value": "",
+      "disabled": false,
+      "checked": false
+    }
+  ],
+  "buttons": [
+    {
+      "text": "ログイン"
+    }
+  ]
+}

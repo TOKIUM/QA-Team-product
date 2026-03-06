@@ -1,0 +1,4898 @@
+{
+  "timestamp": "2026-03-06 15:21:17",
+  "tenant": "TOKIUM QA テナント切替 tkti10",
+  "sub_tabs": {
+    "suppliers_periodic": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/periodic_reports",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "作成",
+        "表示設定",
+        "編集",
+        "削除",
+        "50"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-74",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-76",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-78",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-80",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-82",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-84",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-86",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-88",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-90",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "登録日",
+            "有効期間",
+            "取引先",
+            "支払期日",
+            "計上日",
+            "支払希望日",
+            "請求書メモ",
+            "請求書ラベル",
+            "関連書類の有無",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n取引先設定\n定期支払設定\n定期支払一覧\n作成\n検索結果： 1件\n表示設定 \n登録日\n\t有効期間\n\t取引先\n\t支払期日\n\t計上日\n\t支払希望日\n\t請求書メモ\n\t請求書ラベル\n\t関連書類の有無\n\t\n毎月1日\n\t\t\n\n取引先A\n\n\t\n\t\n\t\n\t\n\t\n\t\t\n編集\n削除\n50 \n1",
+      "sub_tab": "定期支払設定"
+    },
+    "suppliers_settings": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/suppliers",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "検索",
+        "新規取引先追加",
+        "インポート",
+        "エクスポート",
+        "表示設定",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "30"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-76",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-77",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-4",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-6",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-7",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-8",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-78",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-4-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-79",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-81",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-83",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-85",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-87",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-89",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-91",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-93",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-95",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-97",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-99",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-101",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-103",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-105",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-107",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "取引先コード",
+            "取引先名",
+            "支払方法",
+            "登録番号",
+            "登録事業者名",
+            "有効開始日",
+            "自動照合結果",
+            "電話番号",
+            "メールアドレス",
+            "担当者",
+            "担当部署",
+            "識別コード",
+            "請求書直近受領日",
+            "請求書テンプレート名",
+            "メモ",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 4
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "取引先コード",
+        "取引先名",
+        "メモ",
+        "登録番号",
+        "空白検索",
+        "登録事業者名",
+        "空白検索",
+        "有効開始日",
+        "自動照合結果",
+        "電話番号",
+        "担当者",
+        "担当部署",
+        "請求書受領状態",
+        "凍結状態",
+        "請求書テンプレート",
+        "空白検索",
+        "識別コード",
+        "郵便番号",
+        "国",
+        "都道府県/州",
+        "住所1",
+        "住所2",
+        "反社チェック",
+        "与信チェック",
+        "取引開始日",
+        "取引終了日"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n取引先設定\n定期支払設定\n取引先一覧\n検索条件を設定\n新規取引先追加インポートエクスポート\n表示設定 \n取引先コード\n\t取引先名\n\t支払方法\n\t登録番号\n\t登録事業者名\n\t有効開始日\n\t自動照合結果\n\t電話番号\n\tメールアドレス\n\t担当者\n\t担当部署\n\t識別コード\n\t請求書直近受領日\n\t請求書テンプレート名\n\tメモ\n\t\n12345\t取引先B\t\n振込\n\tT1234567890123\t\t\t無効\t\n08011111111\n\tnanaura_k+dev-kyoutuu1@tokium.jp\t\n七浦1(nanaura_k+dev-kyoutuu1@tokium.jp)\n\t\n親部署A\n\tB2POIU\t\n2026/02/03\n\t\t未入力\t\n\n\nA\n\tポスグレテスト\t\nカード\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nS1CZNY\n\t\n\t\t未入力\t\n\n\nmotorTEST\n\t入力遅延テスト用\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nJQC2QO\n\t\n2024/11/26\n\t\t未入力\t\n\n未入力\t取引先A\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\n7YDQAK\n\t\n2026/03/01\n\t\t未入力\t\n30 \n1",
+      "sub_tab": "取引先設定"
+    }
+  },
+  "detail_pages": {
+    "invoice": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/reports",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "この条件で会計データ作成を開始",
+        "請求書を登録する",
+        "すべて",
+        "指定した条件で検索",
+        "タイムスタンプ検証",
+        "請求書証憑の一括ダウンロード",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "50",
+        "URLをコピー",
+        "明細を追加する",
+        "編集する",
+        "今月",
+        "来月",
+        "今月",
+        "来月",
+        "先月",
+        "今月",
+        "選択",
+        "解除",
+        "先月",
+        "今月",
+        "承認する",
+        "保存",
+        "変更履歴"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-61",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-62",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-63",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-64",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-6",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-65",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-66",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-67",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-68",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-15",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-16",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-17",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-18",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-19",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-20",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-21",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-22",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-23",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-24",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-25",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-26",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-27",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-28",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-29",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-30",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-31",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-32",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-selecet-all-rows",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-0",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-1",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-2",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-4",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-6",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-7",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-8",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-9",
+          "disabled": false
+        },
+        {
+          "type": "file",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-4-input",
+          "disabled": false
+        },
+        {
+          "type": "file",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "file",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-90",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "textarea",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "",
+            "取引先コード",
+            "取引先名",
+            "プロジェクト",
+            "取引先担当",
+            "画像等",
+            "送付元",
+            "支払期日",
+            "支払希望日",
+            "計上日",
+            "登録番号",
+            "適格請求書",
+            "請求書番号",
+            "請求書メモ",
+            "請求書ラベル",
+            "ステータス",
+            "支払方法",
+            "金額",
+            "外貨金額",
+            "申請ID",
+            "発注書番号",
+            "紙原本管理番号",
+            "登録日時",
+            "会計データ出力状況",
+            ""
+          ],
+          "rowCount": 10
+        }
+      ],
+      "tabs": [
+        "支払設定",
+        "その他"
+      ],
+      "selects": [],
+      "labels": [
+        "申請ID",
+        "請求書メモ",
+        "取引先名",
+        "空白検索",
+        "費用負担部署",
+        "下位部署を含む",
+        "取引先担当部署",
+        "発注書番号",
+        "空白検索",
+        "登録番号",
+        "空白検索",
+        "適格請求書の取り扱い",
+        "プロジェクト名",
+        "プロジェクトID",
+        "支払期日",
+        "支払希望日",
+        "計上日",
+        "空白検索",
+        "登録日",
+        "金額",
+        "取引先コード",
+        "請求書番号",
+        "空白検索",
+        "借方請求明細科目",
+        "貸方請求明細科目",
+        "請求書ラベル",
+        "除外検索",
+        "空白検索",
+        "送付元メールアドレス",
+        "送付元",
+        "ステータス",
+        "支払方法",
+        "会計データ出力状況",
+        "検索範囲",
+        "登録日時",
+        "送付元",
+        "請求金額",
+        "源泉徴収税額",
+        "支払金額",
+        "支払期日",
+        "支払希望日",
+        "計上日",
+        "登録番号",
+        "取引先名",
+        "取引先コード",
+        "金融機関名",
+        "手数料負担先",
+        "当方",
+        "先方",
+        "請求書番号",
+        "受領日",
+        "請求書メモ",
+        "請求書ラベル"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n請求書一覧\nこの条件で会計データ作成を開始\n請求書を登録する\n指定した条件で検索\nタイムスタンプ検証請求書証憑の一括ダウンロード\n検索結果： 10件\n 表示項目設定\n\t\n\t\n取引先コード\n\t\n取引先名\n\t\nプロジェクト\n\t\n取引先担当\n\t\n画像等\n\t\n送付元\n\t\n支払期日\n\t\n支払希望日\n\t\n計上日\n\t\n登録番号\n\t\n適格請求書\n\t\n請求書番号\n\t\n請求書メモ\n\t\n請求書ラベル\n\t\nステータス\n\t\n支払方法\n\t\n金額\n\t\n外貨金額\n\t\n申請ID\n\t\n発注書番号\n\t\n紙原本管理番号\n\t\n登録日時\n\t\n会計データ出力状況\n\t\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\ntomita_s+up01@tokium.jp\n\t\n2022/11/01\n\t\n2022/11/01\n\t\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥\n0\n\t\t\n20100000001\n\t\n\t\n\t\n2022/11/22 10:51\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n送付元A\n\t\t\tcloud_done\t\nnanaura_k+dev-etc1@tokium.jp\n\t\n2024/04/30\n\t\n2024/04/01\n\t\n2024/03/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥300\n\t\t\n20100000002\n\t\n\t\n\t\n2024/04/02 14:09\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\n取引先B\n\t\t\t\t\nchikata_t+test@tokium.jp\n\t\n2024/11/01\n\t\n2024/11/01\n\t\n2024/10/31\n\tT1234567890123\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥\n0\n\t\t\n20100000007\n\t\n\t\n\t\n2024/11/26 15:22\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/01\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥\n0\n\t\t\n20100000006\n\t\n\t\n\t\n2024/11/26 13:13\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\nEGTS株式会社\n\t\t\tcloud_done\t\nchikata_t+test@tokium.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥7,000\n\t\t\n20100000003\n\t\n\t\n\t\n2024/11/26 10:16\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\ntest\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000004\n\t\n\t\n\t\n2024/11/26 13:10\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\ntest\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000005\n\t\n\t\n\t\n2024/11/26 13:13\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\n取引先B\n\t\t\t\t\nnanaura_k+dev12345@tokium.jp\n\t\n2026/02/01\n\t\n2026/02/01\n\t\n2026/01/31\n\tT1234567890123\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000008\n\t\n\t\n\t\n2026/02/03 08:28\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\nnanaura_k+dev678@tokium.jp\n\t\n2026/02/01\n\t\n2026/02/01\n\t\n2026/01/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥100\n\t\t\n20100000009\n\t\n\t\n\t\n2026/02/03 13:40\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\nシステム\n\t\n\t\n\t\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥10,000\n\t\t\n20100000010\n\t\n\t\n\t\n2026/03/01 05:00\n\t\n未出力\n\t\n削除\n表示件数\n50 \n申請ID20100000001\nURLをコピー\nスキャナ保存要件/ 解像度：NG\n(電子取引であれば問題ありません)\n詳細を確認\n1\n(current)\n2\n3\n4\n5\n6\n7\n8\n9\n10\nVer. 12022/11/22 10:51\n納品書/見積書/契約書/注文書などのその他国税関係書類はこちら\n登録日時\n2022/11/22 10:51\n送付元\ntomita_s+up01@tokium.jp\n請求金額\n￥0\n源泉徴収税額\n￥0\n支払金額\n￥0\n明細がありません。\n明細を追加する\n関連書類はありません。\n編集する\n適格請求書として扱う\n支払設定\nその他\n支払期日\n今月\n来月\n\t\n支払希望日\n今月\n来月\n\t\n計上日\n先月\n今月\n\t\n登録番号\n取引先名\n選択解除\n取引先詳細\n取引先コード\n未設定\n支払方法\n現金\n承認する\n保存\n変更履歴"
+    },
+    "auto_input": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/waiting_worker_document_inputs",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "30",
+        "URLをコピー",
+        "自動入力を待たずに手入力"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "受領日時",
+            "取引先コード",
+            "取引先名",
+            "送付元",
+            "担当",
+            "国税関係書類から移動",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 15
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n自動入力中書類一覧\n総件数： 15件\n受領日時\n\t取引先コード\n\t取引先名 \n\t送付元\n\t担当\n\t国税関係書類から移動\n\t\n2024/04/02 14:28\n\t\n12345\n\t取引先B\tnanaura_k+dev-etc1@tokium.jp\t\t\n\t\n\n2024/11/26 10:11\n\t\n12345\n\t取引先B\tnishimoto_t@beartail.jp\t\t\n\t\n\n2024/11/26 11:24\n\t\n12345\n\t取引先B\tnishimoto_t@beartail.jp\t\t\n\t\n\n2024/11/26 13:15\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 15:16\n\t\nmotorTEST\n\t入力遅延テスト用\tnishimoto_t@beartail.jp\t\t\n\t\n\n2024/11/26 15:16\n\t\nmotorTEST\n\t入力遅延テスト用\tnishimoto_t@beartail.jp\t\t\n\t\n\n2024/11/26 15:16\n\t\nmotorTEST\n\t入力遅延テスト用\tnishimoto_t@beartail.jp\t\t\n\t\n\n2024/11/26 15:34\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 16:04\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 16:10\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 16:12\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 17:13\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 17:19\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2024/11/26 17:56\n\t\n12345\n\t取引先B\tchikata_t+test@tokium.jp\t\t\n\t\n\n2025/08/21 09:58\n\t\n12345\n\t取引先B\tnanaura_k+dev-kyoutuu1@tokium.jp\t\t\n\t\n30 \n1\n自動入力中書類詳細\nURLをコピー\n自動入力を待たずに手入力"
+    },
+    "national_tax": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/national_tax_documents",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "この条件でファイル出力する",
+        "国税関係書類を登録する",
+        "未入力",
+        "指定した条件で検索",
+        "一括編集",
+        "タイムスタンプ検証",
+        "表示設定",
+        "削除",
+        "30",
+        "×Close",
+        "URLをコピー",
+        "変更履歴を確認",
+        "選択",
+        "選択",
+        "解除",
+        "JPY",
+        "請求書一覧に移す",
+        "保存"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-223",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-224",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-225",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-226",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-227",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-8",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-9",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-10",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-340",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-342",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-344",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-346",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-348",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-350",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-352",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-354",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-356",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-358",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-360",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-362",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-364",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-366",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "file",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "file",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": true
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "textarea",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "",
+            "書類種別",
+            "書類タイトル",
+            "取引日",
+            "取引先コード",
+            "取引先名",
+            "取引金額",
+            "外貨金額",
+            "登録番号",
+            "送付元",
+            "所属部署",
+            "取引先担当",
+            "プロジェクト",
+            "メモ",
+            "ラベル",
+            "書類ID",
+            "登録日時",
+            "削除"
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "書類種別",
+        "書類タイトル",
+        "取引先名",
+        "空白検索",
+        "取引先コード",
+        "取引日",
+        "空白検索",
+        "登録日",
+        "取引金額",
+        "書類ID",
+        "登録番号",
+        "空白検索",
+        "取引先担当部署",
+        "所属部署",
+        "プロジェクト名",
+        "プロジェクトID",
+        "メモ",
+        "空白検索",
+        "ラベル",
+        "除外検索",
+        "送付元メールアドレス",
+        "送付元",
+        "送付元",
+        "書類種別",
+        "書類タイトル",
+        "取引日",
+        "取引先名",
+        "取引先コード",
+        "取引金額",
+        "所属部署",
+        "登録番号",
+        "プロジェクト",
+        "メモ"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n国税関係書類一覧\nこの条件でファイル出力する\n国税関係書類を登録する\n指定した条件で検索\n一括編集\nタイムスタンプ検証\n検索結果： 1件\n表示設定 \n\t書類種別\n\t書類タイトル\n\t取引日\n\t取引先コード\n\t取引先名\n\t取引金額\n\t登録番号\n\t送付元\n\t所属部署\n\t取引先担当\n\tプロジェクト\n\tメモ\n\t書類ID\n\t登録日時\n\t削除\n\t\n納品書\n\t\nタイムスタンプ\n\t\n2026/02/03\n\t\n\t\n取引先A\n\t\n￥\n100\n\t\n\t\nnanaura_k+dev12345@tokium.jp\n\t\nQAチーム\n\t\t\n\t\n\t30100000002\t\n2026/02/03 08:26\n\t\n削除\n30 \n1\n×\nClose\n書類ID30100000002\nURLをコピー\n変更履歴を確認\n260203_タイムスタンプ.pdf\n\n\n260203_タイムスタンプ.pdf\nVer. 1タイムスタンプ付与中\n解像度情報\n送付元\nnanaura_k+dev12345@tokium.jp\n書類種別\n選択\t\n書類タイトル\n取引日\n\t\n取引先名\n選択解除\n取引先コード\n未設定\n取引金額\nJPY \n所属部署\nQAチーム\n登録番号\nプロジェクト\n未入力\nメモ\n請求書一覧に移す\n保存"
+    },
+    "suppliers": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/suppliers",
+      "headings": [
+        {
+          "tag": "H4",
+          "text": "取引先編集"
+        }
+      ],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "検索",
+        "新規取引先追加",
+        "インポート",
+        "エクスポート",
+        "表示設定",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "30",
+        "×Close",
+        "選択",
+        "取引先への送付先変更連絡",
+        "保存",
+        "閉じる"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-76",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-77",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-4",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-6",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-7",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-8",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-78",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-4-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-79",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-81",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-83",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-85",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-87",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-89",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-91",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-93",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-95",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-97",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-99",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-101",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-103",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-105",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-107",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-5-input",
+          "disabled": false
+        },
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "tel",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "textarea",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-6-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-7-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": true
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "取引先コード",
+            "取引先名",
+            "支払方法",
+            "登録番号",
+            "登録事業者名",
+            "有効開始日",
+            "自動照合結果",
+            "電話番号",
+            "メールアドレス",
+            "担当者",
+            "担当部署",
+            "識別コード",
+            "請求書直近受領日",
+            "請求書テンプレート名",
+            "メモ",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 4
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "取引先コード",
+        "取引先名",
+        "メモ",
+        "登録番号",
+        "空白検索",
+        "登録事業者名",
+        "空白検索",
+        "有効開始日",
+        "自動照合結果",
+        "電話番号",
+        "担当者",
+        "担当部署",
+        "請求書受領状態",
+        "凍結状態",
+        "請求書テンプレート",
+        "空白検索",
+        "識別コード",
+        "郵便番号",
+        "国",
+        "都道府県/州",
+        "住所1",
+        "住所2",
+        "反社チェック",
+        "与信チェック",
+        "取引開始日",
+        "取引終了日",
+        "取引先コード",
+        "取引先名",
+        "金融機関名",
+        "支店名",
+        "口座種類",
+        "普通",
+        "当座",
+        "貯蓄",
+        "その他",
+        "口座番号",
+        "名義人",
+        "手数料負担先",
+        "当方",
+        "先方",
+        "未指定",
+        "郵便番号",
+        "国",
+        "都道府県/州",
+        "住所1",
+        "住所2",
+        "取引開始日",
+        "取引終了日",
+        "メモ",
+        "与信チェック",
+        "反社チェック",
+        "社内宛名",
+        "識別コード",
+        "アップロードサイト登録用URL",
+        "送付先メールアドレス",
+        "送付先住所",
+        "請求書受領確認"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n取引先設定\n定期支払設定\n取引先一覧\n検索条件を設定\n新規取引先追加インポートエクスポート\n表示設定 \n取引先コード\n\t取引先名\n\t支払方法\n\t登録番号\n\t登録事業者名\n\t有効開始日\n\t自動照合結果\n\t電話番号\n\tメールアドレス\n\t担当者\n\t担当部署\n\t識別コード\n\t請求書直近受領日\n\t請求書テンプレート名\n\tメモ\n\t\n12345\t取引先B\t\n振込\n\tT1234567890123\t\t\t無効\t\n08011111111\n\tnanaura_k+dev-kyoutuu1@tokium.jp\t\n七浦1(nanaura_k+dev-kyoutuu1@tokium.jp)\n\t\n親部署A\n\tB2POIU\t\n2026/02/03\n\t\t未入力\t\n\n\nA\n\tポスグレテスト\t\nカード\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nS1CZNY\n\t\n\t\t未入力\t\n\n\nmotorTEST\n\t入力遅延テスト用\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nJQC2QO\n\t\n2024/11/26\n\t\t未入力\t\n\n未入力\t取引先A\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\n7YDQAK\n\t\n2026/03/01\n\t\t未入力\t\n30 \n1\n×\nClose\n取引先編集\n取引先設定\n取引先コード\n取引先名\n支払方法\n振込\n金融機関名\n支店名\n口座種類\n普通\n当座\n貯蓄\nその他\n口座番号\n名義人\n手数料負担先\n当方\n先方\n未指定\n登録番号\n未登録\n基本情報\n郵便番号\n国\n都道府県/州\n住所1\n住所2\n取引開始日\n\t\n取引終了日\n\t\nメモ\n電話番号\nメールアドレス\n確認事項\n与信チェック\n-\n反社チェック\n-\n担当者設定\n七浦1(nanaura_k+dev-kyoutuu1@tokium.jp)\n担当部署設定\n親部署A\n請求書テンプレート\n適用中:デフォルトテンプレート\n選択\n請求書送付先情報\n社内宛名\n識別コード\nB2POIU\nアップロードサイト登録用URL\nhttps://develop.d3vvubui1hqogp.amplifyapp.com/supplier/423d4284-0c11-4cba-a689-04f21a575684/B2POIU\n送付先メールアドレス\ntokium.tenant.tkti.10+B2POIU@keihi.com\n送付先住所\n〒101-8799\n神田郵便局留め\n株式会社TOKIUM内TOKIUMインボイス係 TOKIUM QA テナント切替 tkti10 取引先B B2POIU\n取引先への送付先変更連絡\nその他\n請求書受領確認\n保存\n閉じる"
+    }
+  },
+  "create_forms": {
+    "invoice_create": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/reports",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "この条件で会計データ作成を開始",
+        "請求書を登録する",
+        "すべて",
+        "指定した条件で検索",
+        "タイムスタンプ検証",
+        "請求書証憑の一括ダウンロード",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "削除",
+        "50"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-61",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-62",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-63",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-64",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-6",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-65",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-66",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-67",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-68",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-15",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-16",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-17",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-18",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-19",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-20",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-21",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-22",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-23",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-24",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-25",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-26",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-27",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-28",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-29",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-30",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-31",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-32",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-selecet-all-rows",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-0",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-1",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-2",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-4",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-6",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-7",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-8",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-hmXxxW-jHNHeb-table-component-wrapper-tbody-select-row-9",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "",
+            "取引先コード",
+            "取引先名",
+            "プロジェクト",
+            "取引先担当",
+            "画像等",
+            "送付元",
+            "支払期日",
+            "支払希望日",
+            "計上日",
+            "登録番号",
+            "適格請求書",
+            "請求書番号",
+            "請求書メモ",
+            "請求書ラベル",
+            "ステータス",
+            "支払方法",
+            "金額",
+            "外貨金額",
+            "申請ID",
+            "発注書番号",
+            "紙原本管理番号",
+            "登録日時",
+            "会計データ出力状況",
+            ""
+          ],
+          "rowCount": 10
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "申請ID",
+        "請求書メモ",
+        "取引先名",
+        "空白検索",
+        "費用負担部署",
+        "下位部署を含む",
+        "取引先担当部署",
+        "発注書番号",
+        "空白検索",
+        "登録番号",
+        "空白検索",
+        "適格請求書の取り扱い",
+        "プロジェクト名",
+        "プロジェクトID",
+        "支払期日",
+        "支払希望日",
+        "計上日",
+        "空白検索",
+        "登録日",
+        "金額",
+        "取引先コード",
+        "請求書番号",
+        "空白検索",
+        "借方請求明細科目",
+        "貸方請求明細科目",
+        "請求書ラベル",
+        "除外検索",
+        "空白検索",
+        "送付元メールアドレス",
+        "送付元",
+        "ステータス",
+        "支払方法",
+        "会計データ出力状況",
+        "検索範囲"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n請求書一覧\nこの条件で会計データ作成を開始\n請求書を登録する\n手入力\n一括登録\n指定した条件で検索\nタイムスタンプ検証請求書証憑の一括ダウンロード\n検索結果： 10件\n 表示項目設定\n\t\n\t\n取引先コード\n\t\n取引先名\n\t\nプロジェクト\n\t\n取引先担当\n\t\n画像等\n\t\n送付元\n\t\n支払期日\n\t\n支払希望日\n\t\n計上日\n\t\n登録番号\n\t\n適格請求書\n\t\n請求書番号\n\t\n請求書メモ\n\t\n請求書ラベル\n\t\nステータス\n\t\n支払方法\n\t\n金額\n\t\n外貨金額\n\t\n申請ID\n\t\n発注書番号\n\t\n紙原本管理番号\n\t\n登録日時\n\t\n会計データ出力状況\n\t\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\ntomita_s+up01@tokium.jp\n\t\n2022/11/01\n\t\n2022/11/01\n\t\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥\n0\n\t\t\n20100000001\n\t\n\t\n\t\n2022/11/22 10:51\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n送付元A\n\t\t\tcloud_done\t\nnanaura_k+dev-etc1@tokium.jp\n\t\n2024/04/30\n\t\n2024/04/01\n\t\n2024/03/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥300\n\t\t\n20100000002\n\t\n\t\n\t\n2024/04/02 14:09\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\n取引先B\n\t\t\t\t\nchikata_t+test@tokium.jp\n\t\n2024/11/01\n\t\n2024/11/01\n\t\n2024/10/31\n\tT1234567890123\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥\n0\n\t\t\n20100000007\n\t\n\t\n\t\n2024/11/26 15:22\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/01\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥\n0\n\t\t\n20100000006\n\t\n\t\n\t\n2024/11/26 13:13\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\nEGTS株式会社\n\t\t\tcloud_done\t\nchikata_t+test@tokium.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥7,000\n\t\t\n20100000003\n\t\n\t\n\t\n2024/11/26 10:16\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\ntest\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000004\n\t\n\t\n\t\n2024/11/26 13:10\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\nmotorTEST\n\t\ntest\n\t\t\tcloud_done\t\nnishimoto_t@beartail.jp\n\t\n2024/11/30\n\t\n2024/11/01\n\t\n2024/10/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000005\n\t\n\t\n\t\n2024/11/26 13:13\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\n12345\n\t\n取引先B\n\t\t\t\t\nnanaura_k+dev12345@tokium.jp\n\t\n2026/02/01\n\t\n2026/02/01\n\t\n2026/01/31\n\tT1234567890123\t\t\n\t\n\t\n\t\n未承認\n\t\n振込\n\t\n￥1,000\n\t\t\n20100000008\n\t\n\t\n\t\n2026/02/03 08:28\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\nnanaura_k+dev678@tokium.jp\n\t\n2026/02/01\n\t\n2026/02/01\n\t\n2026/01/31\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥100\n\t\t\n20100000009\n\t\n\t\n\t\n2026/02/03 13:40\n\t\n未出力\n\t\n削除\n\n\n\t\n\t\t\n取引先A\n\t\t\t\t\nシステム\n\t\n\t\n\t\n\t\t\t\n\t\n\t\n\t\n未承認\n\t\n現金\n\t\n￥10,000\n\t\t\n20100000010\n\t\n\t\n\t\n2026/03/01 05:00\n\t\n未出力\n\t\n削除\n表示件数\n50 "
+    },
+    "national_tax_create": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/national_tax_documents",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "この条件でファイル出力する",
+        "国税関係書類を登録する",
+        "未入力",
+        "指定した条件で検索",
+        "一括編集",
+        "タイムスタンプ検証",
+        "表示設定",
+        "削除",
+        "30"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-223",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-224",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-225",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-226",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-227",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-8",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-9",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-10",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-312",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-314",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-316",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-318",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-320",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-322",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-324",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-326",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-328",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-330",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-332",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-334",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-336",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-338",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "",
+            "書類種別",
+            "書類タイトル",
+            "取引日",
+            "取引先コード",
+            "取引先名",
+            "取引金額",
+            "外貨金額",
+            "登録番号",
+            "送付元",
+            "所属部署",
+            "取引先担当",
+            "プロジェクト",
+            "メモ",
+            "ラベル",
+            "書類ID",
+            "登録日時",
+            "削除"
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "書類種別",
+        "書類タイトル",
+        "取引先名",
+        "空白検索",
+        "取引先コード",
+        "取引日",
+        "空白検索",
+        "登録日",
+        "取引金額",
+        "書類ID",
+        "登録番号",
+        "空白検索",
+        "取引先担当部署",
+        "所属部署",
+        "プロジェクト名",
+        "プロジェクトID",
+        "メモ",
+        "空白検索",
+        "ラベル",
+        "除外検索",
+        "送付元メールアドレス",
+        "送付元"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n国税関係書類一覧\nこの条件でファイル出力する\n国税関係書類を登録する\n手入力\n一括登録\n指定した条件で検索\n一括編集\nタイムスタンプ検証\n検索結果： 1件\n表示設定 \n\t書類種別\n\t書類タイトル\n\t取引日\n\t取引先コード\n\t取引先名\n\t取引金額\n\t登録番号\n\t送付元\n\t所属部署\n\t取引先担当\n\tプロジェクト\n\tメモ\n\t書類ID\n\t登録日時\n\t削除\n\t\n納品書\n\t\nタイムスタンプ\n\t\n2026/02/03\n\t\n\t\n取引先A\n\t\n￥\n100\n\t\n\t\nnanaura_k+dev12345@tokium.jp\n\t\nQAチーム\n\t\t\n\t\n\t30100000002\t\n2026/02/03 08:26\n\t\n削除\n30 \n1"
+    },
+    "supplier_create": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/suppliers",
+      "headings": [
+        {
+          "tag": "H4",
+          "text": "取引先編集"
+        }
+      ],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "検索",
+        "新規取引先追加",
+        "インポート",
+        "エクスポート",
+        "表示設定",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "凍結する",
+        "30",
+        "×Close",
+        "選択",
+        "取引先への送付先変更連絡",
+        "保存",
+        "閉じる"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-76",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-77",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-4",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-5",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-6",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-7",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-8",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-78",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-4-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-79",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-81",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-83",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-85",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-87",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-89",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-91",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-93",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-95",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-97",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-99",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-101",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-103",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-105",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-107",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-5-input",
+          "disabled": false
+        },
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "radio",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "textarea",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-6-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-7-input",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": true
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "取引先コード",
+            "取引先名",
+            "支払方法",
+            "登録番号",
+            "登録事業者名",
+            "有効開始日",
+            "自動照合結果",
+            "電話番号",
+            "メールアドレス",
+            "担当者",
+            "担当部署",
+            "識別コード",
+            "請求書直近受領日",
+            "請求書テンプレート名",
+            "メモ",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 4
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "取引先コード",
+        "取引先名",
+        "メモ",
+        "登録番号",
+        "空白検索",
+        "登録事業者名",
+        "空白検索",
+        "有効開始日",
+        "自動照合結果",
+        "電話番号",
+        "担当者",
+        "担当部署",
+        "請求書受領状態",
+        "凍結状態",
+        "請求書テンプレート",
+        "空白検索",
+        "識別コード",
+        "郵便番号",
+        "国",
+        "都道府県/州",
+        "住所1",
+        "住所2",
+        "反社チェック",
+        "与信チェック",
+        "取引開始日",
+        "取引終了日",
+        "取引先コード",
+        "取引先名",
+        "金融機関名",
+        "手数料負担先",
+        "当方",
+        "先方",
+        "未指定",
+        "郵便番号",
+        "国",
+        "都道府県/州",
+        "住所1",
+        "住所2",
+        "取引開始日",
+        "取引終了日",
+        "メモ",
+        "与信チェック",
+        "反社チェック",
+        "社内宛名",
+        "アップロードサイト登録用URL",
+        "送付先メールアドレス",
+        "送付先住所",
+        "請求書受領確認"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n取引先設定\n定期支払設定\n取引先一覧\n検索条件を設定\n新規取引先追加インポートエクスポート\n表示設定 \n取引先コード\n\t取引先名\n\t支払方法\n\t登録番号\n\t登録事業者名\n\t有効開始日\n\t自動照合結果\n\t電話番号\n\tメールアドレス\n\t担当者\n\t担当部署\n\t識別コード\n\t請求書直近受領日\n\t請求書テンプレート名\n\tメモ\n\t\n12345\t取引先B\t\n振込\n\tT1234567890123\t\t\t無効\t\n08011111111\n\tnanaura_k+dev-kyoutuu1@tokium.jp\t\n七浦1(nanaura_k+dev-kyoutuu1@tokium.jp)\n\t\n親部署A\n\tB2POIU\t\n2026/02/03\n\t\t未入力\t\n\n\nA\n\tポスグレテスト\t\nカード\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nS1CZNY\n\t\n\t\t未入力\t\n\n\nmotorTEST\n\t入力遅延テスト用\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\nJQC2QO\n\t\n2024/11/26\n\t\t未入力\t\n\n未入力\t取引先A\t\n現金\n\t\t\t\t\n\t\n\t未入力\t\n\t\n\t\n7YDQAK\n\t\n2026/03/01\n\t\t未入力\t\n30 \n1\n×\nClose\n取引先編集\n取引先設定\n取引先コード\n取引先名\n支払方法\n振込\n金融機関名\n手数料負担先\n当方\n先方\n未指定\n登録番号\n基本情報\n郵便番号\n国\n都道府県/州\n住所1\n住所2\n取引開始日\n\t\n取引終了日\n\t\nメモ\n電話番号\nメールアドレス\n確認事項\n与信チェック\n-\n反社チェック\n-\n担当者設定\n担当部署設定\n請求書テンプレート\n適用中:デフォルトテンプレート\n選択\n請求書送付先情報\n社内宛名\nアップロードサイト登録用URL\n未入力\n送付先メールアドレス\n未入力\n送付先住所\n未入力\n取引先への送付先変更連絡\nその他\n請求書受領確認\n取引先名が未入力です\n保存\n閉じる"
+    }
+  },
+  "aggregation_detail": {
+    "list_page": {
+      "title": "TOKIUM",
+      "url": "https://dev.keihi.com/payment_requests/analyses",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "TOKIUM QA テナント切替 tkti10マルチテナント検証用2ikeda_n+th4@tokium.jp",
+        "新規",
+        "この条件で検索",
+        "10",
+        "この条件で検索",
+        "この条件で集計",
+        "選択した0件の請求書を集計する"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-1",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-2",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-3",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-4",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-2-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-74",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-75",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-76",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-84",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-85",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "react-select-3-input",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-83",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-80",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-81",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-15",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-16",
+          "disabled": false
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": "",
+          "id": "",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-82",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-18",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-19",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-20",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-21",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-22",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-23",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-24",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-25",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-26",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-27",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-28",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-29",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-30",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-31",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-32",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-33",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-34",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "checkbox-35",
+          "disabled": false
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": "",
+          "id": "sc-bsbRJL-nRWhu-table-component-wrapper-tbody-selecet-all-rows",
+          "disabled": false
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "集計ID",
+            "作成日",
+            "集計名",
+            "支払い状況",
+            "集計方法",
+            "会計データ出力状況",
+            "請求書数",
+            "総額",
+            "削除"
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        },
+        {
+          "headers": [
+            "",
+            "画像等",
+            "支払期日",
+            "支払希望日",
+            "計上日",
+            "最終承認日",
+            "支払い状況",
+            "支払方法",
+            "金融機関名",
+            "手数料負担先",
+            "取引先コード",
+            "取引先名",
+            "プロジェクト",
+            "費用負担部署",
+            "所属部署",
+            "集計状況",
+            "金額",
+            "申請ID",
+            "登録番号",
+            "適格請求書",
+            "発注書番号",
+            "会計データ出力状況",
+            "請求書メモ",
+            "請求書ラベル",
+            "登録日時"
+          ],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "labels": [
+        "集計名",
+        "作成日",
+        "総額",
+        "支払い状況",
+        "会計データ出力状況",
+        "支払期日",
+        "支払希望日",
+        "計上日",
+        "最終承認日",
+        "登録日",
+        "請求書ラベル",
+        "除外検索",
+        "空白検索",
+        "費用負担部署",
+        "下位部署を含む",
+        "取引先担当部署",
+        "下位部署を含む",
+        "所属部署",
+        "下位部署を含む",
+        "金融機関名",
+        "除外検索",
+        "発注書番号",
+        "空白検索",
+        "取引先名",
+        "取引先コード",
+        "プロジェクト名",
+        "プロジェクトID",
+        "登録番号",
+        "空白検索",
+        "適格請求書の取り扱い",
+        "請求書メモ",
+        "空白検索",
+        "支払い状況",
+        "支払方法",
+        "手数料負担先",
+        "集計状況",
+        "会計データ出力状況"
+      ],
+      "links": [
+        {
+          "text": "申請",
+          "href": "/requests"
+        },
+        {
+          "text": "経費",
+          "href": "/transactions"
+        },
+        {
+          "text": "カード明細",
+          "href": "/aggregation_results"
+        },
+        {
+          "text": "集計",
+          "href": "/analyses"
+        },
+        {
+          "text": "自動入力中書類",
+          "href": "/payment_requests/waiting_worker_document_inputs"
+        },
+        {
+          "text": "請求書",
+          "href": "/payment_requests/reports"
+        },
+        {
+          "text": "国税関係書類",
+          "href": "/payment_requests/national_tax_documents"
+        },
+        {
+          "text": "取引先",
+          "href": "/payment_requests/suppliers"
+        },
+        {
+          "text": "集計",
+          "href": "/payment_requests/analyses"
+        },
+        {
+          "text": "請求書発行",
+          "href": "https://invoicing-staging.keihi.com/auth-redirect"
+        }
+      ],
+      "body_text": "システム設定\nTOKIUM QA テナント切替 tkti10\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUMインボイス\n\n自動入力中書類\n請求書\n国税関係書類\n取引先\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n集計履歴\n検索条件\n作成日\n\t集計名\n\t支払い状況\n\t会計データ出力状況\n\t請求書数\n\t総額\n\t削除\nデータがありません\n10 \n請求書一覧\n検索条件\n選択した0件の請求書を集計する\n 表示項目設定\n\t\n画像等\n\t\n支払期日\n\t\n支払希望日\n\t\n計上日\n\t\n最終承認日\n\t\n支払い状況\n\t\n支払方法\n\t\n金融機関名\n\t\n手数料負担先\n\t\n取引先コード\n\t\n取引先名\n\t\nプロジェクト\n\t\n費用負担部署\n\t\n所属部署\n\t\n集計状況\n\t\n金額\n\t\n申請ID\n\t\n登録番号\n\t\n適格請求書\n\t\n発注書番号\n\t\n会計データ出力状況\n\t\n請求書メモ\n\t\n請求書ラベル\n\t\n登録日時\n\nデータがありません"
+    }
+  }
+}

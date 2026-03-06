@@ -1,0 +1,1266 @@
+{
+  "tenant": "th-01",
+  "timestamp": "2026-03-06 09:43:32",
+  "pages": [
+    {
+      "title": "TOKIUM",
+      "url": "https://th-01.dev.keihi.com/transactions",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+        "新規",
+        "検索条件",
+        "経費を登録する",
+        "申請する",
+        "表示項目設定"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索"
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "",
+            "利用日",
+            "ラベル",
+            "電子領収書",
+            "支払先/訪問先",
+            "金額",
+            "経費科目",
+            "税区分",
+            "所属部署",
+            "経費申請書名",
+            "ステータス",
+            "登録日",
+            "登録番号",
+            "適格請求書"
+          ],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "iframes": [
+        {
+          "name": "stripeXDM_default281252_provider",
+          "src": "https://js.stripe.com/v2/channel.html?stripe_xdm_e=https%3A%2F%2Fth-01.dev.keihi.com&stripe_xdm_c=default281252&stripe_xdm_p=1#__stripe_transport__",
+          "id": "stripeXDM_default281252_provider"
+        },
+        {
+          "name": "",
+          "src": "https://js.stripe.com/v2/m/outer.html#referrer=&title=TOKIUM&url=https%3A%2F%2Fth-01.dev.keihi.com%2Ftransactions&muid=NA&sid=NA&version=6&preview=false&",
+          "id": ""
+        }
+      ],
+      "sidebar_links": [
+        {
+          "text": "",
+          "href": "/",
+          "active": false
+        },
+        {
+          "text": "従業員",
+          "href": "/members",
+          "active": false
+        },
+        {
+          "text": "役職",
+          "href": "/posts",
+          "active": false
+        },
+        {
+          "text": "部署",
+          "href": "/groups",
+          "active": false
+        },
+        {
+          "text": "参加者",
+          "href": "/companions",
+          "active": false
+        },
+        {
+          "text": "支払口座",
+          "href": "/preferences/company_expense_accounts",
+          "active": false
+        },
+        {
+          "text": "申請フォーム",
+          "href": "/request_types",
+          "active": false
+        },
+        {
+          "text": "申請フロー",
+          "href": "/approval_flows",
+          "active": false
+        },
+        {
+          "text": "プロジェクト",
+          "href": "/preferences/projects",
+          "active": false
+        },
+        {
+          "text": "外貨",
+          "href": "/preferences/currencies",
+          "active": false
+        },
+        {
+          "text": "会計データ出力形式",
+          "href": "/preferences/export",
+          "active": false
+        },
+        {
+          "text": "科目",
+          "href": "/root_categories",
+          "active": false
+        },
+        {
+          "text": "税区分",
+          "href": "/preferences/tax_categories",
+          "active": false
+        },
+        {
+          "text": "自動入力科目",
+          "href": "/preferences/business_categories",
+          "active": false
+        },
+        {
+          "text": "経費入力・レポート",
+          "href": "/preferences/reports",
+          "active": false
+        },
+        {
+          "text": "日当・手当",
+          "href": "/preferences/allowances",
+          "active": false
+        },
+        {
+          "text": "アラート",
+          "href": "/preferences/alert_rules",
+          "active": false
+        },
+        {
+          "text": "IC乗車券オプション",
+          "href": "/preferences/ic_card_option",
+          "active": false
+        },
+        {
+          "text": "付加情報",
+          "href": "/preferences/metadata",
+          "active": false
+        },
+        {
+          "text": "締め日",
+          "href": "/closing_dates",
+          "active": false
+        },
+        {
+          "text": "会計データ出力",
+          "href": "/preferences/analyses_config",
+          "active": false
+        },
+        {
+          "text": "電子帳簿保存法",
+          "href": "/e_doc_options",
+          "active": false
+        },
+        {
+          "text": "一覧表示",
+          "href": "/preferences/list_options",
+          "active": false
+        },
+        {
+          "text": "法人カード",
+          "href": "/preferences/corporate_cards",
+          "active": false
+        },
+        {
+          "text": "仕訳フォーマット",
+          "href": "/journal_entries",
+          "active": false
+        },
+        {
+          "text": "セキュリティ",
+          "href": "/preferences/security",
+          "active": false
+        },
+        {
+          "text": "ログ",
+          "href": "/activity_logs",
+          "active": false
+        },
+        {
+          "text": "契約",
+          "href": "/payment",
+          "active": false
+        },
+        {
+          "text": "会計データ定期出力",
+          "href": "/accounting_data_scheduled_exports",
+          "active": false
+        },
+        {
+          "text": "汎用マスタ",
+          "href": "/generic_fields/data_sets",
+          "active": false
+        },
+        {
+          "text": "組織変更の予約",
+          "href": "/kernels/organizations/reorganizations/changes",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/notifications",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/support_page?redirect_to=https://support.keihi.com",
+          "active": false
+        },
+        {
+          "text": "別のテナントに切替",
+          "href": "#",
+          "active": false
+        },
+        {
+          "text": "個人設定",
+          "href": "/users/edit",
+          "active": false
+        },
+        {
+          "text": "ログアウト",
+          "href": "#",
+          "active": false
+        }
+      ],
+      "menu_name": "経費一覧",
+      "target_path": "/transactions",
+      "screenshot": "user_経費一覧.png"
+    },
+    {
+      "title": "TOKIUM",
+      "url": "https://th-01.dev.keihi.com/requests",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+        "新規",
+        "申請する",
+        "全選択",
+        "この条件で検索",
+        "申請種別"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索"
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "申請日",
+            "経費申請名",
+            "申請ID",
+            "申請種別 経費申請精算(仮払以外)精算(仮払)",
+            "申請フロー名",
+            "総額",
+            "源泉徴収税総額",
+            "申請状況",
+            ""
+          ],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "iframes": [
+        {
+          "name": "stripeXDM_default164909_provider",
+          "src": "https://js.stripe.com/v2/channel.html?stripe_xdm_e=https%3A%2F%2Fth-01.dev.keihi.com&stripe_xdm_c=default164909&stripe_xdm_p=1#__stripe_transport__",
+          "id": "stripeXDM_default164909_provider"
+        },
+        {
+          "name": "",
+          "src": "https://js.stripe.com/v2/m/outer.html#referrer=&title=TOKIUM&url=https%3A%2F%2Fth-01.dev.keihi.com%2Frequests&muid=67c753a9-963e-468c-aba3-a43119c1897d5ef0d9&sid=28c2273f-5c57-492c-a429-292a7814add18c448b&version=6&preview=false&",
+          "id": ""
+        }
+      ],
+      "sidebar_links": [
+        {
+          "text": "",
+          "href": "/",
+          "active": false
+        },
+        {
+          "text": "従業員",
+          "href": "/members",
+          "active": false
+        },
+        {
+          "text": "役職",
+          "href": "/posts",
+          "active": false
+        },
+        {
+          "text": "部署",
+          "href": "/groups",
+          "active": false
+        },
+        {
+          "text": "参加者",
+          "href": "/companions",
+          "active": false
+        },
+        {
+          "text": "支払口座",
+          "href": "/preferences/company_expense_accounts",
+          "active": false
+        },
+        {
+          "text": "申請フォーム",
+          "href": "/request_types",
+          "active": false
+        },
+        {
+          "text": "申請フロー",
+          "href": "/approval_flows",
+          "active": false
+        },
+        {
+          "text": "プロジェクト",
+          "href": "/preferences/projects",
+          "active": false
+        },
+        {
+          "text": "外貨",
+          "href": "/preferences/currencies",
+          "active": false
+        },
+        {
+          "text": "会計データ出力形式",
+          "href": "/preferences/export",
+          "active": false
+        },
+        {
+          "text": "科目",
+          "href": "/root_categories",
+          "active": false
+        },
+        {
+          "text": "税区分",
+          "href": "/preferences/tax_categories",
+          "active": false
+        },
+        {
+          "text": "自動入力科目",
+          "href": "/preferences/business_categories",
+          "active": false
+        },
+        {
+          "text": "経費入力・レポート",
+          "href": "/preferences/reports",
+          "active": false
+        },
+        {
+          "text": "日当・手当",
+          "href": "/preferences/allowances",
+          "active": false
+        },
+        {
+          "text": "アラート",
+          "href": "/preferences/alert_rules",
+          "active": false
+        },
+        {
+          "text": "IC乗車券オプション",
+          "href": "/preferences/ic_card_option",
+          "active": false
+        },
+        {
+          "text": "付加情報",
+          "href": "/preferences/metadata",
+          "active": false
+        },
+        {
+          "text": "締め日",
+          "href": "/closing_dates",
+          "active": false
+        },
+        {
+          "text": "会計データ出力",
+          "href": "/preferences/analyses_config",
+          "active": false
+        },
+        {
+          "text": "電子帳簿保存法",
+          "href": "/e_doc_options",
+          "active": false
+        },
+        {
+          "text": "一覧表示",
+          "href": "/preferences/list_options",
+          "active": false
+        },
+        {
+          "text": "法人カード",
+          "href": "/preferences/corporate_cards",
+          "active": false
+        },
+        {
+          "text": "仕訳フォーマット",
+          "href": "/journal_entries",
+          "active": false
+        },
+        {
+          "text": "セキュリティ",
+          "href": "/preferences/security",
+          "active": false
+        },
+        {
+          "text": "ログ",
+          "href": "/activity_logs",
+          "active": false
+        },
+        {
+          "text": "契約",
+          "href": "/payment",
+          "active": false
+        },
+        {
+          "text": "会計データ定期出力",
+          "href": "/accounting_data_scheduled_exports",
+          "active": false
+        },
+        {
+          "text": "汎用マスタ",
+          "href": "/generic_fields/data_sets",
+          "active": false
+        },
+        {
+          "text": "組織変更の予約",
+          "href": "/kernels/organizations/reorganizations/changes",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/notifications",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/support_page?redirect_to=https://support.keihi.com",
+          "active": false
+        },
+        {
+          "text": "別のテナントに切替",
+          "href": "#",
+          "active": false
+        },
+        {
+          "text": "個人設定",
+          "href": "/users/edit",
+          "active": false
+        },
+        {
+          "text": "ログアウト",
+          "href": "#",
+          "active": false
+        }
+      ],
+      "menu_name": "申請一覧",
+      "target_path": "/requests",
+      "screenshot": "user_申請一覧.png"
+    },
+    {
+      "title": "TOKIUM",
+      "url": "https://th-01.dev.keihi.com/analyses",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+        "新規",
+        "この条件で検索",
+        "10",
+        "この条件で検索",
+        "この条件で集計",
+        "選択した0件の申請を集計する"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索"
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "number",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "text",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "",
+          "placeholder": ""
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "作成日時",
+            "集計名",
+            "支払いステータス",
+            "集計方法",
+            "会計データ出力",
+            "経費数",
+            "総額",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        },
+        {
+          "headers": [
+            "",
+            "経費申請名",
+            "申請ID",
+            "申請者名",
+            "申請者の所属部署",
+            "総額",
+            "集計状況",
+            "会計データ出力状況",
+            "支払い状況"
+          ],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "iframes": [
+        {
+          "name": "stripeXDM_default644097_provider",
+          "src": "https://js.stripe.com/v2/channel.html?stripe_xdm_e=https%3A%2F%2Fth-01.dev.keihi.com&stripe_xdm_c=default644097&stripe_xdm_p=1#__stripe_transport__",
+          "id": "stripeXDM_default644097_provider"
+        },
+        {
+          "name": "",
+          "src": "https://js.stripe.com/v2/m/outer.html#referrer=&title=TOKIUM&url=https%3A%2F%2Fth-01.dev.keihi.com%2Fanalyses&muid=67c753a9-963e-468c-aba3-a43119c1897d5ef0d9&sid=28c2273f-5c57-492c-a429-292a7814add18c448b&version=6&preview=false&",
+          "id": ""
+        }
+      ],
+      "sidebar_links": [
+        {
+          "text": "",
+          "href": "/",
+          "active": false
+        },
+        {
+          "text": "従業員",
+          "href": "/members",
+          "active": false
+        },
+        {
+          "text": "役職",
+          "href": "/posts",
+          "active": false
+        },
+        {
+          "text": "部署",
+          "href": "/groups",
+          "active": false
+        },
+        {
+          "text": "参加者",
+          "href": "/companions",
+          "active": false
+        },
+        {
+          "text": "支払口座",
+          "href": "/preferences/company_expense_accounts",
+          "active": false
+        },
+        {
+          "text": "申請フォーム",
+          "href": "/request_types",
+          "active": false
+        },
+        {
+          "text": "申請フロー",
+          "href": "/approval_flows",
+          "active": false
+        },
+        {
+          "text": "プロジェクト",
+          "href": "/preferences/projects",
+          "active": false
+        },
+        {
+          "text": "外貨",
+          "href": "/preferences/currencies",
+          "active": false
+        },
+        {
+          "text": "会計データ出力形式",
+          "href": "/preferences/export",
+          "active": false
+        },
+        {
+          "text": "科目",
+          "href": "/root_categories",
+          "active": false
+        },
+        {
+          "text": "税区分",
+          "href": "/preferences/tax_categories",
+          "active": false
+        },
+        {
+          "text": "自動入力科目",
+          "href": "/preferences/business_categories",
+          "active": false
+        },
+        {
+          "text": "経費入力・レポート",
+          "href": "/preferences/reports",
+          "active": false
+        },
+        {
+          "text": "日当・手当",
+          "href": "/preferences/allowances",
+          "active": false
+        },
+        {
+          "text": "アラート",
+          "href": "/preferences/alert_rules",
+          "active": false
+        },
+        {
+          "text": "IC乗車券オプション",
+          "href": "/preferences/ic_card_option",
+          "active": false
+        },
+        {
+          "text": "付加情報",
+          "href": "/preferences/metadata",
+          "active": false
+        },
+        {
+          "text": "締め日",
+          "href": "/closing_dates",
+          "active": false
+        },
+        {
+          "text": "会計データ出力",
+          "href": "/preferences/analyses_config",
+          "active": false
+        },
+        {
+          "text": "電子帳簿保存法",
+          "href": "/e_doc_options",
+          "active": false
+        },
+        {
+          "text": "一覧表示",
+          "href": "/preferences/list_options",
+          "active": false
+        },
+        {
+          "text": "法人カード",
+          "href": "/preferences/corporate_cards",
+          "active": false
+        },
+        {
+          "text": "仕訳フォーマット",
+          "href": "/journal_entries",
+          "active": false
+        },
+        {
+          "text": "セキュリティ",
+          "href": "/preferences/security",
+          "active": false
+        },
+        {
+          "text": "ログ",
+          "href": "/activity_logs",
+          "active": false
+        },
+        {
+          "text": "契約",
+          "href": "/payment",
+          "active": false
+        },
+        {
+          "text": "会計データ定期出力",
+          "href": "/accounting_data_scheduled_exports",
+          "active": false
+        },
+        {
+          "text": "汎用マスタ",
+          "href": "/generic_fields/data_sets",
+          "active": false
+        },
+        {
+          "text": "組織変更の予約",
+          "href": "/kernels/organizations/reorganizations/changes",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/notifications",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/support_page?redirect_to=https://support.keihi.com",
+          "active": false
+        },
+        {
+          "text": "別のテナントに切替",
+          "href": "#",
+          "active": false
+        },
+        {
+          "text": "個人設定",
+          "href": "/users/edit",
+          "active": false
+        },
+        {
+          "text": "ログアウト",
+          "href": "#",
+          "active": false
+        }
+      ],
+      "menu_name": "集計",
+      "target_path": "/analyses",
+      "screenshot": "user_集計.png"
+    },
+    {
+      "title": "TOKIUM",
+      "url": "https://th-01.dev.keihi.com/notifications",
+      "headings": [],
+      "buttons": [
+        "システム設定",
+        "智片拓海　TH連携ユーザーTH-898検証ikeda_n+th3@tokium.jp",
+        "新規",
+        "10",
+        "10"
+      ],
+      "inputs": [
+        {
+          "type": "search",
+          "name": "",
+          "placeholder": "テナント名で検索"
+        }
+      ],
+      "tables": [
+        {
+          "headers": [
+            "",
+            "日時",
+            "通知内容",
+            "申請種別",
+            "申請名",
+            "合計",
+            ""
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        },
+        {
+          "headers": [
+            "",
+            "利用日",
+            "通知内容",
+            "支払先",
+            "金額",
+            "経費を編集"
+          ],
+          "rowCount": 0
+        },
+        {
+          "headers": [],
+          "rowCount": 1
+        }
+      ],
+      "tabs": [],
+      "selects": [],
+      "iframes": [
+        {
+          "name": "stripeXDM_default922342_provider",
+          "src": "https://js.stripe.com/v2/channel.html?stripe_xdm_e=https%3A%2F%2Fth-01.dev.keihi.com&stripe_xdm_c=default922342&stripe_xdm_p=1#__stripe_transport__",
+          "id": "stripeXDM_default922342_provider"
+        },
+        {
+          "name": "",
+          "src": "https://js.stripe.com/v2/m/outer.html#referrer=&title=TOKIUM&url=https%3A%2F%2Fth-01.dev.keihi.com%2Fnotifications&muid=67c753a9-963e-468c-aba3-a43119c1897d5ef0d9&sid=28c2273f-5c57-492c-a429-292a7814add18c448b&version=6&preview=false&",
+          "id": ""
+        }
+      ],
+      "sidebar_links": [
+        {
+          "text": "",
+          "href": "/",
+          "active": false
+        },
+        {
+          "text": "従業員",
+          "href": "/members",
+          "active": false
+        },
+        {
+          "text": "役職",
+          "href": "/posts",
+          "active": false
+        },
+        {
+          "text": "部署",
+          "href": "/groups",
+          "active": false
+        },
+        {
+          "text": "参加者",
+          "href": "/companions",
+          "active": false
+        },
+        {
+          "text": "支払口座",
+          "href": "/preferences/company_expense_accounts",
+          "active": false
+        },
+        {
+          "text": "申請フォーム",
+          "href": "/request_types",
+          "active": false
+        },
+        {
+          "text": "申請フロー",
+          "href": "/approval_flows",
+          "active": false
+        },
+        {
+          "text": "プロジェクト",
+          "href": "/preferences/projects",
+          "active": false
+        },
+        {
+          "text": "外貨",
+          "href": "/preferences/currencies",
+          "active": false
+        },
+        {
+          "text": "会計データ出力形式",
+          "href": "/preferences/export",
+          "active": false
+        },
+        {
+          "text": "科目",
+          "href": "/root_categories",
+          "active": false
+        },
+        {
+          "text": "税区分",
+          "href": "/preferences/tax_categories",
+          "active": false
+        },
+        {
+          "text": "自動入力科目",
+          "href": "/preferences/business_categories",
+          "active": false
+        },
+        {
+          "text": "経費入力・レポート",
+          "href": "/preferences/reports",
+          "active": false
+        },
+        {
+          "text": "日当・手当",
+          "href": "/preferences/allowances",
+          "active": false
+        },
+        {
+          "text": "アラート",
+          "href": "/preferences/alert_rules",
+          "active": false
+        },
+        {
+          "text": "IC乗車券オプション",
+          "href": "/preferences/ic_card_option",
+          "active": false
+        },
+        {
+          "text": "付加情報",
+          "href": "/preferences/metadata",
+          "active": false
+        },
+        {
+          "text": "締め日",
+          "href": "/closing_dates",
+          "active": false
+        },
+        {
+          "text": "会計データ出力",
+          "href": "/preferences/analyses_config",
+          "active": false
+        },
+        {
+          "text": "電子帳簿保存法",
+          "href": "/e_doc_options",
+          "active": false
+        },
+        {
+          "text": "一覧表示",
+          "href": "/preferences/list_options",
+          "active": false
+        },
+        {
+          "text": "法人カード",
+          "href": "/preferences/corporate_cards",
+          "active": false
+        },
+        {
+          "text": "仕訳フォーマット",
+          "href": "/journal_entries",
+          "active": false
+        },
+        {
+          "text": "セキュリティ",
+          "href": "/preferences/security",
+          "active": false
+        },
+        {
+          "text": "ログ",
+          "href": "/activity_logs",
+          "active": false
+        },
+        {
+          "text": "契約",
+          "href": "/payment",
+          "active": false
+        },
+        {
+          "text": "会計データ定期出力",
+          "href": "/accounting_data_scheduled_exports",
+          "active": false
+        },
+        {
+          "text": "汎用マスタ",
+          "href": "/generic_fields/data_sets",
+          "active": false
+        },
+        {
+          "text": "組織変更の予約",
+          "href": "/kernels/organizations/reorganizations/changes",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/notifications",
+          "active": false
+        },
+        {
+          "text": "",
+          "href": "/support_page?redirect_to=https://support.keihi.com",
+          "active": false
+        },
+        {
+          "text": "別のテナントに切替",
+          "href": "#",
+          "active": false
+        },
+        {
+          "text": "個人設定",
+          "href": "/users/edit",
+          "active": false
+        },
+        {
+          "text": "ログアウト",
+          "href": "#",
+          "active": false
+        }
+      ],
+      "menu_name": "通知",
+      "target_path": "/notifications",
+      "screenshot": "user_通知.png"
+    }
+  ],
+  "new_button_dropdown": [
+    {
+      "text": "別のテナントに切替",
+      "href": "#"
+    },
+    {
+      "text": "個人設定",
+      "href": "/users/edit"
+    },
+    {
+      "text": "ログアウト",
+      "href": "#"
+    },
+    {
+      "text": "手入力",
+      "href": "#"
+    },
+    {
+      "text": "交通費入力",
+      "href": "#"
+    },
+    {
+      "text": "自動入力",
+      "href": "/receipt_images/new"
+    }
+  ]
+}
