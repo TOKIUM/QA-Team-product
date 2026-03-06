@@ -38,7 +38,7 @@ class TestSessionState:
         self._current_test_steps = []
 
         # 認証情報（.envロード後に読み取る）
-        self.base_url = "https://invoicing-staging.keihi.com"
+        self.base_url = config.base_url
         self.test_email = os.environ.get("TEST_EMAIL", "test@example.com")
         self.test_password = os.environ.get("TEST_PASSWORD", "TestPass123!")
 
@@ -91,13 +91,17 @@ class TestSessionState:
 
             page.goto = _logged_goto
 
-        page.goto(f"{self.base_url}/login")
-        page.get_by_role("button", name="ログイン", exact=True).wait_for(
-            state="visible")
-        page.get_by_label("メールアドレス").fill(self.test_email)
-        page.get_by_label("パスワード").fill(self.test_password)
-        page.get_by_role("button", name="ログイン", exact=True).click()
-        expect(page).to_have_url(re.compile(r"/invoices"), timeout=30000)
+        # カスタムログイン関数が設定されている場合はそちらを使う
+        if self.config.custom_login:
+            self.config.custom_login(page, self)
+        else:
+            page.goto(f"{self.base_url}/login")
+            page.get_by_role("button", name="ログイン", exact=True).wait_for(
+                state="visible")
+            page.get_by_label("メールアドレス").fill(self.test_email)
+            page.get_by_label("パスワード").fill(self.test_password)
+            page.get_by_role("button", name="ログイン", exact=True).click()
+            expect(page).to_have_url(re.compile(r"/invoices"), timeout=30000)
 
         if self.config.action_logging:
             self._current_test_steps.append(

@@ -33,46 +33,68 @@ SCREEN_CONFIGS = [
         "dir": BASE_DIR / "ログイン",
         "tests": "generated_tests/test_tokium_login.py",
         "smoke_test": "ログインページの表示確認",
+        "category": "login",
     },
     {
         "name": "取引先",
         "dir": BASE_DIR / "取引先",
         "tests": "test_partner_list.py",
         "smoke_test": "一覧ページの表示確認",
+        "category": "invoicing",
     },
     {
         "name": "帳票レイアウト",
         "dir": BASE_DIR / "帳票レイアウト",
         "tests": "test_design_list.py",
         "smoke_test": "帳票レイアウト画面に遷移できる",
+        "category": "invoicing",
     },
     {
         "name": "請求書一覧",
         "dir": BASE_DIR / "請求書" / "請求書一覧",
         "tests": "generated_tests/test_invoice_list.py",
         "smoke_test": "一覧ページの表示確認",
+        "category": "invoicing",
     },
     {
         "name": "請求書詳細",
         "dir": BASE_DIR / "請求書" / "請求書一覧",
         "tests": "generated_tests/test_invoice_detail.py",
         "smoke_test": "請求書詳細画面",
+        "category": "invoicing",
     },
     {
         "name": "一括添付",
         "dir": BASE_DIR / "請求書" / "請求書一覧" / "その他の操作" / "共通添付ファイルの一括添付",
         "tests": ".",
+        "category": "invoicing",
     },
     {
         "name": "CSV請求書作成",
         "dir": BASE_DIR / "請求書" / "請求書一覧" / "請求書作成" / "CSVから新規作成",
         "tests": "test_invoice_creation.py",
+        "category": "invoicing",
     },
     {
         "name": "PDF取り込み",
         "dir": BASE_DIR / "請求書" / "請求書一覧" / "請求書作成" / "PDFを取り込む",
         "tests": "test_pdf_organizer.py",
         "smoke_test": "ファイル分割モードにURL直接アクセスできる",
+        "category": "invoicing",
+    },
+    {
+        "name": "インボイス取引先",
+        "dir": BASE_DIR / "TOKIUMインボイス",
+        "tests": "test_invoice_suppliers.py",
+        "smoke_test": "取引先一覧ページの表示確認",
+        "category": "invoice",
+    },
+    {
+        "name": "インボイス請求書",
+        "dir": BASE_DIR / "TOKIUMインボイス",
+        "tests": "test_invoice_reports.py",
+        "smoke_test": "請求書一覧ページの表示確認",
+        "category": "invoice",
     },
 ]
 
@@ -86,6 +108,8 @@ SCREEN_ALIASES = {
     "bulk": "一括添付",
     "csv": "CSV請求書作成",
     "pdf": "PDF取り込み",
+    "invoice_supplier": "インボイス取引先",
+    "invoice_report": "インボイス請求書",
 }
 
 
@@ -102,7 +126,7 @@ def load_env(env_path: Path) -> dict:
     return env_vars
 
 
-def run_screen_tests(config: dict, env: dict, quick: bool = False) -> dict:
+def run_screen_tests(config: dict, env: dict, quick: bool = False, marker: str = None) -> dict:
     """1画面分のテストを実行し、結果を返す"""
     name = config["name"]
     test_dir = config["dir"]
@@ -150,8 +174,11 @@ def run_screen_tests(config: dict, env: dict, quick: bool = False) -> dict:
         if first_test:
             cmd.extend(["-k", first_test])
         else:
-            # smoke_testが未定義の場合、--co で収集して最初の1件を取得
             cmd.extend(["--maxfail=1", "-x"])
+
+    # マーカーフィルタ
+    if marker:
+        cmd.extend(["-m", marker])
 
     # 環境変数をマージ
     run_env = {**os.environ, **env}
@@ -379,6 +406,15 @@ def main():
         help="スモークテスト: 各画面の最初のテスト1件だけ実行（約1-2分）",
     )
     parser.add_argument(
+        "--category",
+        choices=["login", "invoicing", "invoice"],
+        help="カテゴリで絞り込み: login=ログイン, invoicing=請求書発行, invoice=TOKIUMインボイス",
+    )
+    parser.add_argument(
+        "--marker", "-m",
+        help="pytestマーカーで絞り込み（例: smoke, regression）。各画面の-m引数に渡す",
+    )
+    parser.add_argument(
         "--no-lock",
         action="store_true",
         help="ロック機構を無効化（デバッグ用）",
@@ -430,19 +466,22 @@ def main():
         print("環境変数 TEST_EMAIL, TEST_PASSWORD が設定されていることを確認してください")
 
     # 実行対象の画面を決定
+    configs = SCREEN_CONFIGS
     if args.screens:
         target_names = set()
         for s in args.screens:
-            # エイリアス解決
             resolved = SCREEN_ALIASES.get(s, s)
             target_names.add(resolved)
-        configs = [c for c in SCREEN_CONFIGS if c["name"] in target_names]
+        configs = [c for c in configs if c["name"] in target_names]
         if not configs:
             print(f"[ERROR] 指定された画面が見つかりません: {args.screens}")
             print(f"利用可能: {list(SCREEN_ALIASES.keys())}")
             sys.exit(1)
-    else:
-        configs = SCREEN_CONFIGS
+    if args.category:
+        configs = [c for c in configs if c.get("category") == args.category]
+        if not configs:
+            print(f"[ERROR] カテゴリ '{args.category}' に該当する画面がありません")
+            sys.exit(1)
 
     mode = "スモークテスト" if args.quick else "全テスト"
     print(f"E2Eテスト一括実行開始: {len(configs)} 画面（{mode}）")
@@ -452,7 +491,7 @@ def main():
     results = []
     total_start = datetime.now()
     for config in configs:
-        result = run_screen_tests(config, env, quick=args.quick)
+        result = run_screen_tests(config, env, quick=args.quick, marker=args.marker)
         results.append(result)
     total_duration = (datetime.now() - total_start).total_seconds()
 
