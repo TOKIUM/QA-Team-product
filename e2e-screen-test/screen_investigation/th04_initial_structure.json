@@ -1,0 +1,2424 @@
+{
+  "account": "ikeda_n+th4",
+  "timestamp": "2026-03-06 14:59:37",
+  "tenant": {
+    "tenant_name": "マルチテナント検証用2",
+    "base_url": "https://th-02.dev.keihi.com",
+    "sidebar": [
+      {
+        "text": "申請",
+        "href": "/requests",
+        "x": 0,
+        "y": 120
+      },
+      {
+        "text": "経費",
+        "href": "/transactions",
+        "x": 0,
+        "y": 192
+      },
+      {
+        "text": "カード明細",
+        "href": "/aggregation_results",
+        "x": 0,
+        "y": 236
+      },
+      {
+        "text": "集計",
+        "href": "/analyses",
+        "x": 0,
+        "y": 280
+      },
+      {
+        "text": "請求書発行",
+        "href": "https://invoicing-staging.keihi.com/auth-redirect?subdomain=th-02",
+        "x": 0,
+        "y": 352
+      }
+    ],
+    "user_screens": [
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/requests",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "申請する",
+          "全選択",
+          "この条件で検索",
+          "申請種別"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申請日",
+              "経費申請名",
+              "申請ID",
+              "申請種別 経費申請精算(仮払以外)精算(仮払)",
+              "申請フロー名",
+              "総額",
+              "源泉徴収税総額",
+              "申請状況",
+              ""
+            ],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "申請ID",
+          "申請名（キーワード）",
+          "申請日",
+          "最終承認日",
+          "利用日（経費）",
+          "登録番号",
+          "適格請求書の取り扱い",
+          "承認状況",
+          "申請の種類"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n申請一覧\n申請する\n検索条件を指定\n経費精算(0)\n 表示項目設定\n申請日\n\t\n経費申請名\n\t\n申請ID\n\t\n申請種別 \n\t\n申請フロー名\n\t\n総額\n\t\n源泉徴収税総額\n\t\n申請状況\n\t\n\nデータがありません",
+        "menu_name": "申請",
+        "target_path": "/requests",
+        "screenshot": "t1_user_01_申請.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/transactions",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "検索条件",
+          "経費を登録する",
+          "申請する",
+          "表示項目設定"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "",
+              "利用日",
+              "ラベル",
+              "電子領収書",
+              "支払先/訪問先",
+              "金額",
+              "経費科目",
+              "税区分",
+              "所属部署",
+              "経費申請書名",
+              "ステータス",
+              "登録日",
+              "登録番号",
+              "適格請求書"
+            ],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n経費\n検索条件\n経費を登録する\n申請する\n表示項目設定\n\t\n\t\n利用日\n\t\nラベル\n\t\n電子領収書\n\t\n支払先/訪問先\n\t\n金額\n\t\n経費科目\n\t\n税区分\n\t\n所属部署\n\t\n経費申請書名\n\t\nステータス\n\t\n登録日\n\t\n登録番号\n\t\n適格請求書\n\nデータがありません",
+        "menu_name": "経費",
+        "target_path": "/transactions",
+        "screenshot": "t1_user_02_経費.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/aggregation_results",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "10",
+          "経費を登録",
+          "履歴を削除",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "",
+              "利用日",
+              "ご利用先",
+              "経費科目",
+              "金額",
+              "経費処理"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n連携カード・サービス一覧\n連携カード・サービスを追加する\n表示件数\n10 \n1\n(current)\n利用履歴\n一覧 (0)\n経費を登録履歴を削除\n\t利用日\n\tご利用先\n\t経費科目\n\t金額\n\t経費処理\n表示する履歴情報がありません\n10 ",
+        "menu_name": "カード明細",
+        "target_path": "/aggregation_results",
+        "screenshot": "t1_user_03_カード明細.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/analyses",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "この条件で検索",
+          "10",
+          "この条件で検索",
+          "この条件で集計",
+          "選択した0件の申請を集計する"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "作成日時",
+              "集計名",
+              "支払いステータス",
+              "集計方法",
+              "会計データ出力",
+              "経費数",
+              "総額",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          },
+          {
+            "headers": [
+              "",
+              "経費申請名",
+              "申請ID",
+              "申請者名",
+              "申請者の所属部署",
+              "総額",
+              "集計状況",
+              "会計データ出力状況",
+              "支払い状況"
+            ],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "作成日時",
+          "総額",
+          "集計名",
+          "支払いステータス",
+          "会計データ出力",
+          "申請日",
+          "利用日 (経費)",
+          "最終承認日",
+          "申請者の所属部署",
+          "申請者の役職",
+          "承認済みの承認者",
+          "登録番号",
+          "空白検索",
+          "適格請求書の取り扱い",
+          "部署検索範囲",
+          "集計状況",
+          "会計データ出力状況",
+          "支払い状況"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n経費集計とは\n\n振込データ(全銀データ)の作成や、複数の経費申請等の一括データ出力ができます。\n\n一覧から、集計したい経費申請等を選択して下さい。\n\n集計履歴\n経費申請(0)\n検索条件を設定\n作成日時\n\t集計名\n\t支払いステータス\n\t会計データ出力\n\t経費数\n\t総額\n\t\nデータがありません\n10 \n申請一覧\n経費精算\n検索条件を設定\n選択した0件の申請を集計する\n 表示項目設定\n\t\n経費申請名\n\t\n申請ID\n\t\n申請者名\n\t\n申請者の所属部署\n\t\n総額\n\t\n集計状況\n\t\n会計データ出力状況\n\t\n支払い状況\n\nデータがありません",
+        "menu_name": "集計",
+        "target_path": "/analyses",
+        "screenshot": "t1_user_04_集計.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/notifications",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "10",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "日時",
+              "通知内容",
+              "申請種別",
+              "申請名",
+              "合計",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          },
+          {
+            "headers": [
+              "",
+              "利用日",
+              "通知内容",
+              "支払先",
+              "金額",
+              "経費を編集"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n申請に関する通知\n日時\n\t通知内容\n\t申請種別\n\t申請名\n\t合計\n\t\nデータがありません\n10 \n経費に関する通知\n利用日\n\t通知内容\n\t支払先\n\t金額\n\t経費を編集\nデータがありません\n10 ",
+        "menu_name": "通知",
+        "target_path": "/notifications",
+        "screenshot": "t1_user_05_通知.png"
+      }
+    ],
+    "admin_screens": [
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/members",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "この条件で検索",
+          "従業員を追加する",
+          "インポート",
+          "エクスポート",
+          "10",
+          "10",
+          "ラベルを追加"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "従業員",
+              "部署・役職",
+              "権限",
+              "ステータス",
+              "ラベル"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 21
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [
+              "",
+              "ラベル",
+              "人数",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "氏名 または メールアドレス",
+          "DUMMY",
+          "部署",
+          "役職",
+          "社員番号",
+          "DUMMY",
+          "ラベル",
+          "権限",
+          "検索条件",
+          "表示条件",
+          "口座設定のロック設定を有効化",
+          "定期区間のロック設定を有効化"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n従業員\n従業員一覧\n検索条件を設定\n従業員を追加するインポートエクスポート\n10 \n1\n従業員\n\t部署・役職\n\t権限\n\tステータス\n\tラベル\n智片拓海　テナント切り替え\nchikata_t+th002@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\n凍結君\nchikata_t+th006@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\n追加したユーザー\nchikata_t+th011@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\nマルチテナント検証1\ntokium.tenant.tkti.10@outlook.com\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\nマルチテナント検証2\nnishida_y+tkti10_add002@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\nマルチテナント検証用1\nikeda_n+th3@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n\n\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n\t\n所属部署なし\n\t\n管理者\n集計者\n\t\n口座\t未設定\n定期区間\t未設定\n\t\n未設定\n10 \n1\n従業員ラベル一覧\nラベルを追加\nラベル\n\t人数\n\t\nThere is no data to display\n従業員情報の編集ロック設定\n口座設定のロック設定を有効化\n定期区間のロック設定を有効化",
+        "menu_name": "従業員",
+        "target_path": "/members",
+        "screenshot": "t1_admin_01_従業員.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/companions",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "検索条件をリセット",
+          "この条件で検索",
+          "インポート",
+          "参加者追加",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "氏名",
+              "会社名",
+              "部署名",
+              "役職名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "氏名",
+          "会社名",
+          "部署名",
+          "役職名"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n参加者\n参加者一覧\n検索条件を設定\n氏名\n会社名\n部署名\n役職名\n検索条件をリセット\nこの条件で検索\nインポート参加者追加\n氏名\n\t会社名\n\t部署名\n\t役職名\n\t\nデータがありません\n10 ",
+        "menu_name": "参加者",
+        "target_path": "/companions",
+        "screenshot": "t1_admin_04_参加者.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/company_expense_accounts",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "口座追加"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "金融機関名",
+              "支店名",
+              "口座種類",
+              "口座番号",
+              "名義人",
+              "受託者コード",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n支払口座\n支払口座\n口座追加\n金融機関名\n\t支店名\n\t口座種類\n\t口座番号\n\t名義人\n\t受託者コード\n\t\nデータがありません",
+        "menu_name": "支払口座",
+        "target_path": "/preferences/company_expense_accounts",
+        "screenshot": "t1_admin_05_支払口座.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/request_types",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "追加",
+          "設定"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申請名",
+              "利用する",
+              "フォーム",
+              "オプション",
+              "削除"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n申請フォーム\n申請フォーム一覧\n追加\n申請名\n\t利用する\n\tフォーム\n\tオプション\n\t削除\n経費精算\t\t編集できません\t設定\t削除できません\n事前申請\t\t編集できません\t-\t削除できません",
+        "menu_name": "申請フォーム",
+        "target_path": "/request_types",
+        "screenshot": "t1_admin_06_申請フォーム.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/approval_flows",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "申請フローを作成する",
+          "設定に問題がないかチェックする",
+          "この条件で検索",
+          "全員の申請フローを設定する",
+          "10",
+          "申請フロー",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "名前",
+              "条件",
+              "優先度",
+              "申請フロー",
+              "編集",
+              "複製",
+              "削除"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          },
+          {
+            "headers": [
+              "",
+              "氏名",
+              "部署",
+              "役職",
+              "経費精算"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 7
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "一括承認を使用できるようにする承認者は複数の経費申請、事前申請、汎用申請をまとめて承認できるようになります",
+          "氏名 または メールアドレス",
+          "部署",
+          "役職",
+          "申請フロー名",
+          "申請の種類",
+          "設定状況",
+          "検索対象",
+          "表示条件"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n申請フロー\n承認設定 (経費申請、事前申請、汎用申請)\n\n一括承認を使用できるようにする\n承認者は複数の経費申請、事前申請、汎用申請をまとめて承認できるようになります\n申請フロー一覧\n申請フローを作成する設定に問題がないかチェックする\n名前\n\t条件\n\t優先度\n\t申請フロー\n\t編集\n\t複製\n\t削除\n申請フロー\tすべて\t0\t\n申請時に選択\n\t\t\t\n従業員毎申請フロー一覧\n検索条件を指定\n申請フロー未割当の従業員が存在します。\n全員の申請フローを設定する \n10 \n1\n\t氏名\n\t部署\n\t役職\n\t経費精算\n\t\n智片拓海　テナント切り替え\nchikata_t+th002@tokium.jp\n\t所属なし\t役職なし\t\n申請フロー\n\n\t\n凍結君\nchikata_t+th006@tokium.jp\n\t所属なし\t役職なし\t設定されていないため申請できません\n\t\n追加したユーザー\nchikata_t+th011@tokium.jp\n\t所属なし\t役職なし\t設定されていないため申請できません\n\t\nマルチテナント検証1\ntokium.tenant.tkti.10@outlook.com\n\t所属なし\t役職なし\t設定されていないため申請できません\n\t\nマルチテナント検証2\nnishida_y+tkti10_add002@tokium.jp\n\t所属なし\t役職なし\t設定されていないため申請できません\n\t\nマルチテナント検証用1\nikeda_n+th3@tokium.jp\n\t所属なし\t役職なし\t設定されていないため申請できません\n\t\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n\t所属なし\t役職なし\t設定されていないため申請できません\n10 \n1",
+        "menu_name": "申請フロー",
+        "target_path": "/approval_flows",
+        "screenshot": "t1_admin_07_申請フロー.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/projects",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "プロジェクト機能を利用する"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\nプロジェクト\nプロジェクト設定\nプロジェクト機能を利用する",
+        "menu_name": "プロジェクト",
+        "target_path": "/preferences/projects",
+        "screenshot": "t1_admin_08_プロジェクト.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/export",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "設定する",
+          "既定の形式に設定"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "{reportname} 申請日: {date}",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 39
+          },
+          {
+            "headers": [
+              "ID",
+              "TOKIUM経費精算の勘定科目",
+              "勘定科目"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          },
+          {
+            "headers": [
+              "",
+              "TOKIUM経費精算の税区分",
+              "税区分",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [
+          {
+            "name": "",
+            "options": [
+              "標準",
+              "経費詳細",
+              "申請詳細",
+              "AI経費監査用",
+              "弥生会計",
+              "freee",
+              "MFクラウド会計",
+              "勘定奉行",
+              "A-SaaS会計システム",
+              "会計王（個人）",
+              "会計王（法人）",
+              "JDL IBEX 会計",
+              "JDL IBEX 出納帳net",
+              "PCA 会計X",
+              "PCA会計2000PlusV.2形式",
+              "TKC財務会計システム",
+              "発展会計",
+              "Crew",
+              "MJSLINK"
+            ]
+          }
+        ],
+        "labels": [
+          "摘要欄フォーマット",
+          "出力形式を選択"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n会計データ出力形式\n集計設定\n特定の項目毎に集計した結果を出力する事ができます。\n申請者名\n申請日\n申請者メールアドレス\n勘定科目\n補助科目\n経費科目（経費入力時に表示されている科目）\n支払先\nプロジェクト名\nプロジェクトID\nコメント\n費用負担部署\n所属部署\n摘要欄フォーマット\n摘要欄のフォーマットを設定できます。\n以下の特殊フォーマットが使用できます。\n申請書ID:\t{reportid}\n申請書名:\t{reportname}\n事前申請書ID:\t{prereportid}\n申請日付:\t{date}\n社員ID:\t{userid}\n申請者名:\t{username}\n申請者メールアドレス:\t{email}\n所属部署:\t{userdepartment}\n利用日:\t{transactiondate}\n支払先:\t{shopname}\n勘定科目:\t{category}\n親科目:\t{parentdisplaycategory}\n経費科目:\t{displaycategory}\n補助科目:\t{subcategory}\n税区分名:\t{taxcategoryname}\n参加人数:\t{companionnum}\n参加者一覧:\t{companions}\n参加者詳細:\t{companiondetails}\n取引先社名:\t{clientinc}\n取引先人数:\t{clientnum}\n取引先参加者一覧:\t{clients}\n取引先参加者詳細:\t{clientdetails}\n自社参加者人数:\t{employeenum}\n自社参加者一覧:\t{employees}\n自社参加者詳細:\t{employeedetails}\n出発地:\t{originbycategory}\n到着地:\t{destinationbycategory}\n訪問先:\t{visitbycategory}\n目的:\t{purposebycategory}\n費用負担部署:\t{department}\nプロジェクトID:\t{projectid}\nプロジェクト名:\t{projectname}\n法人請求かどうか:\t{reimbursable}\n外貨コード:\t{foreigncurrencycode}\n外貨レート:\t{exchangerate}\n外貨金額:\t{foreigncurrencyamount}\nコメント:\t{comment}\n出発駅:\t{origin}\n到着駅:\t{destination}\n摘要欄フォーマット\n設定例：{reportname} 申請日: {date}　=>　1月分経費 申請日: 2016/1/31\n設定する\n会計データ出力形式\n出力内容をカスタマイズしたい場合には、仕訳フォーマット設定より仕訳フォーマットを登録してください。（仕訳フォーマット設定）\n仕訳フォーマット設定から追加した仕訳フォーマットは、当設定画面では選択できません。\n仕訳フォーマット設定にて勘定科目コード、税区分コードを設定したい場合には、付加情報設定をご利用ください。（付加情報設定）\n当設定の「既定の形式」よりも、仕訳フォーマット設定の「既定の形式」が優先されます。\n出力形式を選択\n標準\n経費詳細\n申請詳細\nAI経費監査用\n弥生会計\nfreee\nMFクラウド会計\n勘定奉行\nA-SaaS会計システム\n会計王（個人）\n会計王（法人）\nJDL IBEX 会計\nJDL IBEX 出納帳net\nPCA 会計X\nPCA会計2000PlusV.2形式\nTKC財務会計システム\n発展会計\nCrew\nMJSLINK\n既定の形式に設定\n\nTOKIUM経費精算上の勘定科目と、出力先の勘定科目の対応表\n\nTOKIUM経費精算の勘定科目\n\t勘定科目\nデータがありません\n\n税区分等の対応表\n\nTOKIUM経費精算の税区分\n\t税区分\nデータがありません",
+        "menu_name": "会計データ出力形式",
+        "target_path": "/preferences/export",
+        "screenshot": "t1_admin_09_会計データ出力形式.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/tax_categories",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "税区分を復元",
+          "税区分を追加"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "適格",
+              "税区分名",
+              "税率",
+              "開始日",
+              "終了日"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n税区分\n税区分設定\n税区分を復元税区分を追加\n適格\n\t税区分名\n\t税率\n\t開始日\n\t終了日\nデータがありません",
+        "menu_name": "税区分",
+        "target_path": "/preferences/tax_categories",
+        "screenshot": "t1_admin_10_税区分.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/business_categories",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集",
+          "編集"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 24
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 2
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 8
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 10
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 26
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 10
+          },
+          {
+            "headers": [
+              "ID",
+              "業種名",
+              "経費科目名",
+              ""
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 3
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n自動入力科目\n自動入力時の業種・経費科目対応設定\n小売\n飲食\n交通機関\n公共機関・サービス\nサービス\n専門業\nその他\n業種名\n\t経費科目名\n\t\nおみやげ\t\t編集\nコンビニ\t\t編集\nスーパー・デパート\t\t編集\nCD・DVD販売\t\t編集\n化粧品販売\t\t編集\n家具販売\t\t編集\n家電・PC、周辺機器\t\t編集\n建築材料販売\t\t編集\n文具類\t\t編集\n新聞\t\t編集\n書籍\t\t編集\n生花店\t\t編集\nスポーツ用品販売・レンタル\t\t編集\n自動車バイク用品販売\t\t編集\n自動車バイク販売・修理\t\t編集\nお菓子・洋菓子\t\t編集\n薬局・ドラッグストア\t\t編集\n衣料材料・用品\t\t編集\n衣類販売\t\t編集\n貴金属・アクセサリー\t\t編集\n質・リサイクル\t\t編集\n雑貨、生活用品、定額ショップ\t\t編集\n靴・かばん・小物\t\t編集\n食品、食材、飲料\t\t編集",
+        "menu_name": "自動入力科目",
+        "target_path": "/preferences/business_categories",
+        "screenshot": "t1_admin_11_自動入力科目.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/reports",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "設定する",
+          "設定する",
+          "設定する",
+          "設定する",
+          "設定する"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "textarea",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "{year}年{month}月分_経費",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "{submissionyear}年{submissionmonth}月分_事前申請_{username}",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "{comment}  【プロジェクト名】{projectname}",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "株式会社TOKIUM 御中",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 7
+          },
+          {
+            "headers": [],
+            "rowCount": 4
+          },
+          {
+            "headers": [],
+            "rowCount": 39
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "メモ欄テンプレート",
+          "距離表示",
+          "税区分入力",
+          "精算対象外",
+          "事前申請項目なしで申請",
+          "申請書名フォーマット",
+          "事前申請書名フォーマット",
+          "申請書備考欄フォーマット",
+          "精算申請書 宛名"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n経費入力・レポート\n経費入力メモ欄テンプレート\n\n経費入力時に、予め入力されるコメントを設定できます。\n\nメモ欄テンプレート\n設定する\n距離表示\n\n交通費入力時に、距離を表示するかどうかを切り替えることができます。\n\n距離表示\n税区分入力\n\n経費入力時に経費科目に関わらず、税区分を入力できます。\n\n税区分入力\n精算対象外\n\n経費入力時に、精算対象外の表示・非表示を切り替えることができます。\n\n精算対象外\n事前申請項目\n\n事前申請作成、編集時に事前申請項目なしで申請できるようにします。\n\n事前申請項目なしで申請\n申請書名フォーマット\n申請書作成時に予め入力される申請書名を設定できます。\n名前には以下の特殊フォーマットが使用できます。\n申請者名:\t{username}\n提出年:\t{submissionyear}\n提出月:\t{submissionmonth}\n提出日:\t{submissionday}\n経費の利用年（最も過去の日付が反映）:\t{year}\n経費の利用月（最も過去の日付が反映）:\t{month}\n経費の利用日（最も過去の日付が反映）:\t{day}\n申請書名フォーマット\n設定例：{year}年{month}月分_経費　=>　2026年3月分_経費\n設定する\n事前申請書名フォーマット\n事前申請書作成時に予め入力される事前申請書名を設定できます。\n名前には以下の特殊フォーマットが使用できます。\n申請者名:\t{username}\n提出年:\t{submissionyear}\n提出月:\t{submissionmonth}\n提出日:\t{submissionday}\n事前申請書名フォーマット\n設定例：{username}_事前申請　=>　山田太郎_事前申請\n設定する\n申請書備考欄フォーマット\n申請書のxlsファイルを出力する際に、備考欄に表示される項目を設定できます。\n名前には以下の特殊フォーマットが使用できます。\n申請書ID:\t{reportid}\n申請書名:\t{reportname}\n事前申請書ID:\t{prereportid}\n申請日付:\t{date}\n社員ID:\t{userid}\n申請者名:\t{username}\n申請者メールアドレス:\t{email}\n所属部署:\t{userdepartment}\n利用日:\t{transactiondate}\n支払先:\t{shopname}\n勘定科目:\t{category}\n親科目:\t{parentdisplaycategory}\n経費科目:\t{displaycategory}\n補助科目:\t{subcategory}\n税区分名:\t{taxcategoryname}\n参加人数:\t{companionnum}\n参加者一覧:\t{companions}\n参加者詳細:\t{companiondetails}\n取引先社名:\t{clientinc}\n取引先人数:\t{clientnum}\n取引先参加者一覧:\t{clients}\n取引先参加者詳細:\t{clientdetails}\n自社参加者人数:\t{employeenum}\n自社参加者一覧:\t{employees}\n自社参加者詳細:\t{employeedetails}\n出発地:\t{originbycategory}\n到着地:\t{destinationbycategory}\n訪問先:\t{visitbycategory}\n目的:\t{purposebycategory}\n費用負担部署:\t{department}\nプロジェクトID:\t{projectid}\nプロジェクト名:\t{projectname}\n法人請求かどうか:\t{reimbursable}\n外貨コード:\t{foreigncurrencycode}\n外貨レート:\t{exchangerate}\n外貨金額:\t{foreigncurrencyamount}\nコメント:\t{comment}\n出発駅:\t{origin}\n到着駅:\t{destination}\n申請書備考欄フォーマット\n設定例：\n{comment} 【プロジェクト名】{projectname} => 出張時の経費です。 【プロジェクト名】 Aプロジェクト\n設定する\n精算申請書 宛名\n\n経費申請の精算申請書を出力する際に、宛名として表示する企業名を設定できます。\n\n精算申請書 宛名\n設定する",
+        "menu_name": "経費入力・レポート",
+        "target_path": "/preferences/reports",
+        "screenshot": "t1_admin_12_経費入力・レポート.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/allowances",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "flight",
+          "hotel",
+          "directions_car",
+          "local_shipping",
+          "work",
+          "star",
+          "削除",
+          "削除",
+          "手当",
+          "+",
+          "-",
+          "×",
+          "min",
+          "max",
+          "作成"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "項目名 1",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "項目名 1",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "実費入力",
+            "disabled": false
+          },
+          {
+            "type": "textarea",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "",
+              ""
+            ],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "表名称（入力フォーム名）",
+          "メニューアイコン",
+          "選択できる経費科目",
+          "デフォルトの経費科目",
+          "手当表の作成",
+          "表のサイズ",
+          "手当表",
+          "選択肢の閲覧制限",
+          "初期選択肢設定",
+          "追加入力項目",
+          "計算式",
+          "変数",
+          "演算子",
+          "関数",
+          "変数を挿入",
+          "日当・手当の閲覧制限"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n日当・手当\n日当・手当表設定\n新規作成\n表名称（入力フォーム名）\nメニューアイコン\nflight\nhotel\ndirections_car\nlocal_shipping\nwork\nstar\n選択できる経費科目\n全ての経費科目を選択可能にする\nデフォルトの経費科目\n未選択\n手当表の作成\n削除\n削除\n表の次元を追加する\n表のサイズ\n手当表\n\t\n\n\n\t\n日本 円\n選択肢の閲覧制限\n\n閲覧制限対象の選択肢を追加する\n初期選択肢設定\n\n初期選択肢を設定する項目を追加する\n追加入力項目\n入力項目を追加する\n計算式\n×\nフォーマットについて\n変数\n[変数名]\n\n項目に対応する、ユーザの入力値が代入されます\n\n演算子\n+, -, *\n\n足し算、引き算、掛け算を表します\n\n関数\nmin(a, b)\n\na, bの内、小さい方の値を返します\n\nmax(a, b)\n\na, bの内、大きい方の値を返します\n\n変数を挿入\n手当\n+\n-\n×\nmin\nmax\n文字数: 0 / 1800\n日当・手当の閲覧制限\n\n閲覧制限を設定する\n作成",
+        "menu_name": "日当・手当",
+        "target_path": "/preferences/allowances",
+        "screenshot": "t1_admin_13_日当・手当.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/alert_rules",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "設定",
+          "設定",
+          "設定",
+          "設定"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "ルール名",
+              "チェック内容",
+              "チェックレベル",
+              "設定"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 28
+          }
+        ],
+        "tabs": [],
+        "selects": [
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          },
+          {
+            "name": "",
+            "options": [
+              "オフ",
+              "警告表示",
+              "申請不可"
+            ]
+          }
+        ],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\nアラート\n経費アラートルール一覧\nルール名\n\tチェック内容\n\tチェックレベル\n\t設定\n二重登録チェック\t利用日と金額が同じ経費が存在しないことをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n利用日チェック\t利用日が未来の日付になっていないかチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n支払先/訪問先チェック\t支払先/訪問先が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n経費科目チェック\t経費科目が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n税区分チェック\t経費に対して税区分が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n外貨税率チェック\t外貨利用時に税率が0％以外の税区分が指定されていないかチェックする\n\t\nオフ\n警告表示\n申請不可\n\t\n\n事前申請チェック\t事前申請が提出されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n領収書チェック\t領収書が添付されタイムスタンプも付与されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\nプロジェクトチェック\tプロジェクトが設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n申請可能期間チェック\t利用日が申請可能期間内であることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n設定\n\n自動入力経費編集チェック\tICカードなどで自動入力された経費が編集されていないことをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n設定\n\n費用負担部署チェック\t費用負担部署が入力されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n参加者チェック\t参加者が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n設定\n\n発着地チェック\t発着地が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n訪問先チェック\t訪問先が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n目的チェック\t目的が設定されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\nメモ欄入力チェック\tメモ欄テンプレートの内容から変更されているかチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n自動入力カード明細チェック\t自動入力にカード明細が統合されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n経費金額チェック\t指定の経費科目について、経費金額が条件内かチェックする\t\nオフ\n警告表示\n申請不可\n\t\n設定\n\nタイムスタンプ有効性チェック（業務サイクル）※2022年改正対応版\t利用日から業務サイクル以内に画像の読み取りを行いタイムスタンプを発行したことをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\nタイムスタンプ有効性チェック(特に速やかに行う方式) ※2016年改正対応版\t受領者本人が特に速やか(利用日から3日以内)に画像の読み取りを行いタイムスタンプを発行したことをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\nタイムスタンプ有効性チェック(業務サイクル) ※2016年改正対応版\t受領者以外の入力確認を前提として受領者本人が、もしくは受領者以外が、利用日から業務サイクル以内に画像の読み取りを行いタイムスタンプを発行したことをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\nカード明細統合チェック\t領収書が必要なカード連携の経費に対して自動入力の経費が統合されているかチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n為替レート変更チェック\t為替レートが外貨管理の設定値から変更されているかどうかをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n通貨不明チェック\t通貨が不明な状態の経費かどうかをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n自動入力した消費税額との差異チェック\t自動入力した消費税額の総額と、経費の消費税額の総額に差異があるかをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n適格/非適格一致チェック\t「適格請求書として扱う」チェックと税区分の組み合わせをチェックする\t\nオフ\n警告表示\n申請不可\n\t\n\n付加情報入力チェック\t事業所ごとにカスタム設定された必須項目が入力されていることをチェックする\t\nオフ\n警告表示\n申請不可\n\t",
+        "menu_name": "アラート",
+        "target_path": "/preferences/alert_rules",
+        "screenshot": "t1_admin_14_アラート.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/metadata",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "インポート",
+          "エクスポート",
+          "この条件で検索",
+          "項目追加",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "氏名"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "氏名・メールアドレス",
+          "編集モード"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n付加情報\n付加情報設定\nインポートエクスポート\n従業員\n従業員ラベル\n役職\n部署\nプロジェクト\n経費科目\n勘定科目\n税区分\n検索条件を設定\n項目追加\n編集モード\n氏名\nデータがありません\n10 ",
+        "menu_name": "付加情報",
+        "target_path": "/preferences/metadata",
+        "screenshot": "t1_admin_15_付加情報.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/closing_dates",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "締め日を追加する",
+          "10"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "",
+              "利用日(from)",
+              "利用日(to)",
+              "申請可能期間(from)",
+              "申請可能期間(to)",
+              "通知日"
+            ],
+            "rowCount": 0
+          },
+          {
+            "headers": [],
+            "rowCount": 1
+          }
+        ],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n締め日\n経費精算締め日設定\n締め日を追加する\n各経費の利用日に対して申請可能な期間を設定できます。\nただし経費アラート設定の申請可能期間チェックが有効である場合のみ機能します。\n利用日(from)\n\t利用日(to)\n\t申請可能期間(from)\n\t申請可能期間(to)\n\t通知日\nデータがありません\n10 ",
+        "menu_name": "締め日",
+        "target_path": "/closing_dates",
+        "screenshot": "t1_admin_16_締め日.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/e_doc_options",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規",
+          "更新",
+          "更新"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "number",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "text",
+            "name": "",
+            "placeholder": "年/月/日",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "業務サイクルの期間(0〜60の範囲)",
+          "タイムスタンプの有効期限: 67日",
+          "運用開始日",
+          "タイムスタンプ検証機能",
+          "経費"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n電子帳簿保存法\n電子帳簿保存法オプション ※2022年改正対応版\n業務サイクルの期間(0〜60の範囲)\n更新\nタイムスタンプの有効期限: 67日\n運用開始日\n更新\nタイムスタンプ検証設定\nタイムスタンプ検証機能\n解像度検証設定\n経費",
+        "menu_name": "電子帳簿保存法",
+        "target_path": "/e_doc_options",
+        "screenshot": "t1_admin_17_電子帳簿保存法.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/list_options",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          },
+          {
+            "type": "datetime-local",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "申請フロー名を申請一覧・承認一覧に表示する",
+          "プロジェクト名を申請一覧・承認一覧に表示する",
+          "源泉徴収税額を申請一覧・承認一覧に表示する",
+          "削除された経費を検索可能にする",
+          "右記の日時以降に作成した経費を削除済み検索の対象とする"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n一覧表示\n一覧表示\n申請フロー名を申請一覧・承認一覧に表示する\nプロジェクト名を申請一覧・承認一覧に表示する\n源泉徴収税額を申請一覧・承認一覧に表示する\n経費検索\n削除された経費を検索可能にする\n右記の日時以降に作成した経費を削除済み検索の対象とする",
+        "menu_name": "一覧表示",
+        "target_path": "/preferences/list_options",
+        "screenshot": "t1_admin_18_一覧表示.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/corporate_cards",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n法人カード\n\n会社決済型のクレジットカードの明細を、自動的に経費として取り込むことができます。\n\nご利用には事前に各クレジットカード会社への連絡が必要です。\n\n対応カード等、詳細はこちら",
+        "menu_name": "法人カード",
+        "target_path": "/preferences/corporate_cards",
+        "screenshot": "t1_admin_19_法人カード.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/preferences/security/ip_restriction",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          },
+          {
+            "type": "checkbox",
+            "name": "",
+            "placeholder": "",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [
+          "指定されたIPアドレスからのみアクセスを許可します",
+          "✕"
+        ],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\nセキュリティ\nIPアクセス制限\nシングルサインオン\nサブドメイン\nSAML設定\nSAML連携アカウント\nIPアドレス制限\nIPアクセス制限の機能は、有料オプションとなります。ご利用の際には、サポートまでご連絡ください。\n指定されたIPアドレスからのみアクセスを許可します\n✕\n許可IPアドレス一覧で指定されたIPアドレスからのみアクセスできます。\nIPアドレスは最大1,000件まで登録できます。",
+        "menu_name": "セキュリティ",
+        "target_path": "/preferences/security",
+        "screenshot": "t1_admin_20_セキュリティ.png"
+      },
+      {
+        "title": "TOKIUM",
+        "url": "https://th-02.dev.keihi.com/generic_fields/data_sets",
+        "headings": [],
+        "buttons": [
+          "システム設定",
+          "智片拓海　テナント切り替えマルチテナント検証用2ikeda_n+th4@tokium.jp",
+          "新規"
+        ],
+        "inputs": [
+          {
+            "type": "search",
+            "name": "",
+            "placeholder": "テナント名で検索",
+            "disabled": false
+          }
+        ],
+        "tables": [],
+        "tabs": [],
+        "selects": [],
+        "labels": [],
+        "body_text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp\n新規\n申請\n\nTOKIUM経費精算\n\n経費\nカード明細\n集計\n\nTOKIUM請求書発行\n\n請求書発行\n汎用マスタ\n汎用マスタ機能のご利用は有料オプションとなります。ご利用の際には、サポートまでご連絡ください。\n※機能に関する説明はこちら",
+        "menu_name": "汎用マスタ",
+        "target_path": "/generic_fields/data_sets",
+        "screenshot": "t1_admin_21_汎用マスタ.png"
+      }
+    ],
+    "header_info": {
+      "text": "システム設定\n智片拓海　テナント切り替え\nマルチテナント検証用2\nikeda_n+th4@tokium.jp",
+      "links": [],
+      "buttons": []
+    }
+  }
+}

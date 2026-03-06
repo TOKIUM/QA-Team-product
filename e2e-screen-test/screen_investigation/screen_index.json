@@ -1,0 +1,141 @@
+{
+  "generated": "2026-03-06",
+  "description": "TOKIUM画面構成調査 データインデックス",
+  "files": [
+    {
+      "file": "multi_subdomain_setting.json",
+      "size_kb": 5.9,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "screen_structure.json",
+      "size_kb": 105.1,
+      "tenant": "th-01",
+      "timestamp": "2026-03-06 09:37:35",
+      "screen_counts": {
+        "admin_screens": 31
+      }
+    },
+    {
+      "file": "subdomain_created_result.json",
+      "size_kb": 0.6,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "subdomain_setting_detail.json",
+      "size_kb": 2.0,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "subdomain_setup_info.json",
+      "size_kb": 1.3,
+      "tenant": "N/A",
+      "timestamp": "2026-03-06 09:56:54",
+      "screen_counts": {}
+    },
+    {
+      "file": "tenant_info.json",
+      "size_kb": 4.3,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "tenant_list.json",
+      "size_kb": 8.5,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "th02_login_investigation.json",
+      "size_kb": 2.4,
+      "tenant": "N/A",
+      "timestamp": "N/A",
+      "screen_counts": {}
+    },
+    {
+      "file": "th02_screen_structure.json",
+      "size_kb": 95.9,
+      "tenant": "マルチテナント検証用1",
+      "timestamp": "2026-03-06 14:16:18",
+      "screen_counts": {
+        "user_screens": 5,
+        "admin_screens": 24,
+        "sidebar_items": 5
+      }
+    },
+    {
+      "file": "th04_initial_structure.json",
+      "size_kb": 88.8,
+      "tenant": "マルチテナント検証用2",
+      "timestamp": "2026-03-06 14:59:37",
+      "screen_counts": {
+        "user_screens": 5,
+        "admin_screens": 19
+      }
+    },
+    {
+      "file": "th04_screen_structure.json",
+      "size_kb": 259.7,
+      "tenant": "ikeda_n+th4",
+      "timestamp": "2026-03-06 14:59:37",
+      "screen_counts": {
+        "tenant0_user": 5,
+        "tenant0_admin": 19,
+        "tenant1_user": 10,
+        "tenant1_admin": 19
+      }
+    },
+    {
+      "file": "titk_screen_structure.json",
+      "size_kb": 0.2,
+      "tenant": "N/A",
+      "timestamp": "2026-03-06 14:36:09",
+      "screen_counts": {
+        "tenant0_user": 0,
+        "tenant0_admin": 0
+      }
+    },
+    {
+      "file": "tkti10_detail_structure.json",
+      "size_kb": 135.0,
+      "tenant": "TOKIUM QA テナント切替 tkti10",
+      "timestamp": "2026-03-06 15:21:17",
+      "screen_counts": {}
+    },
+    {
+      "file": "tkti10_structure.json",
+      "size_kb": 157.4,
+      "tenant": "TOKIUM QA テナント切替 tkti10",
+      "timestamp": "2026-03-06 14:59:37",
+      "screen_counts": {
+        "user_screens": 10,
+        "admin_screens": 19
+      }
+    },
+    {
+      "file": "user_screen_structure.json",
+      "size_kb": 31.5,
+      "tenant": "th-01",
+      "timestamp": "2026-03-06 09:43:32",
+      "screen_counts": {
+        "user_pages": 4
+      }
+    }
+  ],
+  "screenshot_stats": {
+    "root": 68,
+    "th02": 30,
+    "th04": 76,
+    "titk": 4,
+    "tkti10_detail": 11
+  },
+  "total_screenshots": 189
+}
