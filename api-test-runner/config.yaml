@@ -37,6 +37,15 @@ test:
         skip_fields:              # 作成時に不要なフィールド（CSV上は必須だがAPI実装では任意）
           - "projects[0].id"
           - "projects[0].type"
+  put_normal:
+    expected_status: 200          # PUT 正常系の期待ステータス
+    api_overrides: {}
+  delete_normal:
+    expected_status: 200          # DELETE 正常系の期待ステータス
+    api_overrides: {}
+  patch_normal:
+    expected_status: 200          # PATCH 正常系の期待ステータス
+    api_overrides: {}
   post_normal:
     expected_status: 200          # POST 正常系の期待ステータス（200 or 201）
     api_overrides:
@@ -62,6 +71,8 @@ test:
     enabled: true                 # レスポンスボディ検証（WARN 判定）
     pagination_count_check: true  # limit=N のとき結果が N件以下か
     required_fields_check: true   # リソース配列の各要素で同じキーが存在するか
+    json_schema_check: false      # APISpec パラメータ定義からフィールド型を検証
+    json_schema_skip_params: []   # 型検証から除外するパラメータ名（offset/limit/fields は常に除外）
   invalid_body:
     expected_status: 400          # 型不正値の期待ステータス
     api_overrides: {}

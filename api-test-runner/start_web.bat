@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\’r“c®l\ClaudeCode—p\QA-Team-product\api-test-runner"
+cd /d "%~dp0"
 start "" http://127.0.0.1:8000
 ping -n 3 127.0.0.1 >nul
 python -m api_test_runner web
