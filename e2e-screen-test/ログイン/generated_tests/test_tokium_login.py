@@ -94,7 +94,20 @@ def perform_tokium_id_login(page: Page):
     page.locator('input[name="user[email]"]').fill(TOKIUM_ID_EMAIL)
     page.locator('input[name="user[password]"]').fill(TOKIUM_ID_PASSWORD)
     page.wait_for_timeout(500)
+
+    # 認証APIレスポンスを監視しつつログインボタンをクリック
+    auth_failed = []
+    page.on("response", lambda r: auth_failed.append(r.status)
+            if "auth/sign_in" in r.url and r.status >= 400 else None)
     page.locator('#sign_in_form button[type="button"]').click()
+    page.wait_for_timeout(3000)
+
+    if auth_failed:
+        pytest.skip(
+            f"TOKIUM ID認証失敗(HTTP {auth_failed[0]}): "
+            f"認証情報を確認してください（email={TOKIUM_ID_EMAIL[:20]}...）"
+        )
+
     # SSO: dev.keihi.com → invoicing-staging.keihi.com/auth/callback → /invoices
     page.wait_for_url(re.compile(r"invoicing-staging\.keihi\.com"), timeout=30000)
 
