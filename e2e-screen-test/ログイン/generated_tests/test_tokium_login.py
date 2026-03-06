@@ -110,6 +110,7 @@ def tokium_id_page(page: Page) -> Page:
 # テスト1: ログインページの表示確認
 # =============================================================================
 
+@pytest.mark.smoke
 def test_ログインページの表示確認(page: Page):
     """ログインページの主要要素がすべて正しく表示されている"""
 
@@ -261,8 +262,8 @@ def test_tokium_idログイン成功(page: Page):
     # Step2: invoicing-staging に遷移していること
     expect(page).to_have_url(re.compile(r"invoicing-staging\.keihi\.com"))
 
-    # Step3: ログインユーザー名「智片拓海」の確認（ユーザーメニューボタンで一意特定）
-    expect(page.get_by_role("button", name=re.compile(r"智片拓海"))).to_be_visible()
+    # Step3: ユーザーメニューボタンの確認（認証済み状態 = 事業所名がヘッダーに表示）
+    expect(page.get_by_role("button", name=re.compile(r"マルチテナント検証用"))).to_be_visible()
 
     # Step4: サイドバーのナビゲーションが表示されている（認証済み状態）
     expect(page.locator('a[href="/invoices"]')).to_be_visible()

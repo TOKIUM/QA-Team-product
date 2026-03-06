@@ -94,6 +94,7 @@ def get_gallery_frame(page: Page):
 # 1. 画面遷移・基本表示テスト
 # =============================================================================
 
+@pytest.mark.smoke
 def test_帳票レイアウト画面に遷移できる(logged_in_page: Page):
     """サイドバー「帳票レイアウト」から画面に遷移できる"""
     page = logged_in_page

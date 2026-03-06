@@ -64,6 +64,21 @@ TH_ID_MAP = {
     "test_リネームモードの案内テキスト": "TH-PO25",
     "test_リネームモードのキャンセルボタン": "TH-PO26",
     "test_リネームモードの次へボタン": "TH-PO27",
+    # 異常系（基準1）
+    "test_異常系_存在しないサブパスにアクセス": "TH-PO28",
+    "test_異常系_XSSペイロードをURLに含めてアクセス": "TH-PO29",
+    "test_異常系_SQLインジェクションをURLに含めてアクセス": "TH-PO30",
+    "test_異常系_モード連続切替で画面が安定する": "TH-PO31",
+    "test_異常系_ブラウザバックでモード切替が正常動作する": "TH-PO32",
+    # 境界値（基準2）
+    "test_境界値_分割モードのステッパーが正確に3ステップ": "TH-PO33",
+    "test_境界値_リネームモードのステッパーが正確に2ステップ": "TH-PO34",
+    "test_境界値_分割モードの次へボタンはファイル未選択でdisabledかつクリック不可": "TH-PO35",
+    "test_境界値_リネームモードの次へボタンはファイル未選択でdisabledかつクリック不可": "TH-PO36",
+    # 状態遷移（基準5）
+    "test_状態遷移_キャンセル後に再度画面にアクセスできる": "TH-PO37",
+    # 冪等性（基準7）
+    "test_冪等性_モード切替リンク連打で安定する": "TH-PO38",
 }
 
 
@@ -115,6 +130,7 @@ def get_organizer_frame(page: Page):
 # 1. 画面遷移・基本表示テスト（ファイル分割モード）
 # =============================================================================
 
+@pytest.mark.smoke
 def test_ファイル分割モードにURL直接アクセスできる(logged_in_page: Page):
     """ファイル分割URLを直接指定して画面が表示される"""
     page = goto_separation(logged_in_page)
@@ -411,3 +427,309 @@ def test_リネームモードの次へボタン(logged_in_page: Page):
         next_btn = frame.get_by_role("button", name="次へ")
     expect(next_btn.first).to_be_visible(timeout=10000)
     expect(next_btn.first).to_be_disabled()
+
+
+# =============================================================================
+# 9. 異常系テスト（基準1）
+# =============================================================================
+
+def test_異常系_存在しないサブパスにアクセス(logged_in_page: Page):
+    """存在しないサブパス /invoices/pdf-organizer/invalid にアクセスした場合の挙動"""
+    page = logged_in_page
+    page.goto(f"{BASE_URL}/invoices/pdf-organizer/invalid")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(3000)
+
+    # アプリがクラッシュせず、正規ドメインに留まること
+    assert "invoicing-staging.keihi.com" in page.url
+    body_text = page.inner_text("body")
+    assert len(body_text) > 0, "ページが空（クラッシュの可能性）"
+
+    # リダイレクトされるか、エラー表示されるか、いずれにしてもXSS等は実行されない
+    xss_detected = []
+    page.on("dialog", lambda dialog: (xss_detected.append(dialog.message), dialog.dismiss()))
+    page.wait_for_timeout(1000)
+    assert len(xss_detected) == 0, f"不正なダイアログが検出された: {xss_detected}"
+
+
+def test_異常系_XSSペイロードをURLに含めてアクセス(logged_in_page: Page):
+    """XSSペイロードをURLパスに含めてアクセスし、スクリプトが実行されないこと"""
+    page = logged_in_page
+    xss_detected = []
+    page.on("dialog", lambda dialog: (xss_detected.append(dialog.message), dialog.dismiss()))
+
+    xss_payloads = [
+        "<script>alert('XSS')</script>",
+        "<img src=x onerror=alert(1)>",
+        "javascript:alert(document.cookie)",
+    ]
+    for payload in xss_payloads:
+        page.goto(f"{BASE_URL}/invoices/pdf-organizer/{payload}")
+        page.wait_for_load_state("networkidle")
+        page.wait_for_timeout(2000)
+
+        # 正規ドメインに留まること
+        assert "invoicing-staging.keihi.com" in page.url
+        body_text = page.inner_text("body")
+        assert len(body_text) > 0
+
+    assert len(xss_detected) == 0, f"XSSが実行された: {xss_detected}"
+
+
+def test_異常系_SQLインジェクションをURLに含めてアクセス(logged_in_page: Page):
+    """SQLインジェクションペイロードをURLに含めてアクセスし、異常が発生しないこと"""
+    page = logged_in_page
+    sqli_payloads = [
+        "' OR '1'='1",
+        "1; DROP TABLE invoices; --",
+        "' UNION SELECT * FROM users --",
+    ]
+    for payload in sqli_payloads:
+        page.goto(f"{BASE_URL}/invoices/pdf-organizer/{payload}")
+        page.wait_for_load_state("networkidle")
+        page.wait_for_timeout(2000)
+
+        # 正規ドメインに留まること
+        assert "invoicing-staging.keihi.com" in page.url
+        body_text = page.inner_text("body")
+        assert len(body_text) > 0
+
+        # SQLエラーメッセージが露出していないこと
+        body_lower = body_text.lower()
+        assert "sql" not in body_lower or "syntax" not in body_lower, \
+            f"SQLエラーが露出している: {body_text[:200]}"
+
+
+def test_異常系_モード連続切替で画面が安定する(logged_in_page: Page):
+    """分割→リネーム→分割と連続切替しても画面が安定していること"""
+    page = goto_separation(logged_in_page)
+
+    # 分割 → リネーム
+    page.get_by_role("link", name="ファイルリネームに切り替える").click()
+    expect(page).to_have_url(re.compile(r"/rename"), timeout=15000)
+    page.wait_for_timeout(2000)
+
+    # リネーム → 分割
+    page.get_by_role("link", name="ファイル分割に切り替える").click()
+    expect(page).to_have_url(re.compile(r"/separation"), timeout=15000)
+    page.wait_for_timeout(2000)
+
+    # 分割 → リネーム（2回目）
+    page.get_by_role("link", name="ファイルリネームに切り替える").click()
+    expect(page).to_have_url(re.compile(r"/rename"), timeout=15000)
+    page.wait_for_timeout(2000)
+
+    # 最終状態: リネームモードの見出しとiframeが正常表示されていること
+    heading = page.get_by_role("heading", name="PDFをリネームして取り込む")
+    expect(heading).to_be_visible(timeout=10000)
+
+    frame = get_organizer_frame(page)
+    expect(frame.locator("text=ファイルアップロード").first).to_be_visible(timeout=10000)
+
+
+def test_異常系_ブラウザバックでモード切替が正常動作する(logged_in_page: Page):
+    """モード切替後にブラウザバックで戻った場合、前のモードが正常表示されること"""
+    page = goto_separation(logged_in_page)
+
+    # 分割モードの見出し確認
+    expect(page.get_by_role("heading", name="PDFを分割して取り込む")).to_be_visible()
+
+    # リネームモードに切替
+    page.get_by_role("link", name="ファイルリネームに切り替える").click()
+    expect(page).to_have_url(re.compile(r"/rename"), timeout=15000)
+    expect(page.get_by_role("heading", name="PDFをリネームして取り込む")).to_be_visible(timeout=10000)
+
+    # ブラウザバックで分割モードに戻る
+    page.go_back()
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(IFRAME_LOAD_WAIT)
+
+    # 分割モードに戻っていること
+    expect(page).to_have_url(re.compile(r"/separation"), timeout=15000)
+    expect(page.get_by_role("heading", name="PDFを分割して取り込む")).to_be_visible(timeout=10000)
+
+
+# =============================================================================
+# 10. 境界値テスト（基準2）
+# =============================================================================
+
+def test_境界値_分割モードのステッパーが正確に3ステップ(logged_in_page: Page):
+    """分割モードのステッパーが正確に3ステップ（直前2/境界3/直後4ステップ目なし）"""
+    page = goto_separation(logged_in_page)
+    frame = get_organizer_frame(page)
+
+    # 期待される3ステップのテキスト
+    step_texts = ["ファイルアップロード", "ファイルの分割", "プレビュー"]
+
+    # 境界: 3ステップが全て存在すること
+    for step_text in step_texts:
+        loc = frame.locator(f"text={step_text}").first
+        expect(loc).to_be_visible(timeout=10000)
+
+    # 直前（2ステップ目）: ファイルの分割が存在（3ステップ中2つ目）
+    expect(frame.locator("text=ファイルの分割").first).to_be_visible()
+
+    # 直後（4ステップ目相当）: 存在しないステップが表示されていないこと
+    # ステッパーのステップ数をDOM要素で数える
+    # MUIステッパーは .MuiStep-root or step要素で構成される
+    stepper_steps = frame.locator(".MuiStep-root")
+    step_count = stepper_steps.count()
+    if step_count > 0:
+        # MUIステッパーの場合: 正確に3ステップ
+        assert step_count == 3, f"ステッパーのステップ数が3でない（実際: {step_count}）"
+    else:
+        # MUIでない場合: 4つ目のステップテキストが存在しないことで検証
+        # リネームモード固有の「ファイル名の変換」は分割モードにはない
+        fourth_step_candidates = ["確認", "完了", "送信", "ファイル名の変換"]
+        for candidate in fourth_step_candidates:
+            loc = frame.locator(f"text={candidate}")
+            assert loc.count() == 0, \
+                f"4ステップ目相当の要素 '{candidate}' が存在する（count={loc.count()}）"
+
+
+def test_境界値_リネームモードのステッパーが正確に2ステップ(logged_in_page: Page):
+    """リネームモードのステッパーが正確に2ステップ（直前1/境界2/直後3ステップ目なし）"""
+    page = goto_rename(logged_in_page)
+    frame = get_organizer_frame(page)
+
+    # 期待される2ステップのテキスト
+    step_texts = ["ファイルアップロード", "ファイル名の変換"]
+
+    # 境界: 2ステップが全て存在すること
+    for step_text in step_texts:
+        loc = frame.locator(f"text={step_text}").first
+        expect(loc).to_be_visible(timeout=10000)
+
+    # 直前（1ステップ目）: ファイルアップロードが存在（2ステップ中1つ目）
+    expect(frame.locator("text=ファイルアップロード").first).to_be_visible()
+
+    # 直後（3ステップ目相当）: 分割モード固有のステップが表示されていないこと
+    stepper_steps = frame.locator(".MuiStep-root")
+    step_count = stepper_steps.count()
+    if step_count > 0:
+        assert step_count == 2, f"ステッパーのステップ数が2でない（実際: {step_count}）"
+    else:
+        # 分割モード固有のステップが存在しないことで検証
+        third_step_candidates = ["ファイルの分割", "プレビュー"]
+        for candidate in third_step_candidates:
+            loc = frame.locator(f"text={candidate}")
+            assert loc.count() == 0, \
+                f"3ステップ目相当の要素 '{candidate}' が存在する（count={loc.count()}）"
+
+
+def test_境界値_分割モードの次へボタンはファイル未選択でdisabledかつクリック不可(logged_in_page: Page):
+    """分割モードで次へボタンがdisabled状態のとき、クリックしてもステップが進まないこと"""
+    page = goto_separation(logged_in_page)
+    frame = get_organizer_frame(page)
+
+    next_btn = frame.locator('button:has-text("次へ")')
+    if next_btn.count() == 0:
+        next_btn = frame.get_by_role("button", name="次へ")
+
+    # disabled状態であること（境界: ファイル0件）
+    expect(next_btn.first).to_be_disabled()
+
+    # disabledボタンをクリック（force=Trueで強制クリック）
+    next_btn.first.click(force=True)
+    page.wait_for_timeout(2000)
+
+    # ステップ1のままであること（ステップが進んでいないこと）
+    expect(frame.locator("text=アップロードするファイルを選択し").first).to_be_visible(timeout=5000)
+    # URLも変わっていないこと
+    expect(page).to_have_url(re.compile(r"/separation"))
+
+
+def test_境界値_リネームモードの次へボタンはファイル未選択でdisabledかつクリック不可(logged_in_page: Page):
+    """リネームモードで次へボタンがdisabled状態のとき、クリックしてもステップが進まないこと"""
+    page = goto_rename(logged_in_page)
+    frame = get_organizer_frame(page)
+
+    next_btn = frame.locator('button:has-text("次へ")')
+    if next_btn.count() == 0:
+        next_btn = frame.get_by_role("button", name="次へ")
+
+    # disabled状態であること（境界: ファイル0件）
+    expect(next_btn.first).to_be_disabled()
+
+    # disabledボタンをクリック（force=Trueで強制クリック）
+    next_btn.first.click(force=True)
+    page.wait_for_timeout(2000)
+
+    # ステップ1のままであること
+    expect(frame.locator("text=アップロードするファイルを選択し").first).to_be_visible(timeout=5000)
+    expect(page).to_have_url(re.compile(r"/rename"))
+
+
+# =============================================================================
+# 11. 状態遷移テスト（基準5）
+# =============================================================================
+
+def test_状態遷移_キャンセル後に再度画面にアクセスできる(logged_in_page: Page):
+    """iframe内のキャンセルボタン押下後、再度画面にアクセスして正常表示されること"""
+    page = goto_separation(logged_in_page)
+    frame = get_organizer_frame(page)
+
+    # キャンセルボタンをクリック
+    cancel_btn = frame.locator('button:has-text("キャンセル")')
+    if cancel_btn.count() == 0:
+        cancel_btn = frame.get_by_role("button", name="キャンセル")
+    cancel_btn.first.click()
+    page.wait_for_timeout(3000)
+
+    # キャンセル後の状態を確認（一覧に戻るか、同画面に留まるか）
+    page.wait_for_load_state("networkidle")
+
+    # 再度分割モードにアクセス
+    page.goto(SEPARATION_URL)
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(IFRAME_LOAD_WAIT)
+
+    # 正常表示されること
+    expect(page).to_have_url(re.compile(r"/invoices/pdf-organizer/separation"))
+    expect(page.get_by_role("heading", name="PDFを分割して取り込む")).to_be_visible(timeout=10000)
+
+    # iframeも正常にロードされること
+    frame = get_organizer_frame(page)
+    expect(frame.locator("text=ファイルアップロード").first).to_be_visible(timeout=10000)
+
+
+# =============================================================================
+# 12. 冪等性テスト（基準7）
+# =============================================================================
+
+def test_冪等性_モード切替リンク連打で安定する(logged_in_page: Page):
+    """モード切替リンクを素早く連続クリックしても最終状態が安定すること"""
+    page = goto_separation(logged_in_page)
+
+    # 分割→リネームを素早くクリック
+    page.get_by_role("link", name="ファイルリネームに切り替える").click()
+    page.wait_for_timeout(1000)
+
+    # リネーム→分割を素早くクリック
+    link = page.get_by_role("link", name="ファイル分割に切り替える")
+    if link.is_visible():
+        link.click()
+        page.wait_for_timeout(1000)
+
+    # 分割→リネームをもう一度
+    link = page.get_by_role("link", name="ファイルリネームに切り替える")
+    if link.is_visible():
+        link.click()
+
+    # 最終状態の安定を待機
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(IFRAME_LOAD_WAIT)
+
+    # ページが正常表示されていること（分割またはリネームのいずれか）
+    url = page.url
+    assert "/invoices/pdf-organizer/" in url, f"PDF取り込み画面から離脱した: {url}"
+
+    # 見出しが表示されていること
+    heading_separation = page.get_by_role("heading", name="PDFを分割して取り込む")
+    heading_rename = page.get_by_role("heading", name="PDFをリネームして取り込む")
+    assert heading_separation.is_visible() or heading_rename.is_visible(), \
+        "連打後にどちらの見出しも表示されていない"
+
+    # iframeが正常にロードされていること
+    frame = get_organizer_frame(page)
+    expect(frame.locator("text=ファイルアップロード").first).to_be_visible(timeout=10000)

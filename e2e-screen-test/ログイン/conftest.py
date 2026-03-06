@@ -1,189 +1,42 @@
-"""
-pytest-playwright 共通設定 + test_results対応
+"""pytest-playwright 共通設定（ログイン画面テスト用）- e2e_common委譲
 
-テスト実行時の Playwright 設定を一元管理する。
-テスト結果（ログ、動画、JSONサマリー）をtest_results/に自動保存する。
-各テストの操作を動画録画し、TH-IDフォルダに保存する。
-
-動画保存の仕組み:
-  Playwrightの動画はブラウザコンテキスト（ページ）が閉じた後に
-  ファイルが確定する。pytest-playwrightの page fixture は
-  テスト終了後に自動で page.close() を呼ぶため、
-  page.video.save_as() をfixture teardownで呼ぶとハングする。
-  そのため、動画パスをフック時に記録しておき、
-  pytest_sessionfinish で全動画を一括コピーする方式を採用している。
+action logging無効（ログイン画面テストはLocatorパッチ不要）。
 """
 
 import os
-import json
-import shutil
+import sys
 import pytest
-from datetime import datetime
 
-from config import BASE_DIR
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+from e2e_common import ScreenConfig, setup_screen
 
-
-# ===== test_results設定 =====
-RESULT_DIR = os.path.join(str(BASE_DIR), "test_results")
-LOGS_DIR = os.path.join(RESULT_DIR, "_logs")
-VIDEOS_DIR = os.path.join(RESULT_DIR, "_videos_tmp")
-os.makedirs(LOGS_DIR, exist_ok=True)
-os.makedirs(VIDEOS_DIR, exist_ok=True)
-
-_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-_log_file_path = os.path.join(LOGS_DIR, f"test_login_{_timestamp}.log")
-_log_fh = None
-_test_results = []
-_session_start = None
-
-# 動画の遅延コピー用リスト: [(video_src_path, dest_path), ...]
-_pending_video_copies = []
-
-
-def _log(msg: str):
-    """コンソール + ファイルに出力"""
-    global _log_fh
-    line = f"[{datetime.now().strftime('%H:%M:%S')}] {msg}"
-    if _log_fh:
-        _log_fh.write(line + "\n")
-        _log_fh.flush()
-    try:
-        print(line)
-    except UnicodeEncodeError:
-        print(line.encode("ascii", "replace").decode())
-
-
-def get_th_result_dir(th_id: str) -> str:
-    """TH-IDごとの保存フォルダを作成して返す"""
-    d = os.path.join(RESULT_DIR, th_id)
-    os.makedirs(d, exist_ok=True)
-    return d
+_state = setup_screen(ScreenConfig(
+    screen_name="login",
+    log_prefix="test_login",
+    action_logging=False,
+    page_fixture_names=["tokium_id_page", "page"],
+), __file__)
 
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args):
-    """ブラウザコンテキストの共通設定（動画録画有効）"""
-    return {
-        **browser_context_args,
-        "viewport": {"width": 1280, "height": 720},
-        "locale": "ja-JP",
-        "timezone_id": "Asia/Tokyo",
-        "record_video_dir": VIDEOS_DIR,
-        "record_video_size": {"width": 1280, "height": 720},
-    }
+    return _state.browser_context_args(browser_context_args)
 
 
 @pytest.fixture(scope="session")
 def browser_type_launch_args(browser_type_launch_args):
-    """ブラウザ起動時の共通設定"""
-    return {
-        **browser_type_launch_args,
-        "slow_mo": 0,  # 通常は 0（高速）。デバッグ時は 500 等に設定
-    }
+    return _state.browser_type_launch_args(browser_type_launch_args)
 
-
-# ===== セッションレベルのフック =====
 
 def pytest_sessionstart(session):
-    """テストセッション開始時にログファイルを開く"""
-    global _log_fh, _session_start
-    _log_fh = open(_log_file_path, "w", encoding="utf-8")
-    _session_start = datetime.now()
-    _log(f"===== テストセッション開始: {_session_start.strftime('%Y-%m-%d %H:%M:%S')} =====")
-    _log(f"ログ保存先: {_log_file_path}")
-    _log(f"結果保存先: {RESULT_DIR}")
+    _state.on_session_start(session)
 
 
 def pytest_sessionfinish(session, exitstatus):
-    """テストセッション終了時に動画コピー＋JSONサマリーを保存"""
-    global _log_fh
-    session_end = datetime.now()
-    duration = (session_end - _session_start).total_seconds() if _session_start else 0
+    _state.on_session_finish(session, exitstatus)
 
-    passed = sum(1 for r in _test_results if r["result"] == "PASS")
-    failed = sum(1 for r in _test_results if r["result"] == "FAIL")
-    total = len(_test_results)
-
-    _log(f"===== テストセッション終了: {session_end.strftime('%Y-%m-%d %H:%M:%S')} =====")
-    _log(f"結果: {passed} PASS / {failed} FAIL / {total} TOTAL （{duration:.1f}秒）")
-
-    # 遅延コピー: セッション終了時にはページ/コンテキストが閉じているため動画が確定済み
-    for src_path, dest_path in _pending_video_copies:
-        try:
-            if os.path.exists(src_path) and os.path.getsize(src_path) > 0:
-                os.makedirs(os.path.dirname(dest_path), exist_ok=True)
-                shutil.copy2(src_path, dest_path)
-                _log(f"  🎬 動画保存: {dest_path}")
-            else:
-                _log(f"  🎬 動画保存スキップ（ファイルなしまたは空）: {src_path}")
-        except Exception as e:
-            _log(f"  🎬 動画保存失敗: {e}")
-
-    # 一時動画フォルダのクリーンアップ
-    if os.path.exists(VIDEOS_DIR):
-        try:
-            shutil.rmtree(VIDEOS_DIR)
-        except Exception:
-            pass
-
-    # JSONサマリー保存
-    summary = {
-        "session_start": _session_start.isoformat() if _session_start else None,
-        "session_end": session_end.isoformat(),
-        "duration_seconds": round(duration, 1),
-        "total": total,
-        "passed": passed,
-        "failed": failed,
-        "results": _test_results,
-    }
-    json_path = os.path.join(LOGS_DIR, f"test_login_{_timestamp}.json")
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(summary, f, ensure_ascii=False, indent=2)
-    _log(f"JSONサマリー保存: {json_path}")
-
-    if _log_fh:
-        _log_fh.close()
-        _log_fh = None
-
-
-# ===== テストレベルのフック =====
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """各テストの結果をキャプチャし、動画パスを記録、ログを保存"""
     outcome = yield
-    report = outcome.get_result()
-
-    if report.when == "call":
-        th_id = getattr(item, "_th_id", None)
-        test_name = item.name
-        result = "PASS" if report.passed else "FAIL"
-        duration = round(report.duration, 2)
-
-        _log(f"[{result}] {test_name} ({duration}s)"
-             + (f" TH-ID: {th_id}" if th_id else ""))
-
-        # 動画パスを記録（実際のコピーはsessionfinishで実行）
-        if th_id:
-            page = item.funcargs.get("tokium_id_page") or item.funcargs.get("page")
-            if page:
-                try:
-                    video = page.video
-                    if video:
-                        video_path = video.path()
-                        if video_path:
-                            result_dir = get_th_result_dir(th_id)
-                            dest_path = os.path.join(result_dir, f"{th_id}.webm")
-                            _pending_video_copies.append((video_path, dest_path))
-                            _log(f"  🎬 動画パス記録: {video_path} → {dest_path}")
-                except Exception as e:
-                    _log(f"  🎬 動画パス記録失敗: {e}")
-
-        # 結果記録
-        _test_results.append({
-            "th_id": th_id,
-            "test_name": test_name,
-            "result": result,
-            "duration": duration,
-            "error": str(report.longrepr) if report.failed else None,
-        })
+    _state.on_makereport(item, call, outcome)
