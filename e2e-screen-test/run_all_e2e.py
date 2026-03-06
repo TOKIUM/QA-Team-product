@@ -117,6 +117,48 @@ SCREEN_CONFIGS = [
         "smoke_test": "集計画面の表示確認",
         "category": "invoice",
     },
+    {
+        "name": "経費申請",
+        "dir": BASE_DIR / "経費精算",
+        "tests": "test_requests.py",
+        "smoke_test": "申請画面の表示確認",
+        "category": "expense",
+    },
+    {
+        "name": "経費一覧",
+        "dir": BASE_DIR / "経費精算",
+        "tests": "test_transactions.py",
+        "smoke_test": "経費画面の表示確認",
+        "category": "expense",
+    },
+    {
+        "name": "カード明細",
+        "dir": BASE_DIR / "経費精算",
+        "tests": "test_card_statements.py",
+        "smoke_test": "カード明細画面の表示確認",
+        "category": "expense",
+    },
+    {
+        "name": "経費集計",
+        "dir": BASE_DIR / "経費精算",
+        "tests": "test_expense_analyses.py",
+        "smoke_test": "集計画面の表示確認",
+        "category": "expense",
+    },
+    {
+        "name": "WDL帳票",
+        "dir": BASE_DIR / "WDL",
+        "tests": "test_wdl_invoices.py",
+        "smoke_test": "帳票一覧ページの表示確認",
+        "category": "wdl",
+    },
+    {
+        "name": "WDL受信ポスト",
+        "dir": BASE_DIR / "WDL",
+        "tests": "test_wdl_invoice_posts.py",
+        "smoke_test": "受信ポスト画面の表示確認",
+        "category": "wdl",
+    },
 ]
 
 # 画面名の短縮マッピング（CLIで指定しやすくする）
@@ -134,6 +176,12 @@ SCREEN_ALIASES = {
     "invoice_auto_input": "インボイス自動入力",
     "invoice_national_tax": "インボイス国税関係書類",
     "invoice_aggregation": "インボイス集計",
+    "expense_requests": "経費申請",
+    "expense_transactions": "経費一覧",
+    "expense_card": "カード明細",
+    "expense_analyses": "経費集計",
+    "wdl_invoices": "WDL帳票",
+    "wdl_posts": "WDL受信ポスト",
 }
 
 
@@ -431,8 +479,8 @@ def main():
     )
     parser.add_argument(
         "--category",
-        choices=["login", "invoicing", "invoice"],
-        help="カテゴリで絞り込み: login=ログイン, invoicing=請求書発行, invoice=TOKIUMインボイス",
+        choices=["login", "invoicing", "invoice", "wdl", "expense"],
+        help="カテゴリで絞り込み: login=ログイン, invoicing=請求書発行, invoice=TOKIUMインボイス, wdl=WDL, expense=経費精算",
     )
     parser.add_argument(
         "--marker", "-m",

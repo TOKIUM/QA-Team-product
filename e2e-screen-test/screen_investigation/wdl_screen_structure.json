@@ -1,0 +1,322 @@
+{
+  "investigation_date": "2026-03-06T19:24:59.136288",
+  "base_url": "https://invoicing-wdl-staging.keihi.com",
+  "environment": "staging",
+  "product": "WDL (WEB Download Site)",
+  "screens": [
+    {
+      "name": "top_after_login",
+      "url": "https://invoicing-wdl-staging.keihi.com/invoices",
+      "screenshot": "screenshots/wdl/00_after_login.png",
+      "structure": {
+        "title": "TOKIUM Webダウンロード",
+        "url": "https://invoicing-wdl-staging.keihi.com/invoices",
+        "headings": [
+          {
+            "tag": "H1",
+            "text": "帳票"
+          }
+        ],
+        "nav_links": [
+          {
+            "text": "帳票",
+            "href": "/invoices"
+          },
+          {
+            "text": "受信ポスト",
+            "href": "/invoice-posts"
+          }
+        ],
+        "buttons": [
+          "池田尚人ikeda_n@tokium.jp",
+          "検索条件",
+          "検索条件を追加",
+          "この条件で検索",
+          "リセット"
+        ],
+        "forms": [
+          {
+            "action": "https://invoicing-wdl-staging.keihi.com/invoices",
+            "method": "get",
+            "inputs": [
+              {
+                "type": "select-one",
+                "name": "invoicePostId",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "documentNumber",
+                "placeholder": ""
+              },
+              {
+                "type": "checkbox",
+                "name": "notDownloaded",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "totalAmountMin",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "totalAmountMax",
+                "placeholder": ""
+              },
+              {
+                "type": "date",
+                "name": "billedAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "billedAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "dueAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "dueAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "receivedAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "receivedAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "text",
+                "name": "memo",
+                "placeholder": ""
+              }
+            ]
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "受信日",
+              "ダウンロード済みダウンロード済み",
+              "送付元",
+              "添付",
+              "請求書番号",
+              "合計金額",
+              "支払期日",
+              "ファイル名",
+              "メモ"
+            ],
+            "row_count": 10
+          }
+        ]
+      },
+      "timestamp": "2026-03-06T19:25:07.327095"
+    },
+    {
+      "name": "01_帳票",
+      "url": "https://invoicing-wdl-staging.keihi.com/invoices",
+      "original_url": "https://invoicing-wdl-staging.keihi.com/invoices",
+      "screenshot": "screenshots\\wdl\\01_帳票.png",
+      "structure": {
+        "title": "TOKIUM Webダウンロード",
+        "url": "https://invoicing-wdl-staging.keihi.com/invoices",
+        "headings": [
+          {
+            "tag": "H1",
+            "text": "帳票"
+          }
+        ],
+        "nav_links": [
+          {
+            "text": "帳票",
+            "href": "/invoices"
+          },
+          {
+            "text": "受信ポスト",
+            "href": "/invoice-posts"
+          }
+        ],
+        "buttons": [
+          "池田尚人ikeda_n@tokium.jp",
+          "検索条件",
+          "検索条件を追加",
+          "この条件で検索",
+          "リセット"
+        ],
+        "forms": [
+          {
+            "action": "https://invoicing-wdl-staging.keihi.com/invoices",
+            "method": "get",
+            "inputs": [
+              {
+                "type": "select-one",
+                "name": "invoicePostId",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "documentNumber",
+                "placeholder": ""
+              },
+              {
+                "type": "checkbox",
+                "name": "notDownloaded",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "totalAmountMin",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "totalAmountMax",
+                "placeholder": ""
+              },
+              {
+                "type": "date",
+                "name": "billedAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "billedAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "dueAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "dueAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "receivedAtFrom",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "date",
+                "name": "receivedAtTo",
+                "placeholder": "YYYY-MM-DD"
+              },
+              {
+                "type": "text",
+                "name": "memo",
+                "placeholder": ""
+              }
+            ]
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "受信日",
+              "ダウンロード済みダウンロード済み",
+              "送付元",
+              "添付",
+              "請求書番号",
+              "合計金額",
+              "支払期日",
+              "ファイル名",
+              "メモ"
+            ],
+            "row_count": 10
+          }
+        ]
+      },
+      "timestamp": "2026-03-06T19:25:10.408791"
+    },
+    {
+      "name": "02_受信ポスト",
+      "url": "https://invoicing-wdl-staging.keihi.com/invoice-posts",
+      "original_url": "https://invoicing-wdl-staging.keihi.com/invoice-posts",
+      "screenshot": "screenshots\\wdl\\02_受信ポスト.png",
+      "structure": {
+        "title": "TOKIUM Webダウンロード",
+        "url": "https://invoicing-wdl-staging.keihi.com/invoice-posts",
+        "headings": [
+          {
+            "tag": "H1",
+            "text": "受信ポスト"
+          }
+        ],
+        "nav_links": [
+          {
+            "text": "帳票",
+            "href": "/invoices"
+          },
+          {
+            "text": "受信ポスト",
+            "href": "/invoice-posts"
+          }
+        ],
+        "buttons": [
+          "池田尚人ikeda_n@tokium.jp",
+          "検索条件",
+          "検索条件を追加",
+          "この条件で検索",
+          "リセット"
+        ],
+        "forms": [
+          {
+            "action": "https://invoicing-wdl-staging.keihi.com/invoice-posts",
+            "method": "get",
+            "inputs": [
+              {
+                "type": "text",
+                "name": "senderName",
+                "placeholder": ""
+              },
+              {
+                "type": "text",
+                "name": "recipientEmail",
+                "placeholder": ""
+              },
+              {
+                "type": "checkbox",
+                "name": "hasChangeRequest",
+                "placeholder": ""
+              }
+            ]
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "送付元名",
+              "変更依頼",
+              "未読",
+              "閲覧可能",
+              ""
+            ],
+            "row_count": 10
+          }
+        ]
+      },
+      "timestamp": "2026-03-06T19:25:13.337114"
+    }
+  ],
+  "navigation": [
+    {
+      "text": "帳票",
+      "href": "/invoices"
+    },
+    {
+      "text": "受信ポスト",
+      "href": "/invoice-posts"
+    }
+  ]
+}
