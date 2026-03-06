@@ -96,6 +96,27 @@ SCREEN_CONFIGS = [
         "smoke_test": "請求書一覧ページの表示確認",
         "category": "invoice",
     },
+    {
+        "name": "インボイス自動入力",
+        "dir": BASE_DIR / "TOKIUMインボイス",
+        "tests": "test_auto_input.py",
+        "smoke_test": "自動入力中書類一覧の表示確認",
+        "category": "invoice",
+    },
+    {
+        "name": "インボイス国税関係書類",
+        "dir": BASE_DIR / "TOKIUMインボイス",
+        "tests": "test_national_tax.py",
+        "smoke_test": "国税関係書類一覧の表示確認",
+        "category": "invoice",
+    },
+    {
+        "name": "インボイス集計",
+        "dir": BASE_DIR / "TOKIUMインボイス",
+        "tests": "test_aggregation.py",
+        "smoke_test": "集計画面の表示確認",
+        "category": "invoice",
+    },
 ]
 
 # 画面名の短縮マッピング（CLIで指定しやすくする）
@@ -110,6 +131,9 @@ SCREEN_ALIASES = {
     "pdf": "PDF取り込み",
     "invoice_supplier": "インボイス取引先",
     "invoice_report": "インボイス請求書",
+    "invoice_auto_input": "インボイス自動入力",
+    "invoice_national_tax": "インボイス国税関係書類",
+    "invoice_aggregation": "インボイス集計",
 }
 
 
