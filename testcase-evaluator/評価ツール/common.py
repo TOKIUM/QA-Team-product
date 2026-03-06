@@ -19,6 +19,7 @@ HEADER_KEYWORDS = {
     'detail':   ['詳細'],
     'steps':    ['手順', 'テスト実行手順', '実行手順', 'テスト手順', '操作手順'],
     'expected': ['期待値', '期待結果', '確認結果'],
+    'priority': ['優先度', '優先', 'Priority'],
     'notes':    ['備考'],
 }
 
@@ -157,3 +158,38 @@ def strip_parens(text):
 def is_vague_exception(text):
     """曖昧表現の偽陽性チェック（例外パターンに該当するかどうか）"""
     return any(re.search(exc, text) for exc in VAGUE_EXCEPTIONS)
+
+
+# =====================================================================
+# テスト手順フォーマッター
+# =====================================================================
+
+def format_test_steps(preconditions, steps):
+    """前提条件と実行手順を統一フォーマットで整形する。
+
+    Args:
+        preconditions: 前提条件のリスト（文字列のリスト）。空リストなら省略。
+        steps: 実行手順のリスト（文字列のリスト）。番号なしで渡す。
+
+    Returns:
+        整形済みの手順文字列。
+
+    出力例:
+        【前提条件】
+        ・パスワード変更画面でパスワードを入力済みであること
+
+        【実行手順】
+        1. 「パスワードを変更する」ボタンをクリックする
+    """
+    parts = []
+    if preconditions:
+        parts.append("【前提条件】")
+        for p in preconditions:
+            parts.append(f"・{p}")
+        parts.append("")  # 空行で区切り
+
+    parts.append("【実行手順】")
+    for i, s in enumerate(steps, 1):
+        parts.append(f"{i}. {s}")
+
+    return "\n".join(parts)

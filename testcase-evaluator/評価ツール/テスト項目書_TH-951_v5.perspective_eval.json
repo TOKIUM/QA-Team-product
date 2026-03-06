@@ -1,0 +1,43 @@
+{
+  "file": "テスト項目書_TH-951_v5.xlsx",
+  "score": 100,
+  "max_score": 100,
+  "sections_found": 5,
+  "toc_items": 5,
+  "testcases_used": 22,
+  "spec_provided": true,
+  "categories": [
+    {
+      "name": "構造妥当性",
+      "score": 20,
+      "max": 20,
+      "issues": []
+    },
+    {
+      "name": "リスト網羅性",
+      "score": 20,
+      "max": 20,
+      "issues": [
+        "（参考）リスト行数(22)がテスト観点数(8)の1.5倍超"
+      ]
+    },
+    {
+      "name": "マトリクス整合性",
+      "score": 20,
+      "max": 20,
+      "issues": []
+    },
+    {
+      "name": "デシジョンテーブル論理性",
+      "score": 20,
+      "max": 20,
+      "issues": []
+    },
+    {
+      "name": "リスク観点妥当性",
+      "score": 20,
+      "max": 20,
+      "issues": []
+    }
+  ]
+}
