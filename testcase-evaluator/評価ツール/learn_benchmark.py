@@ -46,6 +46,50 @@ VAGUE_PATTERNS = [
 ]
 
 
+def quick_score(stats):
+    """分析済みstatsから品質スコアを推定する（0〜100点）
+
+    evaluate_testcases.py の6チェックを簡易再現し、
+    学習に含めるべきファイルかを高速に判定する。
+    """
+    score = 100
+    ec = max(stats['expected_count'], 1)
+    cc = max(stats['case_count'], 1)
+
+    # チェック1: 曖昧表現（最大-20点、1件あたり約4点）
+    score -= min(stats['vague_count'] * 4, 20)
+
+    # チェック2: 複数「こと」混在（最大-15点、1件あたり2点）
+    score -= min(stats['koto_2plus'] * 2, 15)
+
+    # チェック4: 手順の省略（最大-10点）
+    steps_rate = stats['with_steps'] / cc
+    if steps_rate < 0.4:
+        score -= 10
+    elif steps_rate < 0.6:
+        score -= 7
+    elif steps_rate < 0.8:
+        score -= 3
+
+    # チェック5a: 期待値の長さ（最大-5点）
+    short_or_long = sum(1 for l in stats['expected_lengths'] if l < 7 or l > 80)
+    if ec > 0:
+        dev_rate = short_or_long / ec
+        if dev_rate > 0.2:
+            score -= 5
+        elif dev_rate > 0.1:
+            score -= 3
+
+    # チェック5c: 末尾表現（最大-5点）
+    good_ending_rate = stats['good_ending_count'] / ec
+    if good_ending_rate < 0.7:
+        score -= 5
+    elif good_ending_rate < 0.8:
+        score -= 3
+
+    return max(0, score)
+
+
 def analyze_sheet(ws, col_map, data_start_row):
     """1シートを分析して統計情報を返す"""
     no_col = col_map.get('no')
@@ -124,50 +168,78 @@ def analyze_sheet(ws, col_map, data_start_row):
 # ベンチマーク生成
 # =====================================================================
 
-def compute_benchmark(file_stats_list):
-    """全ファイルの分析結果からベンチマーク基準値を算出"""
+def compute_weight(quick_score_val):
+    """品質スコアから学習重みを計算する
 
-    # 全ファイル統合
+    高品質ファイルの統計値がベンチマークにより強く反映される。
+    90点を基準（1.0倍）とし、95点以上は1.2倍の重みを持つ。
+    """
+    if quick_score_val >= 95:
+        return 1.2
+    elif quick_score_val >= 90:
+        return 1.0
+    elif quick_score_val >= 80:
+        return 0.5
+    else:
+        return 0.0
+
+
+def compute_benchmark(file_stats_list):
+    """全ファイルの分析結果からベンチマーク基準値を算出（重み付き）"""
+
+    # 全ファイル統合（パーセンタイル・末尾パターン用。重み対象外）
     all_expected_lengths = []
     all_steps_lengths = []
-    total_cases = 0
-    total_with_steps = 0
-    total_with_numbered = 0
-    total_expected = 0
-    total_koto_1 = 0
-    total_koto_2plus = 0
-    total_vague = 0
-    total_good_ending = 0
     all_endings = {}
+
+    # 重み付き集計（rate計算用）
+    w_total_cases = 0.0
+    w_total_with_steps = 0.0
+    w_total_with_numbered = 0.0
+    w_total_expected = 0.0
+    w_total_koto_1 = 0.0
+    w_total_vague = 0.0
+    w_total_good_ending = 0.0
+
+    # 生の合計（メタデータ用）
+    total_cases = 0
+    total_expected = 0
 
     for fs in file_stats_list:
         stats = fs['stats']
+        weight = compute_weight(fs.get('quick_score', 90))
+        fs['weight'] = weight
+
         all_expected_lengths.extend(stats['expected_lengths'])
         all_steps_lengths.extend(stats['steps_lengths'])
-        total_cases += stats['case_count']
-        total_with_steps += stats['with_steps']
-        total_with_numbered += stats['with_numbered_steps']
-        total_expected += stats['expected_count']
-        total_koto_1 += stats['koto_1']
-        total_koto_2plus += stats['koto_2plus']
-        total_vague += stats['vague_count']
-        total_good_ending += stats['good_ending_count']
         for k, v in stats['endings'].items():
             all_endings[k] = all_endings.get(k, 0) + v
 
-    # 統計値算出
+        total_cases += stats['case_count']
+        total_expected += stats['expected_count']
+
+        # 重み付き集計
+        w_total_cases += stats['case_count'] * weight
+        w_total_with_steps += stats['with_steps'] * weight
+        w_total_with_numbered += stats['with_numbered_steps'] * weight
+        w_total_expected += stats['expected_count'] * weight
+        w_total_koto_1 += stats['koto_1'] * weight
+        w_total_vague += stats['vague_count'] * weight
+        w_total_good_ending += stats['good_ending_count'] * weight
+
+    # 統計値算出（パーセンタイル・平均値は重みなし — データ点の分布を見るため）
     avg_expected = sum(all_expected_lengths) / max(len(all_expected_lengths), 1)
     avg_steps = sum(all_steps_lengths) / max(len(all_steps_lengths), 1)
 
-    # パーセンタイル（期待値の長さ）
     sorted_exp = sorted(all_expected_lengths)
     p5 = sorted_exp[int(len(sorted_exp) * 0.05)] if sorted_exp else 0
     p95 = sorted_exp[int(len(sorted_exp) * 0.95)] if sorted_exp else 100
 
-    # 末尾表現TOP
     top_endings = sorted(all_endings.items(), key=lambda x: -x[1])[:15]
 
-    safe_expected = max(total_expected, 1)
+    # rate計算は重み付き
+    safe_w_cases = max(w_total_cases, 1.0)
+    safe_w_expected = max(w_total_expected, 1.0)
 
     benchmark = {
         '_meta': {
@@ -175,6 +247,8 @@ def compute_benchmark(file_stats_list):
             'source_files': [fs['file'] for fs in file_stats_list],
             'total_cases': total_cases,
             'total_expected': total_expected,
+            'quality_gate': {},
+            'weighted': True,
         },
         'expected_length': {
             'avg': round(avg_expected, 1),
@@ -187,26 +261,26 @@ def compute_benchmark(file_stats_list):
             'avg': round(avg_steps, 1),
         },
         'steps_coverage': {
-            'rate': round(total_with_steps / max(total_cases, 1), 3),
+            'rate': round(w_total_with_steps / safe_w_cases, 3),
             'good': 0.80,
             'warning': 0.60,
         },
         'numbered_steps': {
-            'rate': round(total_with_numbered / max(total_cases, 1), 3),
+            'rate': round(w_total_with_numbered / safe_w_cases, 3),
             'good': 0.20,
         },
         'single_koto_rate': {
-            'rate': round(total_koto_1 / safe_expected, 4),
+            'rate': round(w_total_koto_1 / safe_w_expected, 4),
             'good': 0.98,
             'warning': 0.95,
         },
         'vague_rate': {
-            'rate': round(total_vague / safe_expected, 4),
+            'rate': round(w_total_vague / safe_w_expected, 4),
             'good': 0.01,
             'acceptable': 0.03,
         },
         'good_endings': {
-            'rate': round(total_good_ending / safe_expected, 3),
+            'rate': round(w_total_good_ending / safe_w_expected, 3),
             'good': 0.80,
             'patterns': [e[0] for e in top_endings],
         },
@@ -221,6 +295,8 @@ def compute_benchmark(file_stats_list):
         benchmark['per_file'].append({
             'file': fs['file'],
             'cases': s['case_count'],
+            'quick_score': fs.get('quick_score', 0),
+            'weight': fs.get('weight', 1.0),
             'expected_avg': round(sum(s['expected_lengths']) / max(len(s['expected_lengths']), 1), 1),
             'steps_avg': round(sum(s['steps_lengths']) / max(len(s['steps_lengths']), 1), 1),
             'steps_coverage': round(s['with_steps'] / sc, 3),
@@ -268,7 +344,7 @@ def fmt_diff(new_val, old_val, fmt='.1f', suffix='', invert=False):
     return f'{sign}{diff:{fmt}}{suffix}{direction}'
 
 
-def generate_report(benchmark, prev_benchmark, report_dir):
+def generate_report(benchmark, prev_benchmark, report_dir, excluded_files=None):
     """学習レポートMarkdownを生成して保存"""
     today = datetime.now().strftime('%Y-%m-%d')
     bm = benchmark
@@ -277,9 +353,12 @@ def generate_report(benchmark, prev_benchmark, report_dir):
     # ファイル別テーブル
     file_rows = []
     for i, pf in enumerate(bm['per_file'], 1):
+        weight_str = f"{pf.get('weight', 1.0):.1f}x"
+        qs_str = f"{pf.get('quick_score', '?')}点"
         file_rows.append(
-            f"| {i} | {pf['file'][:60]} | {pf['cases']:,}件 "
-            f"| {pf['expected_avg']}字 | {pf['koto_1_rate']*100:.0f}% "
+            f"| {i} | {pf['file'][:50]} | {pf['cases']:,}件 "
+            f"| {qs_str} | {weight_str} "
+            f"| {pf['koto_1_rate']*100:.0f}% "
             f"| {pf['vague_rate']*100:.1f}% | {pf['good_ending_rate']*100:.0f}% |"
         )
 
@@ -337,8 +416,8 @@ def generate_report(benchmark, prev_benchmark, report_dir):
 
 ## ファイル別サマリー
 
-| # | ファイル | ケース数 | 期待値平均 | こと1回率 | 曖昧率 | 良好末尾率 |
-|---|---|---|---|---|---|---|
+| # | ファイル | ケース数 | スコア | 重み | こと1回率 | 曖昧率 | 良好末尾率 |
+|---|---|---|---|---|---|---|---|
 {file_table}
 
 ---
@@ -372,6 +451,27 @@ def generate_report(benchmark, prev_benchmark, report_dir):
 | 番号付き手順率 | {bm['numbered_steps']['good']*100:.0f}%以上 | — |
 """
 
+    # 品質ゲートで除外されたファイルのセクション
+    if excluded_files:
+        excluded_rows = '\n'.join(
+            f"| {ef['file'][:60]} | {ef.get('quick_score', '?')}点 | {ef['stats']['case_count']}件 |"
+            for ef in excluded_files
+        )
+        gate_info = bm['_meta'].get('quality_gate', {})
+        min_score = gate_info.get('min_score', 80)
+        report += f"""
+---
+
+## 品質ゲートで除外されたファイル（{min_score}点未満）
+
+| ファイル | スコア | ケース数 |
+|---|---|---|
+{excluded_rows}
+
+> これらのファイルはベンチマーク算出に含まれていません。
+> 品質を改善して再配置するか、不要であれば削除してください。
+"""
+
     report_path = os.path.join(report_dir, '学習レポート.md')
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write(report)
@@ -389,6 +489,10 @@ def main():
     parser.add_argument('--output', '-o', default=None,
                         help='出力先（デフォルト: 参考例フォルダ内の benchmark.json）')
     parser.add_argument('--verbose', '-v', action='store_true', help='詳細出力')
+    parser.add_argument('--min-score', type=int, default=90,
+                        help='品質ゲート: この点数未満のファイルを学習から除外（デフォルト: 90）')
+    parser.add_argument('--no-gate', action='store_true',
+                        help='品質ゲートを無効化し、全ファイルを学習対象にする')
     parser.add_argument('--include-all', action='store_true',
                         help='シート名フィルタを無効化し、全シートを学習対象にする')
     args = parser.parse_args()
@@ -465,9 +569,44 @@ def main():
         print("\nERROR: 分析可能なファイルがありませんでした")
         sys.exit(1)
 
+    # 品質ゲート: スコアの低いファイルを除外
+    excluded_files = []
+    if not args.no_gate:
+        print()
+        print(f"品質ゲート: {args.min_score}点未満のファイルを除外")
+        print("-" * 60)
+        passed = []
+        for fs in file_stats_list:
+            qs = quick_score(fs['stats'])
+            fs['quick_score'] = qs
+            if qs >= args.min_score:
+                passed.append(fs)
+                if args.verbose:
+                    print(f"  ✅ {qs}点 {fs['file']}")
+            else:
+                excluded_files.append(fs)
+                print(f"  ❌ {qs}点 {fs['file']}（除外）")
+        if excluded_files:
+            print(f"\n除外: {len(excluded_files)}件 / 通過: {len(passed)}件")
+        else:
+            print(f"全{len(passed)}件が品質ゲート通過")
+        file_stats_list = passed
+
+    if not file_stats_list:
+        print("\nERROR: 品質ゲート通過ファイルがありません（--min-score を下げるか --no-gate を指定）")
+        sys.exit(1)
+
     # ベンチマーク生成
     print()
     benchmark = compute_benchmark(file_stats_list)
+
+    # 品質ゲート情報をメタデータに記録
+    benchmark['_meta']['quality_gate'] = {
+        'min_score': args.min_score if not args.no_gate else None,
+        'passed': len(file_stats_list),
+        'excluded': [{'file': fs['file'], 'score': fs.get('quick_score', 0)}
+                     for fs in excluded_files],
+    }
 
     # 出力
     output_path = args.output or os.path.join(ref_dir, 'benchmark.json')
@@ -495,8 +634,10 @@ def main():
     # ファイル別サマリー
     print("--- ファイル別サマリー ---")
     for pf in benchmark['per_file']:
+        qs = pf.get('quick_score', '?')
+        w = pf.get('weight', 1.0)
         print(f"  {pf['file']}: {pf['cases']}件"
-              f" / 期待値{pf['expected_avg']}字"
+              f" / {qs}点 / {w:.1f}x"
               f" / 手順{pf['steps_coverage']*100:.0f}%"
               f" / こと1回{pf['koto_1_rate']*100:.0f}%"
               f" / 曖昧{pf['vague_rate']*100:.1f}%")
@@ -533,10 +674,29 @@ def main():
     shutil.copy2(output_path, snapshot_path)
 
     # レポート生成
-    report_path = generate_report(benchmark, prev_benchmark, report_dir)
+    report_path = generate_report(benchmark, prev_benchmark, report_dir, excluded_files)
 
     print(f"\n学習レポート: {report_path}")
     print(f"スナップショット: {snapshot_path}")
+
+    # 古いスナップショットの自動クリーンアップ（最新3件のみ保持）
+    cleanup_old_snapshots(report_base, keep=3)
+
+
+def cleanup_old_snapshots(report_base, keep=3):
+    """古い学習レポートスナップショットを削除し、最新N件のみ保持する"""
+    if not os.path.isdir(report_base):
+        return
+    dates = sorted([d for d in os.listdir(report_base)
+                    if os.path.isdir(os.path.join(report_base, d))
+                    and re.match(r'\d{4}-\d{2}-\d{2}', d)])
+    if len(dates) <= keep:
+        return
+    to_remove = dates[:-keep]
+    for d in to_remove:
+        path = os.path.join(report_base, d)
+        shutil.rmtree(path)
+        print(f"古いスナップショット削除: {d}")
 
 
 if __name__ == '__main__':
