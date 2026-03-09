@@ -106,6 +106,19 @@ class RunManager:
             results_dir_name = config.get("output", {}).get("results_dir", "results")
             results_dir = self.project_root / results_dir_name
 
+            # Web UIから選択されたパターンでconfig.patternsを上書き
+            if patterns:
+                config = {**config, "test": {**config.get("test", {}), "patterns": patterns}}
+
+            # ファイル個別選択時は individual_only を無効化（CLIの --api と同等）
+            if csv_files:
+                test_cfg = config.get("test", {})
+                pn_cfg = test_cfg.get("post_normal", {})
+                if pn_cfg.get("individual_only"):
+                    pn_cfg = {**pn_cfg, "individual_only": []}
+                    test_cfg = {**test_cfg, "post_normal": pn_cfg}
+                    config = {**config, "test": test_cfg}
+
             client = ApiClient(
                 base_url, api_key, timeout=timeout,
                 max_retries=max_retries, retry_delay=retry_delay,
@@ -124,7 +137,23 @@ class RunManager:
                 self._state.total = len(test_cases)
 
             if not test_cases:
-                self._set_error("フィルタ条件に一致するテストケースがありません")
+                # 選択状況に応じた具体的メッセージ
+                if patterns:
+                    pattern_str = ", ".join(patterns)
+                    methods_in_specs = set(s.method for s in specs)
+                    if all(m == "GET" for m in methods_in_specs) and any(
+                            p in patterns for p in [
+                                "post_normal", "put_normal",
+                                "delete_normal", "patch_normal"]):
+                        msg = (f"選択したCSVファイルはGET APIのため、"
+                               f"書き込み系パターン({pattern_str})では"
+                               f"テストが生成されません")
+                    else:
+                        msg = (f"パターン [{pattern_str}] に一致する"
+                               f"テストケースがありません")
+                else:
+                    msg = "フィルタ条件に一致するテストケースがありません"
+                self._set_error(msg)
                 client.close()
                 return
 
@@ -133,9 +162,29 @@ class RunManager:
             run_dir = results_dir / timestamp
             run_dir.mkdir(parents=True, exist_ok=True)
 
+            # データ比較設定
+            dc_config = config.get("test", {}).get(
+                "post_normal", {}).get("data_comparison", {})
+            dc_enabled = dc_config.get("enabled", False)
+
             results = []
             for tc in test_cases:
+                # テスト前スナップショット（post_normal + 認証あり + 成功期待のみ）
+                before = None
+                if (dc_enabled and tc.pattern == "post_normal"
+                        and tc.use_auth and tc.expected_status < 400):
+                    before = runner._get_snapshot(tc, dc_config)
+
                 result = client.execute(tc)
+
+                # テスト後スナップショット + 差分計算
+                if before is not None and result.passed:
+                    after = runner._get_after_snapshot(tc, result, dc_config)
+                    if after is not None:
+                        result.before_snapshot = before
+                        result.after_snapshot = after
+                        result.data_diff_summary = runner._compute_data_diff(
+                            before, after)
 
                 # スキーマ検証
                 if result.passed and result.response_body is not None:
@@ -151,6 +200,20 @@ class RunManager:
                                   indent=runner.json_indent, ensure_ascii=False)
                         f.write("\n")
                     result.output_file = str(output_file)
+
+                # before/after スナップショット保存
+                if result.before_snapshot is not None:
+                    bf = run_dir / f"{tc.name}_before.json"
+                    with open(bf, "w", encoding="utf-8", newline="\n") as f:
+                        json.dump(result.before_snapshot, f,
+                                  indent=runner.json_indent, ensure_ascii=False)
+                        f.write("\n")
+                if result.after_snapshot is not None:
+                    af = run_dir / f"{tc.name}_after.json"
+                    with open(af, "w", encoding="utf-8", newline="\n") as f:
+                        json.dump(result.after_snapshot, f,
+                                  indent=runner.json_indent, ensure_ascii=False)
+                        f.write("\n")
 
                 results.append(result)
 
@@ -204,7 +267,32 @@ class RunManager:
                 else:
                     label = "PASS"
 
-                result_list.append({
+                # 操作種別を判定
+                operation = ""
+                if tc.pattern == "post_normal":
+                    name_lower = tc.name.lower()
+                    if "create" in name_lower or "登録" in tc.name:
+                        operation = "create"
+                    elif "update" in name_lower or "更新" in tc.name:
+                        operation = "update"
+                    elif "delete" in name_lower or "削除" in tc.name:
+                        operation = "delete"
+                    else:
+                        operation = "post"
+
+                # レスポンスボディ（先頭2000文字まで、ポーリングサイズ抑制）
+                response_body_preview = None
+                response_body_truncated = False
+                if r.response_body is not None:
+                    body_str = json.dumps(
+                        r.response_body, indent=2, ensure_ascii=False)
+                    if len(body_str) > 2000:
+                        response_body_preview = body_str[:2000]
+                        response_body_truncated = True
+                    else:
+                        response_body_preview = body_str
+
+                entry = {
                     "name": tc.name,
                     "pattern": tc.pattern,
                     "description": TestRunner._test_description(tc),
@@ -218,9 +306,16 @@ class RunManager:
                     "request_url": r.request_url or "",
                     "request_headers": r.request_headers or {},
                     "query_params": tc.query_params or {},
+                    "request_body": tc.request_body,
                     "schema_warnings": r.schema_warnings or [],
                     "output_file": tc.name + ".json" if r.response_body is not None else "",
-                })
+                    "operation": operation,
+                    "response_body": response_body_preview,
+                    "response_body_truncated": response_body_truncated,
+                }
+                if r.data_diff_summary:
+                    entry["data_comparison"] = r.data_diff_summary
+                result_list.append(entry)
 
             total = len(results)
             passed = sum(1 for r in results if r.passed)

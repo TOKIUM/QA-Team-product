@@ -197,7 +197,8 @@ class TestPostTestValue:
     def test_string_type(self):
         p = Parameter("名前", "name", "文字列", "〇", "")
         val = TestRunner._post_test_value(p)
-        assert val == "test_value"
+        assert isinstance(val, str)
+        assert "[APIテスト]name_" in val
 
     def test_email_type(self):
         p = Parameter("メール", "email", "文字列", "〇", "")
@@ -224,7 +225,8 @@ class TestPostTestValue:
         val = TestRunner._post_test_value(p)
         assert isinstance(val, list)
         assert len(val) == 1
-        assert val[0] == {"name": "test_value"}
+        assert "name" in val[0]
+        assert "[APIテスト]name_" in val[0]["name"]
 
     def test_object_with_children(self):
         child = Parameter("権限", "is_admin", "真偽値", "〇", "")

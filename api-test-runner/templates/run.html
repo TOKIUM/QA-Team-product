@@ -26,15 +26,15 @@
     <div style="margin-bottom:12px">
         <div class="text-sm-500" style="color:var(--text-secondary);margin-bottom:6px">パターン: <span id="patternStatus" class="fw-normal"></span></div>
         <div class="filter-group" id="patternChecks">
-            <button class="filter-btn active" data-pat="auth" onclick="togglePattern(this)">auth</button>
-            <button class="filter-btn active" data-pat="pagination" onclick="togglePattern(this)">pagination</button>
-            <button class="filter-btn active" data-pat="search" onclick="togglePattern(this)">search</button>
-            <button class="filter-btn active" data-pat="boundary" onclick="togglePattern(this)">boundary</button>
-            <button class="filter-btn active" data-pat="missing_required" onclick="togglePattern(this)">missing_required</button>
-            <button class="filter-btn active" data-pat="post_normal" onclick="togglePattern(this)">post_normal</button>
-            <button class="filter-btn active" data-pat="put_normal" onclick="togglePattern(this)">put_normal</button>
-            <button class="filter-btn active" data-pat="delete_normal" onclick="togglePattern(this)">delete_normal</button>
-            <button class="filter-btn active" data-pat="patch_normal" onclick="togglePattern(this)">patch_normal</button>
+            <button class="filter-btn" data-pat="auth" onclick="togglePattern(this)">auth</button>
+            <button class="filter-btn" data-pat="pagination" onclick="togglePattern(this)">pagination</button>
+            <button class="filter-btn" data-pat="search" onclick="togglePattern(this)">search</button>
+            <button class="filter-btn" data-pat="boundary" onclick="togglePattern(this)">boundary</button>
+            <button class="filter-btn" data-pat="missing_required" onclick="togglePattern(this)">missing_required</button>
+            <button class="filter-btn" data-pat="post_normal" onclick="togglePattern(this)">post_normal</button>
+            <button class="filter-btn" data-pat="put_normal" onclick="togglePattern(this)">put_normal</button>
+            <button class="filter-btn" data-pat="delete_normal" onclick="togglePattern(this)">delete_normal</button>
+            <button class="filter-btn" data-pat="patch_normal" onclick="togglePattern(this)">patch_normal</button>
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(true)" style="margin-left:8px">全選択</button>
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(false)">全解除</button>
         </div>
@@ -81,7 +81,7 @@
         <div class="table-scroll" style="max-height:500px">
             <table>
                 <thead>
-                    <tr>
+                    <tr id="resultsHeader">
                         <th class="sortable" data-col="name" onclick="sortResults('name')">テスト名 <span class="sort-icon">▲</span></th>
                         <th class="sortable" data-col="description" onclick="sortResults('description')">検証内容 <span class="sort-icon">▲</span></th>
                         <th>期待</th>
