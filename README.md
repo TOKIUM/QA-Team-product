@@ -11,6 +11,7 @@ QAチームが作成したテスト自動化ツール群。
 | `tool/testcase-evaluator` | テストケース評価 | テスト項目書（Excel）を100点満点で自動評価 |
 | `tool/pdf-test-data-generator` | PDFテストデータ生成 | ファイルアップロードテスト用のPDF・各種ファイルを生成 |
 | `tool/qa-bug-replay` | QA Bug Replay | バグ発見時に直近30秒の動画+Consoleログ+Networkリクエストを自動保存するChrome拡張 |
+| `tool/contract-create` | 契約書生成ツール | 指定した文面の契約書を生成（主にTCで活用） |
 
 ## 使い方
 
