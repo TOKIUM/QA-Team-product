@@ -124,10 +124,11 @@ MAX_MONEY_P1_PENALTY = 5
 MAX_KANTEN_COVERAGE_PENALTY = 5
 
 # 金額関連キーワード（ガードレール qa-perspectives.md 1-13 準拠）
+# 注意: "金額"単体は画面カラム名として頻出するため除外。金額「計算」に関するキーワードに限定
 MONEY_KEYWORDS = [
-    '金額', '計算', '按分', '消費税', '源泉', '丸め', '切捨', '切上', '四捨五入',
-    '外貨', 'レート', '税抜', '税込', '課金', '請求額', '税額', '小数点',
-    '端数', '仕訳', '定期支払',
+    '金額計算', '金額変更', '按分', '消費税', '源泉', '丸め', '切捨', '切上', '四捨五入',
+    '外貨', '為替レート', '外貨レート', '税抜', '税込', '課金', '請求額', '税額', '小数点',
+    '端数', '仕訳', '定期支払', '金額確認',
 ]
 
 
@@ -593,8 +594,11 @@ def check_kanten_tc_coverage(cases, col_map, ws_kanten):
         return {'checked': False, 'issues': [], 'penalty': 0}
 
     # 観点シートから○のついた行を抽出
+    # 行1-26はヘッダ領域（環境/OS/ブラウザ/アプリ/権限が混在）のためスキップ
+    # 行27以降の観点セクション（リスト/マトリクス/DT/チェックリスト）のみ対象
+    PERSPECTIVE_SECTION_START = 27
     marked_perspectives = []
-    for row in range(1, ws_kanten.max_row + 1):
+    for row in range(PERSPECTIVE_SECTION_START, ws_kanten.max_row + 1):
         row_has_mark = False
         row_texts = []
         for col in range(1, min(ws_kanten.max_column + 1, 20)):

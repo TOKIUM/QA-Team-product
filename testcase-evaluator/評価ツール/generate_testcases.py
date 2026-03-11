@@ -467,9 +467,10 @@ def analyze_perspectives(spec_text, test_cases=None):
 
     # --- 環境判定 ---
     # デフォルト: Web系の機能なら TK+TI+TD をベースに
-    has_tk = any(w in combined for w in ["tokium経費", "経費精算", "tk", "経費"])
-    has_ti = any(w in combined for w in ["tokium請求書", "請求書", "ti", "invoice"])
-    has_td = any(w in combined for w in ["tokiumdoc", "電子帳簿", "td", "ドキュメント", "doc"])
+    # 注意: "tk","ti","td","doc"等の短い略語は偽陽性を起こすため、より具体的なキーワードを使用
+    has_tk = any(w in combined for w in ["tokium経費", "経費精算", "tokium expense", "経費申請"])
+    has_ti = any(w in combined for w in ["tokium請求書", "請求書発行", "tokium invoice", "invoicing"])
+    has_td = any(w in combined for w in ["tokiumdoc", "電子帳簿", "tokium document", "tokium doc"])
 
     if has_tk and has_ti and has_td:
         result["env"]["TK+TI+TD"] = True
@@ -499,8 +500,9 @@ def analyze_perspectives(spec_text, test_cases=None):
     result["browser"]["Safari"] = has_safari
 
     # --- アプリ（モバイル） ---
-    has_ios = any(w in combined for w in ["ios", "iphone", "ipad", "モバイル", "アプリ", "スマホ"])
-    has_android = any(w in combined for w in ["android", "モバイル", "アプリ", "スマホ"])
+    # 注意: "アプリ"は"アプリケーション"にもマッチするため除外。"モバイル"も汎用的すぎるため除外
+    has_ios = any(w in combined for w in ["ios", "iphone", "ipad", "iosアプリ", "スマホ"])
+    has_android = any(w in combined for w in ["android", "androidアプリ", "スマホ"])
     has_ipad = any(w in combined for w in ["ipad", "タブレット"])
 
     if has_ios:
@@ -514,8 +516,9 @@ def analyze_perspectives(spec_text, test_cases=None):
 
     # --- 主要観点 ---
     perspective_keywords = {
-        "負荷": ["負荷", "パフォーマンス", "大量", "高負荷", "速度", "レスポンス"],
-        "金額確認": ["金額", "税", "消費税", "合計", "小計", "請求額", "支払", "単価"],
+        "負荷": ["負荷テスト", "パフォーマンス", "高負荷", "速度改善", "レスポンス改善", "大量データ処理"],
+        "金額確認": ["金額計算", "税計算", "消費税率", "端数", "按分", "丸め", "小数点",
+                    "税率変更", "単価変更", "金額変更", "合計額", "小計額"],
         "時間経過": ["時間経過", "タイムアウト", "有効期限", "期限", "日付", "期間"],
         "高頻度": ["高頻度", "連打", "連続", "繰り返し"],
         "既存機能への影響": ["既存", "影響", "回帰", "リグレッション", "デグレ"],
@@ -524,10 +527,10 @@ def analyze_perspectives(spec_text, test_cases=None):
         "UIUX": ["ui", "ux", "画面", "表示", "デザイン", "レイアウト", "ボタン", "フォーム"],
         "セキュリティ/権限": ["セキュリティ", "権限", "認証", "ログイン", "パスワード", "アクセス制限",
                           "ip制限", "saml", "sso"],
-        "お客様提供ドキュメント": ["ヘルプ", "マニュアル", "ドキュメント", "利用ガイド"],
+        "お客様提供ドキュメント": ["ヘルプページ", "マニュアル更新", "利用ガイド", "ヘルプセンター"],
         "統一性": ["統一", "一貫性", "命名規則"],
         "英語化": ["英語", "多言語", "i18n", "翻訳", "ローカライズ"],
-        "外部API": ["api", "外部連携", "webhook", "連携", "外部api"],
+        "外部API": ["外部api", "外部連携", "webhook", "api連携", "apiキー", "api仕様"],
         "本番環境への影響(チャットボタン等)": ["本番", "チャット", "ウィジェット"],
         "契約変更(プラン・オプション変更)": ["プラン", "契約", "オプション", "ライセンス"],
     }
@@ -542,12 +545,13 @@ def analyze_perspectives(spec_text, test_cases=None):
         result["perspective"]["既存機能への影響"] = True
 
     # --- 権限 ---
+    # 注意: "承認"や"取引先"は機能名としても頻出するため、権限ロール名に限定
     permission_keywords = {
-        "権限なし": ["権限なし", "一般ユーザー", "一般"],
-        "集計者": ["集計者", "集計"],
-        "承認者": ["承認者", "承認"],
-        "管理者": ["管理者", "admin"],
-        "取引先管理者": ["取引先管理者", "取引先"],
+        "権限なし": ["権限なし", "一般ユーザー"],
+        "集計者": ["集計者権限", "集計者ロール"],
+        "承認者": ["承認者権限", "承認者ロール"],
+        "管理者": ["管理者権限", "管理者ロール", "admin権限"],
+        "取引先管理者": ["取引先管理者権限", "取引先管理者ロール"],
     }
 
     has_any_permission = False
@@ -1409,6 +1413,14 @@ def _fill_kanten_sheet(ws, perspectives, ticket_keys=None):
     if perspectives.get("ticket_url"):
         if not ticket_keys:
             ws.cell(row=4, column=9, value=perspectives["ticket_url"])
+
+    # テンプレートの既存○マークをクリア（KANTEN_CELLSに定義のない列も含む）
+    MARK_COLUMNS = [3, 6, 9, 12, 14, 15]  # C, F, I, L, N, O
+    for row in range(11, 26):
+        for col in MARK_COLUMNS:
+            val = ws.cell(row=row, column=col).value
+            if val and str(val).strip() in ('○', '◯', '〇', 'O'):
+                ws.cell(row=row, column=col, value="-")
 
     # 各カテゴリの選択を書き込む
     for category, items in KANTEN_CELLS.items():
