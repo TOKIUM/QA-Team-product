@@ -223,6 +223,46 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     print(f"CSV specs: {len(specs)} APIs")
     print()
 
+    # --pattern 指定時は config.patterns を上書きしてテスト生成に反映
+    if hasattr(args, "pattern") and args.pattern:
+        cli_patterns = args.pattern.split(",")
+        config.setdefault("test", {})["patterns"] = cli_patterns
+
+    # --safe-write / --safe-post: 書き込み系テストを有効化（確認プロンプト付き）
+    safe_write = getattr(args, "safe_write", False)
+    safe_post = getattr(args, "safe_post", False)
+    if safe_write or safe_post:
+        patterns = config.setdefault("test", {}).setdefault("patterns", [])
+        if safe_write:
+            write_patterns = ["post_normal", "put_normal", "delete_normal", "patch_normal"]
+            label = "POST/PUT/DELETE/PATCH"
+        else:
+            write_patterns = ["post_normal"]
+            label = "POST"
+        added = []
+        for wp in write_patterns:
+            if wp not in patterns:
+                patterns.append(wp)
+                added.append(wp)
+        flag_name = "--safe-write" if safe_write else "--safe-post"
+        print(f"** {flag_name}: {label} 正常系テストが有効化されました **")
+        if added:
+            print(f"   追加パターン: {', '.join(added)}")
+        print("   注意: 実データの登録・変更・削除が発生します")
+        try:
+            answer = input("   続行しますか？ (y/N): ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            answer = ""
+        if answer != "y":
+            print("中断しました")
+            return 0
+
+    # --api 指定時は individual_only を無効化（個別指定なので全API生成が必要）
+    if hasattr(args, "api") and args.api:
+        test_cfg = config.setdefault("test", {})
+        for pattern_key in ("post_normal", "put_normal", "delete_normal", "patch_normal"):
+            test_cfg.setdefault(pattern_key, {})["individual_only"] = []
+
     # テストケース生成
     client = ApiClient(
         base_url, api_key, timeout=timeout,
@@ -241,16 +281,19 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     if hasattr(args, "api") and args.api:
         apis = set(args.api.split(","))
         test_cases = [tc for tc in test_cases if any(a in tc.name for a in apis)]
+    if hasattr(args, "method") and args.method:
+        methods_filter = {m.strip().upper() for m in args.method.split(",")}
+        test_cases = [tc for tc in test_cases if tc.method in methods_filter]
     if hasattr(args, "failed_only") and args.failed_only:
         test_cases = _filter_failed_only(test_cases, results_dir)
     filtered = total_before != len(test_cases)
 
     # メソッド別カウント
-    get_count = sum(1 for tc in test_cases if tc.method == "GET")
-    post_count = sum(1 for tc in test_cases if tc.method == "POST")
-    method_info = f"GET: {get_count}"
-    if post_count:
-        method_info += f", POST: {post_count}"
+    from collections import Counter
+    method_counts = Counter(tc.method for tc in test_cases)
+    method_info = ", ".join(
+        f"{m}: {c}" for m, c in sorted(method_counts.items())
+    )
 
     info = f"Test cases: {len(test_cases)} ({method_info})"
     if filtered:
@@ -261,10 +304,16 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
 
     # ドライラン
     if hasattr(args, "dry_run") and args.dry_run:
-        from .test_runner import TestRunner as TR
+        from .validator import ResponseValidator
         for tc in test_cases:
-            desc = TR._test_description(tc)
+            desc = ResponseValidator.test_description(tc)
             print(f"  {desc}")
+            if tc.request_body and tc.use_auth:
+                import json
+                body_str = json.dumps(tc.request_body, ensure_ascii=False)
+                if len(body_str) > 120:
+                    body_str = body_str[:120] + "..."
+                print(f"    body: {body_str}")
         print()
         print(f"Dry run: {len(test_cases)} test(s) would be executed")
         client.close()
@@ -381,6 +430,32 @@ def cmd_trend(args: argparse.Namespace, project_root: Path) -> int:
     return 0
 
 
+def cmd_convert(args: argparse.Namespace) -> int:
+    """convert サブコマンド: OpenAPI JSON/YAML → CSV 変換."""
+    from .openapi_converter import OpenApiConverter
+
+    input_path = Path(args.input)
+    if not input_path.exists():
+        print(f"Error: File not found: {input_path}")
+        return 1
+
+    converter = OpenApiConverter.from_file(input_path)
+    rows = converter.convert()
+
+    if not rows:
+        print("Warning: No API endpoints found in the spec.")
+        return 0
+
+    if args.output:
+        output_path = Path(args.output)
+        converter.to_csv(output_path)
+        print(f"Converted {len(rows)} parameter(s) → {output_path}")
+    else:
+        print(converter.to_csv())
+
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="api_test_runner",
@@ -400,8 +475,14 @@ def main() -> int:
                             help="API フィルタ (カンマ区切り, 例: groups,members)")
     run_parser.add_argument("--failed-only", "-f", action="store_true",
                             help="前回 FAIL のテストのみ再実行")
+    run_parser.add_argument("--method", "-m", default=None,
+                            help="メソッドフィルタ (カンマ区切り, 例: POST,PUT,DELETE)")
     run_parser.add_argument("--dry-run", action="store_true",
                             help="テスト一覧を表示するのみ（実行しない）")
+    run_parser.add_argument("--safe-post", action="store_true",
+                            help="POST 正常系テストを安全に実行（--safe-write のエイリアス）")
+    run_parser.add_argument("--safe-write", action="store_true",
+                            help="書き込み系テスト (POST/PUT/DELETE/PATCH) を安全に実行（確認プロンプト付き）")
     run_parser.add_argument("--env", "-e", default=None,
                             help="環境名 (例: staging → .env.staging を読み込み)")
 
@@ -440,6 +521,12 @@ def main() -> int:
     web_parser.add_argument("--port", "-p", type=int, default=8000,
                             help="ポート (default: 8000)")
 
+    # convert
+    convert_parser = subparsers.add_parser("convert", help="OpenAPI JSON/YAML → CSV 変換")
+    convert_parser.add_argument("input", help="OpenAPI ファイル (JSON/YAML)")
+    convert_parser.add_argument("-o", "--output", default=None,
+                                help="出力 CSV ファイルパス (省略時は標準出力)")
+
     # trend
     trend_parser = subparsers.add_parser("trend", help="パフォーマンストレンド分析")
     trend_parser.add_argument("--last", "-n", type=int, default=10,
@@ -475,6 +562,8 @@ def main() -> int:
         return 0
     elif args.command == "diff":
         return cmd_diff(args, project_root)
+    elif args.command == "convert":
+        return cmd_convert(args)
     elif args.command == "trend":
         return cmd_trend(args, project_root)
 

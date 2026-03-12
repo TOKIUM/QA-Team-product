@@ -12,6 +12,7 @@ from ..csv_parser import parse_directory
 from ..http_client import ApiClient
 from ..reporter import Reporter
 from ..test_runner import TestRunner
+from ..validator import ResponseValidator
 
 
 @dataclass
@@ -113,11 +114,12 @@ class RunManager:
             # ファイル個別選択時は individual_only を無効化（CLIの --api と同等）
             if csv_files:
                 test_cfg = config.get("test", {})
-                pn_cfg = test_cfg.get("post_normal", {})
-                if pn_cfg.get("individual_only"):
-                    pn_cfg = {**pn_cfg, "individual_only": []}
-                    test_cfg = {**test_cfg, "post_normal": pn_cfg}
-                    config = {**config, "test": test_cfg}
+                for pattern_key in ("post_normal", "put_normal", "delete_normal", "patch_normal"):
+                    p_cfg = test_cfg.get(pattern_key, {})
+                    if p_cfg.get("individual_only"):
+                        p_cfg = {**p_cfg, "individual_only": []}
+                        test_cfg = {**test_cfg, pattern_key: p_cfg}
+                config = {**config, "test": test_cfg}
 
             client = ApiClient(
                 base_url, api_key, timeout=timeout,
@@ -163,17 +165,20 @@ class RunManager:
             run_dir.mkdir(parents=True, exist_ok=True)
 
             # データ比較設定
-            dc_config = config.get("test", {}).get(
-                "post_normal", {}).get("data_comparison", {})
-            dc_enabled = dc_config.get("enabled", False)
+            dc_enabled = any(
+                runner._get_dc_config(p)[0]
+                for p in TestRunner._WRITE_PATTERNS
+            )
 
             results = []
             for tc in test_cases:
-                # テスト前スナップショット（post_normal + 認証あり + 成功期待のみ）
+                # テスト前スナップショット（書き込み系 + 認証あり + 成功期待のみ）
                 before = None
-                if (dc_enabled and tc.pattern == "post_normal"
+                if (tc.pattern in TestRunner._WRITE_PATTERNS
                         and tc.use_auth and tc.expected_status < 400):
-                    before = runner._get_snapshot(tc, dc_config)
+                    tc_dc_enabled, dc_config = runner._get_dc_config(tc.pattern)
+                    if tc_dc_enabled:
+                        before = runner._get_snapshot(tc, dc_config)
 
                 result = client.execute(tc)
 
@@ -188,9 +193,8 @@ class RunManager:
 
                 # スキーマ検証
                 if result.passed and result.response_body is not None:
-                    warnings = TestRunner._validate_schema(result)
-                    result.schema_warnings = warnings
-                runner._validate_response_body(result)
+                    ResponseValidator.validate_schema(result)
+                runner._validator.validate_response_body(result)
 
                 # JSON 保存
                 if result.response_body is not None:
@@ -295,7 +299,7 @@ class RunManager:
                 entry = {
                     "name": tc.name,
                     "pattern": tc.pattern,
-                    "description": TestRunner._test_description(tc),
+                    "description": ResponseValidator.test_description(tc),
                     "method": tc.method,
                     "url_path": tc.url_path,
                     "expected_status": tc.expected_status,

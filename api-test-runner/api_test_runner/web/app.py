@@ -98,8 +98,18 @@ def create_app(project_root: Path) -> FastAPI:
         d = project_root / csv_dir
         if not d.exists():
             return {"files": [], "error": f"ディレクトリが見つかりません: {csv_dir}"}
-        files = sorted([f.name for f in d.glob("*.csv")])
-        return {"files": files, "csv_dir": csv_dir}
+        from ..csv_parser import parse_single
+        file_list = []
+        for f in sorted(d.glob("*.csv"), key=lambda p: p.name):
+            info = {"name": f.name, "method": ""}
+            try:
+                spec = parse_single(f)
+                if spec:
+                    info["method"] = spec.method
+            except Exception:
+                pass
+            file_list.append(info)
+        return {"files": file_list, "csv_dir": csv_dir}
 
     # ─── API: テスト実行 ──────────────────────────
 

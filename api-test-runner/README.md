@@ -30,6 +30,7 @@ python -m api_test_runner run path/to/csv_dir     # CSV ディレクトリ指定
 python -m api_test_runner run --pattern auth,search  # パターン指定
 python -m api_test_runner run --api groups,members   # API 指定
 python -m api_test_runner run --env staging        # 環境切替（.env.staging）
+python -m api_test_runner run --method POST,PUT     # メソッド指定
 python -m api_test_runner run --failed-only        # 前回失敗分のみ再実行
 python -m api_test_runner run --dry-run            # テストケース一覧のみ表示
 
@@ -138,7 +139,7 @@ notification:
     on_failure_only: true
 ```
 
-詳細: [docs/config-reference.md](docs/config-reference.md)
+詳細: [docs/config-reference.md](docs/config-reference.md) | API 追加手順: [docs/how-to-add-api.md](docs/how-to-add-api.md)
 
 ## ディレクトリ構成
 

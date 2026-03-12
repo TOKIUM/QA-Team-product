@@ -16,6 +16,7 @@ from .csv_parser import parse_directory
 from .http_client import ApiClient
 from .reporter import Reporter
 from .test_runner import TestRunner
+from .validator import ResponseValidator
 
 
 class App(tk.Tk):
@@ -277,8 +278,7 @@ class App(tk.Tk):
 
             # スキーマ検証
             if result.passed and result.response_body is not None:
-                warnings = TestRunner._validate_schema(result)
-                result.schema_warnings = warnings
+                ResponseValidator.validate_schema(result)
 
             # JSON 保存
             if result.response_body is not None:
@@ -339,7 +339,7 @@ class App(tk.Tk):
         ), tags=(tag,))
         self._results_map[tc.name] = result
 
-        desc = TestRunner._test_description(tc)
+        desc = ResponseValidator.test_description(tc)
         log_msg = f"[{label}] {desc} ({elapsed})"
         if result.schema_warnings:
             log_msg += f" [{'; '.join(result.schema_warnings)}]"

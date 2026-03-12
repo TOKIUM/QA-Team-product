@@ -7,7 +7,9 @@ from pathlib import Path
 import pytest
 
 from api_test_runner.models import ApiSpec, Parameter, TestCase
+from api_test_runner.test_generator import TestGenerator
 from api_test_runner.test_runner import TestRunner
+from api_test_runner.validator import ResponseValidator
 
 
 class TestBoundaryPattern:
@@ -196,33 +198,33 @@ class TestPostNormalPattern:
 class TestPostTestValue:
     def test_string_type(self):
         p = Parameter("名前", "name", "文字列", "〇", "")
-        val = TestRunner._post_test_value(p)
+        val = TestGenerator._post_test_value(p)
         assert isinstance(val, str)
         assert "[APIテスト]name_" in val
 
     def test_email_type(self):
         p = Parameter("メール", "email", "文字列", "〇", "")
-        val = TestRunner._post_test_value(p)
+        val = TestGenerator._post_test_value(p)
         assert "@example.com" in val
 
     def test_password_type(self):
         p = Parameter("パスワード", "password", "文字列", "〇", "")
-        val = TestRunner._post_test_value(p)
+        val = TestGenerator._post_test_value(p)
         assert isinstance(val, str)
         assert len(val) >= 8
 
     def test_integer_type(self):
         p = Parameter("ID", "id", "整数", "〇", "")
-        assert TestRunner._post_test_value(p) == 1
+        assert TestGenerator._post_test_value(p) == 1
 
     def test_boolean_type(self):
         p = Parameter("権限", "is_admin", "真偽値", "", "")
-        assert TestRunner._post_test_value(p) is False
+        assert TestGenerator._post_test_value(p) is False
 
     def test_array_with_children(self):
         child = Parameter("名前", "name", "文字列", "〇", "")
         p = Parameter("一覧", "items", "配列", "〇", "", children=[child])
-        val = TestRunner._post_test_value(p)
+        val = TestGenerator._post_test_value(p)
         assert isinstance(val, list)
         assert len(val) == 1
         assert "name" in val[0]
@@ -231,13 +233,13 @@ class TestPostTestValue:
     def test_object_with_children(self):
         child = Parameter("権限", "is_admin", "真偽値", "〇", "")
         p = Parameter("権限情報", "authorities", "オブジェクト", "〇", "", children=[child])
-        val = TestRunner._post_test_value(p)
+        val = TestGenerator._post_test_value(p)
         assert isinstance(val, dict)
         assert val == {"is_admin": False}
 
     def test_override(self):
         p = Parameter("部署ID", "department_id", "文字列", "〇", "")
-        val = TestRunner._post_test_value(p, {"department_id": "abc-123"})
+        val = TestGenerator._post_test_value(p, {"department_id": "abc-123"})
         assert val == "abc-123"
 
 
@@ -247,12 +249,12 @@ class TestBuildMinimalBody:
             Parameter("名前", "name", "文字列", "〇", ""),
             Parameter("任意", "optional", "文字列", "", ""),
         ]
-        body = TestRunner._build_minimal_body(params)
+        body = TestGenerator._build_minimal_body(params)
         assert "name" in body
         assert "optional" not in body
 
     def test_nested_required(self, sample_post_spec):
-        body = TestRunner._build_minimal_body(sample_post_spec.params)
+        body = TestGenerator._build_minimal_body(sample_post_spec.params)
         assert "members" in body
         assert isinstance(body["members"], list)
         assert len(body["members"]) == 1
@@ -268,30 +270,30 @@ class TestBuildMinimalBody:
 class TestOmitField:
     def test_simple_key(self):
         body = {"name": "test", "email": "a@b.com"}
-        result = TestRunner._omit_field(body, "name")
+        result = TestGenerator._omit_field(body, "name")
         assert "name" not in result
         assert "email" in result
 
     def test_nested_array_key(self):
         body = {"members": [{"name": "test", "email": "a@b.com"}]}
-        result = TestRunner._omit_field(body, "members[0].name")
+        result = TestGenerator._omit_field(body, "members[0].name")
         assert "name" not in result["members"][0]
         assert "email" in result["members"][0]
 
     def test_top_level_key(self):
         body = {"members": [{"name": "test"}], "other": 1}
-        result = TestRunner._omit_field(body, "members")
+        result = TestGenerator._omit_field(body, "members")
         assert "members" not in result
         assert "other" in result
 
     def test_invalid_path_returns_original(self):
         body = {"name": "test"}
-        result = TestRunner._omit_field(body, "nonexistent.field")
+        result = TestGenerator._omit_field(body, "nonexistent.field")
         assert result == body
 
     def test_does_not_mutate_original(self):
         body = {"members": [{"name": "test", "email": "a@b.com"}]}
-        TestRunner._omit_field(body, "members[0].name")
+        TestGenerator._omit_field(body, "members[0].name")
         assert "name" in body["members"][0]
 
 
@@ -616,19 +618,19 @@ class TestInvalidBodyPattern:
 
 class TestInvalidValueForType:
     def test_string_returns_int(self):
-        assert TestRunner._invalid_value_for_type("文字列") == 999
+        assert TestGenerator._invalid_value_for_type("文字列") == 999
 
     def test_int_returns_string(self):
-        assert TestRunner._invalid_value_for_type("整数") == "abc"
+        assert TestGenerator._invalid_value_for_type("整数") == "abc"
 
     def test_bool_returns_string(self):
-        assert TestRunner._invalid_value_for_type("真偽値") == "invalid"
+        assert TestGenerator._invalid_value_for_type("真偽値") == "invalid"
 
     def test_array_returns_string(self):
-        assert TestRunner._invalid_value_for_type("配列") == "not_an_array"
+        assert TestGenerator._invalid_value_for_type("配列") == "not_an_array"
 
     def test_unknown_returns_none(self):
-        assert TestRunner._invalid_value_for_type("不明な型") is None
+        assert TestGenerator._invalid_value_for_type("不明な型") is None
 
 
 class TestTestDescription:
@@ -643,7 +645,7 @@ class TestTestDescription:
             use_auth=True,
             expected_status=400,
         )
-        desc = TestRunner._test_description(tc)
+        desc = ResponseValidator.test_description(tc)
         assert "boundary" in desc
         assert "limit=-1" in desc
         assert "400" in desc
@@ -660,7 +662,7 @@ class TestTestDescription:
             expected_status=400,
             request_body={"name": "test"},
         )
-        desc = TestRunner._test_description(tc)
+        desc = ResponseValidator.test_description(tc)
         assert "missing required" in desc
         assert "400" in desc
 
@@ -676,7 +678,7 @@ class TestTestDescription:
             expected_status=400,
             request_body={},
         )
-        desc = TestRunner._test_description(tc)
+        desc = ResponseValidator.test_description(tc)
         assert "invalid body" in desc
         assert "400" in desc
 
@@ -692,6 +694,6 @@ class TestTestDescription:
             expected_status=200,
             request_body={"name": "test"},
         )
-        desc = TestRunner._test_description(tc)
+        desc = ResponseValidator.test_description(tc)
         assert "normal" in desc
         assert "200" in desc

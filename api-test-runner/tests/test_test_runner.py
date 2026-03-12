@@ -7,49 +7,51 @@ from pathlib import Path
 import pytest
 
 from api_test_runner.models import ApiSpec, Parameter, TestCase, TestResult
+from api_test_runner.test_generator import TestGenerator
 from api_test_runner.test_runner import TestRunner
+from api_test_runner.validator import ResponseValidator
 
 
 class TestResolvePaths:
     def test_strips_base_path(self):
         spec = ApiSpec("3", "test", "/api/v2/groups.json", "GET", "groups")
-        path, name = TestRunner._resolve_paths(spec, "/api/v2")
+        path, name = TestGenerator._resolve_paths(spec, "/api/v2")
         assert path == "groups.json"
         assert name == "groups"
 
     def test_nested_url(self):
         spec = ApiSpec("8", "test", "/api/v2/members/bulk_create_job.json", "GET", "bulk_create_job")
-        path, name = TestRunner._resolve_paths(spec, "/api/v2")
+        path, name = TestGenerator._resolve_paths(spec, "/api/v2")
         assert path == "members/bulk_create_job.json"
         assert name == "members-bulk_create_job"
 
     def test_no_base_path(self):
         spec = ApiSpec("3", "test", "/groups.json", "GET", "groups")
-        path, name = TestRunner._resolve_paths(spec, "")
+        path, name = TestGenerator._resolve_paths(spec, "")
         assert path == "groups.json"
         assert name == "groups"
 
 
 class TestSearchTestValue:
     def test_integer_type(self):
-        assert TestRunner._search_test_value("整数") == 1
+        assert TestGenerator._search_test_value("整数") == 1
 
     def test_boolean_type(self):
-        assert TestRunner._search_test_value("真偽値") == "true"
+        assert TestGenerator._search_test_value("真偽値") == "true"
 
     def test_id_param_name(self):
-        assert TestRunner._search_test_value("文字列", "department_id") == 1
+        assert TestGenerator._search_test_value("文字列", "department_id") == 1
 
     def test_quoted_remarks(self):
-        val = TestRunner._search_test_value("文字列", "status", '"all" or "active"')
+        val = TestGenerator._search_test_value("文字列", "status", '"all" or "active"')
         assert val == "all"
 
     def test_colon_remarks(self):
-        val = TestRunner._search_test_value("文字列", "type", "通常の役職: company")
+        val = TestGenerator._search_test_value("文字列", "type", "通常の役職: company")
         assert val == "company"
 
     def test_fallback(self):
-        assert TestRunner._search_test_value("文字列") == "test"
+        assert TestGenerator._search_test_value("文字列") == "test"
 
 
 class TestGenerateTestCases:
@@ -174,7 +176,7 @@ class TestValidateSchema:
             api=sample_spec,
             body={"groups": [{"id": 1}]},
         )
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert result.schema_warnings == []
 
     def test_missing_resource_key(self, sample_spec):
@@ -182,7 +184,7 @@ class TestValidateSchema:
             api=sample_spec,
             body={"data": [{"id": 1}]},
         )
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert len(result.schema_warnings) == 1
         assert "groups" in result.schema_warnings[0]
 
@@ -191,25 +193,25 @@ class TestValidateSchema:
             api=sample_spec,
             body={"groups": {"id": 1}},
         )
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert len(result.schema_warnings) == 1
         assert "list" in result.schema_warnings[0]
 
     def test_body_is_none(self, sample_spec):
         result = self._make_result(api=sample_spec, body=None)
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert len(result.schema_warnings) == 1
         assert "空" in result.schema_warnings[0]
 
     def test_body_is_list(self, sample_spec):
         result = self._make_result(api=sample_spec, body=[{"id": 1}])
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert len(result.schema_warnings) == 1
         assert "dict" in result.schema_warnings[0]
 
     def test_skips_failed_tests(self, sample_spec):
         result = self._make_result(api=sample_spec, body=None, passed=False)
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert result.schema_warnings == []
 
     def test_skips_no_auth_tests(self, sample_spec):
@@ -218,12 +220,12 @@ class TestValidateSchema:
             expected_status=401, passed=True,
         )
         # expected_status != 200 なのでスキップ
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert result.schema_warnings == []
 
     def test_skips_custom_tests(self):
         result = self._make_result(api=None, body={"data": []})
-        TestRunner._validate_schema(result)
+        ResponseValidator.validate_schema(result)
         assert result.schema_warnings == []
 
 
@@ -259,53 +261,53 @@ class TestValidateResponseBody:
     def test_empty_body_warns(self, sample_spec):
         runner = self._make_runner()
         result = self._make_result(sample_spec, {})
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert any("空" in w for w in result.schema_warnings)
 
     def test_null_body_warns(self, sample_spec):
         runner = self._make_runner()
         result = self._make_result(sample_spec, None)
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert any("空" in w for w in result.schema_warnings)
 
     def test_pagination_count_exceeds_limit(self, sample_spec):
         runner = self._make_runner()
         body = {"groups": [{"id": 1}, {"id": 2}, {"id": 3}]}
         result = self._make_result(sample_spec, body, query_params={"limit": 2})
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert any("limit=2" in w for w in result.schema_warnings)
 
     def test_pagination_count_within_limit(self, sample_spec):
         runner = self._make_runner()
         body = {"groups": [{"id": 1}, {"id": 2}]}
         result = self._make_result(sample_spec, body, query_params={"limit": 5})
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert not any("limit" in w for w in result.schema_warnings)
 
     def test_disabled_skips_all(self, sample_spec):
         runner = self._make_runner(enabled=False)
         result = self._make_result(sample_spec, {})
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert not any("response_validation" in w for w in result.schema_warnings)
 
     def test_fail_result_skipped(self, sample_spec):
         runner = self._make_runner()
         result = self._make_result(sample_spec, {}, passed=False)
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert result.schema_warnings == []
 
     def test_key_consistency_warns(self, sample_spec):
         runner = self._make_runner()
         body = {"groups": [{"id": 1, "name": "a"}, {"id": 2}]}
         result = self._make_result(sample_spec, body)
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert any("キー欠損" in w for w in result.schema_warnings)
 
     def test_key_consistency_ok(self, sample_spec):
         runner = self._make_runner()
         body = {"groups": [{"id": 1, "name": "a"}, {"id": 2, "name": "b"}]}
         result = self._make_result(sample_spec, body)
-        runner._validate_response_body(result)
+        runner._validator.validate_response_body(result)
         assert not any("キー欠損" in w for w in result.schema_warnings)
 
 
@@ -424,6 +426,89 @@ class TestPutDeletePatchPatterns:
 
         assert cases[0].expected_status == 204
 
+    def test_put_normal_with_body_overrides(self, sample_put_spec):
+        """PUT の body_overrides でフィールドが上書きされる."""
+        config = {
+            "test": {
+                "patterns": ["put_normal"],
+                "put_normal": {
+                    "expected_status": 200,
+                    "body_overrides": {
+                        "members-update": {"name": "固定名前", "id": "abc-123"},
+                    },
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_put_spec])
+        normal = next(c for c in cases if c.use_auth)
+        assert normal.request_body["name"] == "固定名前"
+
+    def test_put_normal_with_individual_only(self, sample_put_spec):
+        """PUT の individual_only で全実行時にスキップされる."""
+        config = {
+            "test": {
+                "patterns": ["put_normal"],
+                "put_normal": {
+                    "individual_only": ["members-update"],
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_put_spec])
+        assert len(cases) == 0
+
+    def test_patch_normal_with_body_overrides(self, sample_patch_spec):
+        """PATCH の body_overrides でフィールドが上書きされる."""
+        config = {
+            "test": {
+                "patterns": ["patch_normal"],
+                "patch_normal": {
+                    "expected_status": 200,
+                    "body_overrides": {
+                        "members-patch": {"name": "パッチ名前"},
+                    },
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_patch_spec])
+        normal = next(c for c in cases if c.use_auth)
+        assert normal.request_body["name"] == "パッチ名前"
+
+    def test_patch_normal_with_individual_only(self, sample_patch_spec):
+        """PATCH の individual_only で全実行時にスキップされる."""
+        config = {
+            "test": {
+                "patterns": ["patch_normal"],
+                "patch_normal": {
+                    "individual_only": ["members-patch"],
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_patch_spec])
+        assert len(cases) == 0
+
+    def test_delete_normal_with_individual_only(self, sample_delete_spec):
+        """DELETE の individual_only で全実行時にスキップされる."""
+        config = {
+            "test": {
+                "patterns": ["delete_normal"],
+                "delete_normal": {
+                    "individual_only": ["members-delete"],
+                },
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        cases = runner.generate_test_cases([sample_delete_spec])
+        assert len(cases) == 0
+
     def test_delete_normal_with_api_overrides(self, sample_delete_spec):
         config = {
             "test": {
@@ -441,3 +526,46 @@ class TestPutDeletePatchPatterns:
         cases = runner.generate_test_cases([sample_delete_spec])
 
         assert cases[0].expected_status == 204
+
+
+class TestGetDcConfig:
+    """_get_dc_config() のフォールバック動作テスト."""
+
+    def test_pattern_specific_config(self):
+        """パターン固有の data_comparison が優先される."""
+        config = {
+            "test": {
+                "post_normal": {"data_comparison": {"enabled": True, "wait_after_post_seconds": 5}},
+                "put_normal": {"data_comparison": {"enabled": False, "wait_after_post_seconds": 10}},
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        enabled, dc_cfg = runner._get_dc_config("put_normal")
+        assert enabled is False
+        assert dc_cfg.get("wait_after_post_seconds") == 10
+
+    def test_fallback_to_post_normal(self):
+        """パターン固有設定がない場合は post_normal にフォールバック."""
+        config = {
+            "test": {
+                "post_normal": {"data_comparison": {"enabled": True, "wait_after_post_seconds": 5}},
+                "delete_normal": {"expected_status": 200},
+            },
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        enabled, dc_cfg = runner._get_dc_config("delete_normal")
+        assert enabled is True
+        assert dc_cfg.get("wait_after_post_seconds") == 5
+
+    def test_no_config_at_all(self):
+        """どちらも未設定の場合は無効."""
+        config = {
+            "test": {},
+            "api": {"base_url": "https://example.com/api/v2"},
+        }
+        runner = TestRunner(config, None, Path("/tmp"))
+        enabled, dc_cfg = runner._get_dc_config("patch_normal")
+        assert enabled is False
+        assert dc_cfg == {}

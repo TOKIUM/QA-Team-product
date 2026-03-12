@@ -12,6 +12,8 @@ from .models import ApiSpec, Parameter, TestCase
 class TestGenerator:
     """CSV 仕様からテストケースを生成する."""
 
+    __test__ = False  # pytest collection 除外
+
     def __init__(self, config: dict):
         self.config = config
 
@@ -340,16 +342,32 @@ class TestGenerator:
 
         # --- post_normal パターン（POST 正常系テスト）---
         if "post_normal" in patterns:
-            overrides = test_config.get("search", {}).get("overrides", {})
+            base_overrides = test_config.get("search", {}).get("overrides", {})
             post_normal_config = test_config.get("post_normal", {})
             success_status = post_normal_config.get("expected_status", 200)
             pn_api_overrides = post_normal_config.get("api_overrides", {})
+            pn_body_overrides = post_normal_config.get("body_overrides", {})
+            individual_only = set(post_normal_config.get("individual_only", []))
             for spec in post_specs:
                 url_path, resource_name = self._resolve_paths(spec, base_path)
+                # individual_only に含まれるAPIは全実行時スキップ
+                if resource_name in individual_only:
+                    continue
                 pn_overrides = pn_api_overrides.get(resource_name, {})
                 api_success_status = pn_overrides.get(
                     "expected_status", success_status)
+                # API別body_overrides → 共通search.overrides の順でマージ
+                api_body_ov = pn_body_overrides.get(resource_name, {})
+                overrides = {**base_overrides, **api_body_ov}
                 body = self._build_minimal_body(spec.params, overrides)
+                # body_overrides の追加フィールドを配列要素にマージ
+                # （必須でないフィールドもoverridesで指定すればボディに含まれる）
+                if api_body_ov and body:
+                    for top_key, top_val in body.items():
+                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
+                            for ov_key, ov_val in api_body_ov.items():
+                                if ov_val is not None and ov_key not in top_val[0]:
+                                    top_val[0][ov_key] = ov_val
                 if not body:
                     continue
                 # 最小ボディ正常系
@@ -379,16 +397,28 @@ class TestGenerator:
 
         # --- put_normal パターン（PUT 正常系テスト）---
         if "put_normal" in patterns:
-            overrides = test_config.get("search", {}).get("overrides", {})
+            base_overrides = test_config.get("search", {}).get("overrides", {})
             put_normal_config = test_config.get("put_normal", {})
             success_status = put_normal_config.get("expected_status", 200)
             pn_api_overrides = put_normal_config.get("api_overrides", {})
+            pn_body_overrides = put_normal_config.get("body_overrides", {})
+            individual_only = set(put_normal_config.get("individual_only") or [])
             for spec in put_specs:
                 url_path, resource_name = self._resolve_paths(spec, base_path)
+                if resource_name in individual_only:
+                    continue
                 pn_overrides = pn_api_overrides.get(resource_name, {})
                 api_success_status = pn_overrides.get(
                     "expected_status", success_status)
+                api_body_ov = pn_body_overrides.get(resource_name, {})
+                overrides = {**base_overrides, **api_body_ov}
                 body = self._build_minimal_body(spec.params, overrides)
+                if api_body_ov and body:
+                    for top_key, top_val in body.items():
+                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
+                            for ov_key, ov_val in api_body_ov.items():
+                                if ov_val is not None and ov_key not in top_val[0]:
+                                    top_val[0][ov_key] = ov_val
                 if not body:
                     continue
                 cases.append(TestCase(
@@ -419,8 +449,11 @@ class TestGenerator:
             delete_normal_config = test_config.get("delete_normal", {})
             success_status = delete_normal_config.get("expected_status", 200)
             dn_api_overrides = delete_normal_config.get("api_overrides", {})
+            individual_only = set(delete_normal_config.get("individual_only") or [])
             for spec in delete_specs:
                 url_path, resource_name = self._resolve_paths(spec, base_path)
+                if resource_name in individual_only:
+                    continue
                 dn_overrides = dn_api_overrides.get(resource_name, {})
                 api_success_status = dn_overrides.get(
                     "expected_status", success_status)
@@ -447,16 +480,28 @@ class TestGenerator:
 
         # --- patch_normal パターン（PATCH 正常系テスト）---
         if "patch_normal" in patterns:
-            overrides = test_config.get("search", {}).get("overrides", {})
+            base_overrides = test_config.get("search", {}).get("overrides", {})
             patch_normal_config = test_config.get("patch_normal", {})
             success_status = patch_normal_config.get("expected_status", 200)
             pn_api_overrides = patch_normal_config.get("api_overrides", {})
+            pn_body_overrides = patch_normal_config.get("body_overrides", {})
+            individual_only = set(patch_normal_config.get("individual_only") or [])
             for spec in patch_specs:
                 url_path, resource_name = self._resolve_paths(spec, base_path)
+                if resource_name in individual_only:
+                    continue
                 pn_overrides = pn_api_overrides.get(resource_name, {})
                 api_success_status = pn_overrides.get(
                     "expected_status", success_status)
+                api_body_ov = pn_body_overrides.get(resource_name, {})
+                overrides = {**base_overrides, **api_body_ov}
                 body = self._build_minimal_body(spec.params, overrides)
+                if api_body_ov and body:
+                    for top_key, top_val in body.items():
+                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
+                            for ov_key, ov_val in api_body_ov.items():
+                                if ov_val is not None and ov_key not in top_val[0]:
+                                    top_val[0][ov_key] = ov_val
                 if not body:
                     continue
                 cases.append(TestCase(
@@ -650,28 +695,40 @@ class TestGenerator:
         if param.param_name == "password":
             return "Test1234!"
 
-        return "test_value"
+        from datetime import datetime
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        return f"[APIテスト]{param.param_name}_{ts}"
 
     @staticmethod
     def _build_minimal_object(
         params: list[Parameter], overrides: dict | None = None,
     ) -> dict:
-        """パラメータリストから必須フィールドのみの最小オブジェクトを生成."""
+        """パラメータリストから必須フィールドのみの最小オブジェクトを生成.
+
+        overrides で None を指定したフィールドはオブジェクトから除外される。
+        """
         obj: dict = {}
         for p in params:
             if p.required == "〇":
-                obj[p.param_name] = TestGenerator._post_test_value(p, overrides)
+                val = TestGenerator._post_test_value(p, overrides)
+                if val is not None:
+                    obj[p.param_name] = val
         return obj
 
     @staticmethod
     def _build_minimal_body(
         params: list[Parameter], overrides: dict | None = None,
     ) -> dict:
-        """API の全パラメータから必須フィールドのみの最小リクエストボディを生成."""
+        """API の全パラメータから必須フィールドのみの最小リクエストボディを生成.
+
+        overrides で None を指定したフィールドはボディから除外される。
+        """
         body: dict = {}
         for p in params:
             if p.required == "〇":
-                body[p.param_name] = TestGenerator._post_test_value(p, overrides)
+                val = TestGenerator._post_test_value(p, overrides)
+                if val is not None:
+                    body[p.param_name] = val
         return body
 
     @staticmethod

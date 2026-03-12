@@ -6,6 +6,7 @@ import pytest
 
 from api_test_runner.models import TestCase, TestResult
 from api_test_runner.test_runner import TestRunner
+from api_test_runner.validator import ResponseValidator
 
 
 def _make_result(
@@ -39,22 +40,22 @@ def _make_result(
 class TestValidateErrorBody400:
     def test_400_with_message_key(self):
         result = _make_result(400, 400, {"message": "Bad Request"})
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
     def test_400_missing_message_key(self):
         result = _make_result(400, 400, {"error": "something"})
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("message" in w for w in result.schema_warnings)
 
     def test_400_none_body(self):
         result = _make_result(400, 400, None)
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("空" in w for w in result.schema_warnings)
 
     def test_400_non_dict_body(self):
         result = _make_result(400, 400, [1, 2, 3])
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("dict" in w for w in result.schema_warnings)
 
     def test_400_missing_required_with_param_key(self):
@@ -63,7 +64,7 @@ class TestValidateErrorBody400:
             {"message": "missing param", "param": "job_id"},
             pattern="missing_required",
         )
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         # message あり + param あり → 警告なし
         assert len(result.schema_warnings) == 0
 
@@ -73,7 +74,7 @@ class TestValidateErrorBody400:
             {"message": "missing", "missing_values": ["name"]},
             pattern="missing_required",
         )
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
     def test_400_missing_required_with_errors_key(self):
@@ -82,7 +83,7 @@ class TestValidateErrorBody400:
             {"message": "error", "errors": [{"field": "name"}]},
             pattern="missing_required",
         )
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
     def test_400_missing_required_no_detail_keys(self):
@@ -91,7 +92,7 @@ class TestValidateErrorBody400:
             {"message": "error"},
             pattern="missing_required",
         )
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("param" in w or "missing_values" in w or "errors" in w
                     for w in result.schema_warnings)
 
@@ -99,17 +100,17 @@ class TestValidateErrorBody400:
 class TestValidateErrorBody401:
     def test_401_non_empty_body(self):
         result = _make_result(401, 401, {"error": "Unauthorized"})
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
     def test_401_empty_body(self):
         result = _make_result(401, 401, {})
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("401" in w and "空" in w for w in result.schema_warnings)
 
     def test_401_none_body(self):
         result = _make_result(401, 401, None)
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert any("401" in w and "空" in w for w in result.schema_warnings)
 
 
@@ -117,13 +118,13 @@ class TestValidateErrorBodySkips:
     def test_skips_failed_test(self):
         """FAIL テストはスキップ."""
         result = _make_result(400, 200, {"no_message": True}, passed=False)
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
     def test_skips_200_response(self):
         """200 レスポンスはスキップ."""
         result = _make_result(200, 200, {"groups": []})
-        TestRunner._validate_error_body(result)
+        ResponseValidator.validate_error_body(result)
         assert len(result.schema_warnings) == 0
 
 

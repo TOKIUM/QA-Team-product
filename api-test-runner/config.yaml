@@ -1,124 +1,180 @@
 api:
-  base_url: https://dev.keihi.com/api/v2
   auth:
+    token_env: API_KEY
     type: bearer
-    token_env: API_KEY        # 環境変数名を指定（値は .env から読む）
-
-test:
-  methods:                    # 対象 HTTP メソッド
-    - GET
-    - POST
-  patterns:
-    - auth                    # 認証あり(200) + 認証なし(401)
-    - pagination              # offset/limit テスト
-    - search                  # パラメータ検索テスト
-    - boundary                # limit 境界値テスト（負数/ゼロ/上限/上限超過）
-    - missing_required        # 必須パラメータ欠損テスト（400 を期待）
-    # - post_normal           # POST 正常系テスト（デフォルトOFF: 実データ登録のためテスト環境でのみ有効化）
-  boundary:
-    overflow_expected_status: 400  # 上限超過時の期待ステータス（API により 200 の場合あり）
-    offset_negative_expected_status: 400  # offset 負数の期待ステータス
-    offset_large_value: 999999            # offset 巨大値テストの値
-    offset_large_expected_status: 200     # offset 巨大値の期待ステータス（空配列）
-    api_overrides:
-      members:
-        overflow_expected_status: 200     # members は limit 上限超過を許容（200 返却）
-      groups:
-        negative_expected_status: 500     # groups は limit=-1 で 500
-        offset_negative_expected_status: 500  # groups は offset=-1 で 500
-      posts:
-        zero_expected_status: 400         # posts は limit=0 を拒否（400）
-      projects:
-        zero_expected_status: 400         # projects は limit=0 を拒否（400）
-  missing_required:
-    expected_status: 400          # グローバルデフォルト
-    api_overrides:
-      projects-bulk_create_job:
-        skip_fields:              # 作成時に不要なフィールド（CSV上は必須だがAPI実装では任意）
-          - "projects[0].id"
-          - "projects[0].type"
-  put_normal:
-    expected_status: 200          # PUT 正常系の期待ステータス
-    api_overrides: {}
-  delete_normal:
-    expected_status: 200          # DELETE 正常系の期待ステータス
-    api_overrides: {}
-  patch_normal:
-    expected_status: 200          # PATCH 正常系の期待ステータス
-    api_overrides: {}
-  post_normal:
-    expected_status: 200          # POST 正常系の期待ステータス（200 or 201）
-    api_overrides:
-      projects-bulk_update_job:
-        expected_status: 400      # id フィールドが UUID 形式必須（"test_value" は不正）
-      members-bulk_create_job:
-        expected_status: 400      # authorities の必須サブキーが不足（空オブジェクト不可）
-  pagination:
-    offset: 0
-    limit: 5
-  search:
-    overrides:                # パラメータ名ごとのテスト値を上書き（環境依存値など）
-      department_id: "90980a77-cdab-4db8-b845-0ea3d27e1954"
-  crud_chain:
-    enabled: false                # デフォルト無効（POST を伴うため）
-    id_field: "id"
-    delete_url_pattern: "{url_path}/{id}"
-    post_expected_status: 200
-    delete_expected_status: 200
-    verify_delete_expected_status: 404
-    api_overrides: {}
-  response_validation:
-    enabled: true                 # レスポンスボディ検証（WARN 判定）
-    pagination_count_check: true  # limit=N のとき結果が N件以下か
-    required_fields_check: true   # リソース配列の各要素で同じキーが存在するか
-    json_schema_check: false      # APISpec パラメータ定義からフィールド型を検証
-    json_schema_skip_params: []   # 型検証から除外するパラメータ名（offset/limit/fields は常に除外）
-  invalid_body:
-    expected_status: 400          # 型不正値の期待ステータス
-    api_overrides: {}
-  error_body_validation: true  # エラーレスポンスボディの構造検証（400/401）
-  timeout: 30                 # HTTP タイムアウト秒
-  concurrency: 3              # 同時実行数（1=逐次, 2以上=並行）
-  retry:
-    max_retries: 2            # 5xx/接続エラー時の最大リトライ回数
-    delay: 1.0                # 初回リトライ待機秒（指数バックオフ）
-
-output:
-  results_dir: results
-  json_indent: 4
-
+  base_url: https://dev.keihi.com/api/v2
+custom_tests:
+- expected_status: 200
+  method: GET
+  name: health-check
+  url_path: payment_requests/reports
+  use_auth: true
+- expected_status: 200
+  method: GET
+  name: get-reports
+  url_path: payment_requests/reports
+  use_auth: true
+- expected_status: 401
+  method: GET
+  name: get-reports-no-auth
+  url_path: payment_requests/reports
+  use_auth: false
+- expected_status: 200
+  method: GET
+  name: get-reports-with-sort
+  query_params:
+    amount_from: 1000
+  request_body:
+    sort:
+    - key: due_at
+      order: asc
+  url_path: payment_requests/reports
+  use_auth: true
 notification:
   slack:
-    webhook_url: ""              # 空なら通知しない
-    on_failure_only: true        # true なら FAIL 時のみ通知
-
-custom_tests:
-  - name: health-check
-    url_path: payment_requests/reports
-    method: GET
-    use_auth: true
+    on_failure_only: true
+    webhook_url: ''
+output:
+  json_indent: 4
+  results_dir: results
+test:
+  boundary:
+    api_overrides:
+      groups:
+        negative_expected_status: 500
+        offset_negative_expected_status: 500
+      members:
+        overflow_expected_status: 200
+      posts:
+        zero_expected_status: 400
+      projects:
+        zero_expected_status: 400
+    offset_large_expected_status: 200
+    offset_large_value: 999999
+    offset_negative_expected_status: 400
+    overflow_expected_status: 400
+  concurrency: 3
+  crud_chain:
+    api_overrides: {}
+    delete_expected_status: 200
+    delete_url_pattern: '{url_path}/{id}'
+    enabled: false
+    id_field: id
+    post_expected_status: 200
+    verify_delete_expected_status: 404
+  delete_normal:
+    api_overrides: {}
+    # individual_only: []    # --api 指定時のみ実行する API（全実行時はスキップ）
+    # data_comparison:       # 未設定時は post_normal.data_comparison にフォールバック
+    #   enabled: true
+    #   get_endpoints: {}
     expected_status: 200
-
-  - name: get-reports
-    url_path: payment_requests/reports
-    method: GET
-    use_auth: true
+  error_body_validation: true
+  invalid_body:
+    api_overrides: {}
+    expected_status: 400
+  methods:
+  - GET
+  - POST
+  missing_required:
+    api_overrides:
+      projects-bulk_create_job:
+        skip_fields:
+        - projects[0].id
+        - projects[0].type
+    expected_status: 400
+  pagination:
+    limit: 5
+    offset: 0
+  patch_normal:
+    api_overrides: {}
+    body_overrides: {}
+    # individual_only: []    # --api 指定時のみ実行する API（全実行時はスキップ）
+    # data_comparison:       # 未設定時は post_normal.data_comparison にフォールバック
+    #   enabled: true
+    #   get_endpoints: {}
     expected_status: 200
-
-  - name: get-reports-no-auth
-    url_path: payment_requests/reports
-    method: GET
-    use_auth: false
-    expected_status: 401
-
-  - name: get-reports-with-sort
-    url_path: payment_requests/reports
-    method: GET
-    query_params:
-      amount_from: 1000
-    request_body:
-      sort:
-        - key: due_at
-          order: asc
-    use_auth: true
+  patterns:
+  - auth
+  - pagination
+  - search
+  - boundary
+  - missing_required
+  # - post_normal           # POST 正常系テスト（デフォルトOFF: --safe-post で確認付き実行推奨）
+  post_normal:
+    individual_only:    # --api 指定時のみ実行（全実行時はスキップ）
+    - projects-bulk_update_job
+    - projects-bulk_delete_job
+    - members-bulk_update_job
+    api_overrides:
+      members-bulk_create_job:
+        expected_status: 200
+      projects-bulk_update_job:
+        expected_status: 200
+    body_overrides:
+      members-bulk_create_job:
+        authorities:
+          is_accountant: false
+          is_admin: false
+          is_approver: false
+          is_supplier_manager: false
+          is_tax_document_editor: false
+      members-bulk_update_job:
+        id: "3ea94dd0-1487-46cc-af8c-713c45442460"
+        name: "[APIテスト]更新済み従業員_20260309"
+      projects-bulk_create_job:
+        id: null
+        type: null
+      projects-bulk_update_job:
+        id: 64e73281-426d-4026-9171-7d130ccf2f7b
+        name: "[APIテスト]更新済みプロジェクト_20260309"
+      projects-bulk_delete_job:
+        id: 64e73281-426d-4026-9171-7d130ccf2f7b
+    crud_sequence:
+      enabled: false
+      sequences:
+        projects:
+          create: projects-bulk_create_job
+          update: projects-bulk_update_job
+          delete: projects-bulk_delete_job
+          list_endpoint: projects.json
+          resource_key: projects
+          id_field: id
+    data_comparison:
+      enabled: true
+      get_endpoints:
+        members/bulk_create_job.json: members.json
+        members/bulk_update_job.json: members.json
+        projects/bulk_create_job.json: projects.json
+        projects/bulk_update_job.json: projects.json
+        projects/bulk_delete_job.json: projects.json
+      get_params:
+        limit: 100
+      job_polling:
+        enabled: true
+        max_wait_seconds: 30
+        poll_interval_seconds: 3
+        status_url_pattern: '{url_path}?job_id={job_id}'
+      wait_after_post_seconds: 5
     expected_status: 200
+  put_normal:
+    api_overrides: {}
+    body_overrides: {}
+    # individual_only: []    # --api 指定時のみ実行する API（全実行時はスキップ）
+    # data_comparison:       # 未設定時は post_normal.data_comparison にフォールバック
+    #   enabled: true
+    #   get_endpoints: {}
+    expected_status: 200
+  response_validation:
+    enabled: true
+    json_schema_check: true
+    json_schema_skip_params: []
+    pagination_count_check: true
+    required_fields_check: true
+  retry:
+    delay: 1.0
+    max_retries: 2
+  search:
+    overrides:
+      department_id: 90980a77-cdab-4db8-b845-0ea3d27e1954
+  timeout: 30

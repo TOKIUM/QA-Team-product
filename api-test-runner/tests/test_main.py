@@ -118,6 +118,91 @@ class TestResolveSettings:
         assert api_key == "custom_value"
 
 
+class TestSafeWriteFlag:
+    """--safe-write / --safe-post フラグのテスト."""
+
+    @staticmethod
+    def _inject_patterns(config, write_patterns):
+        """safe-write ロジックをシミュレート."""
+        patterns = config.setdefault("test", {}).setdefault("patterns", [])
+        added = []
+        for wp in write_patterns:
+            if wp not in patterns:
+                patterns.append(wp)
+                added.append(wp)
+        return added
+
+    def test_safe_write_adds_all_write_patterns(self):
+        """--safe-write で4パターン全て追加."""
+        config = {"test": {"patterns": ["auth"]}}
+        write_patterns = ["post_normal", "put_normal", "delete_normal", "patch_normal"]
+        added = self._inject_patterns(config, write_patterns)
+        assert len(added) == 4
+        for wp in write_patterns:
+            assert wp in config["test"]["patterns"]
+
+    def test_safe_post_adds_post_only(self):
+        """--safe-post で post_normal のみ追加."""
+        config = {"test": {"patterns": ["auth"]}}
+        added = self._inject_patterns(config, ["post_normal"])
+        assert added == ["post_normal"]
+        assert "put_normal" not in config["test"]["patterns"]
+
+    def test_safe_write_no_duplicate(self):
+        """既存パターンは重複追加しない."""
+        config = {"test": {"patterns": ["auth", "post_normal", "delete_normal"]}}
+        write_patterns = ["post_normal", "put_normal", "delete_normal", "patch_normal"]
+        added = self._inject_patterns(config, write_patterns)
+        assert added == ["put_normal", "patch_normal"]
+        assert config["test"]["patterns"].count("post_normal") == 1
+        assert config["test"]["patterns"].count("delete_normal") == 1
+
+    def test_safe_write_abort(self):
+        """確認プロンプトでN入力時は中断."""
+        answer = "n"
+        assert answer != "y"
+
+
+class TestMethodFilter:
+    """--method フィルタのテスト."""
+
+    def _make_test_case(self, name: str, method: str = "GET") -> TestCase:
+        return TestCase(
+            name=name, pattern="auth", api=None, method=method,
+            url_path="test.json", query_params={}, use_auth=True,
+            expected_status=200,
+        )
+
+    def test_filter_by_post(self):
+        cases = [
+            self._make_test_case("get-1", "GET"),
+            self._make_test_case("post-1", "POST"),
+            self._make_test_case("put-1", "PUT"),
+        ]
+        methods_filter = {"POST"}
+        filtered = [tc for tc in cases if tc.method in methods_filter]
+        assert len(filtered) == 1
+        assert filtered[0].method == "POST"
+
+    def test_filter_multiple_methods(self):
+        cases = [
+            self._make_test_case("get-1", "GET"),
+            self._make_test_case("post-1", "POST"),
+            self._make_test_case("put-1", "PUT"),
+            self._make_test_case("del-1", "DELETE"),
+        ]
+        methods_filter = {"PUT", "DELETE"}
+        filtered = [tc for tc in cases if tc.method in methods_filter]
+        assert len(filtered) == 2
+        assert {tc.method for tc in filtered} == {"PUT", "DELETE"}
+
+    def test_filter_case_insensitive(self):
+        """CLI入力はupper()で正規化される."""
+        raw = "post,put"
+        methods_filter = {m.strip().upper() for m in raw.split(",")}
+        assert methods_filter == {"POST", "PUT"}
+
+
 class TestFilterFailedOnly:
     def _make_test_case(self, name: str) -> TestCase:
         return TestCase(

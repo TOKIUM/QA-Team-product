@@ -118,6 +118,7 @@ class Reporter:
                 "request_url": r.request_url,
                 "request_headers": masked_headers,
                 "query_params": r.test_case.query_params,
+                "request_body": r.test_case.request_body,
                 "use_auth": r.test_case.use_auth,
                 "expected_status": r.test_case.expected_status,
                 "actual_status": r.status_code,
@@ -134,6 +135,9 @@ class Reporter:
 
             if r.schema_warnings:
                 test_entry["schema_warnings"] = r.schema_warnings
+
+            if r.data_diff_summary:
+                test_entry["data_comparison"] = r.data_diff_summary
 
             report["tests"].append(test_entry)
 
@@ -214,6 +218,41 @@ class Reporter:
                 cls = "pass"
                 status = "PASS"
             warn_text = _esc("; ".join(r.schema_warnings)) if r.schema_warnings else ""
+
+            # リクエストボディ（展開可能）
+            body_html = ""
+            if r.test_case.request_body:
+                import json as _json
+                body_json = _esc(_json.dumps(r.test_case.request_body, indent=2, ensure_ascii=False))
+                body_html = (f'<details><summary>リクエストボディ</summary>'
+                             f'<pre style="margin:4px 0;font-size:12px">{body_json}</pre></details>')
+
+            # データ比較
+            dc_html = ""
+            if r.data_diff_summary:
+                dc_parts = []
+                total_info = r.data_diff_summary.get("_total")
+                if total_info:
+                    d = total_info.get("diff", 0)
+                    sign = "+" if d > 0 else ""
+                    dc_parts.append(f"総件数: {total_info.get('before_total')} → "
+                                    f"{total_info.get('after_total')} ({sign}{d})")
+                for key, val in r.data_diff_summary.items():
+                    if key == "_total":
+                        continue
+                    dc_parts.append(
+                        f"{_esc(key)}: {val['before_count']}件→{val['after_count']}件 "
+                        f"(追加:{val['added_count']}, 変更:{val['changed_count']})")
+                    for item_id, changes in val.get("changed", {}).items():
+                        for fname, vals in changes.items():
+                            dc_parts.append(
+                                f"  {_esc(fname)}: {_esc(str(vals['before']))} → "
+                                f"{_esc(str(vals['after']))}")
+                dc_html = (f'<details><summary>データ比較</summary>'
+                           f'<pre style="margin:4px 0;font-size:12px">{"<br>".join(dc_parts)}</pre></details>')
+
+            extra = body_html + dc_html
+
             test_rows += (
                 f'<tr class="row-{cls}">'
                 f"<td>{_esc(r.test_case.name)}</td>"
@@ -224,7 +263,7 @@ class Reporter:
                 f"<td>{r.status_code}</td>"
                 f"<td>{r.elapsed_ms:.0f} ms</td>"
                 f'<td class="{cls}">{status}</td>'
-                f"<td>{warn_text}</td>"
+                f"<td>{warn_text}{extra}</td>"
                 f"</tr>\n"
             )
 

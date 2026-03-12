@@ -92,12 +92,19 @@ API 接続設定。
 
 ### test.post_normal / put_normal / delete_normal / patch_normal
 
-各メソッドの正常系テスト設定。構造は共通。
+各メソッドの正常系テスト設定。
 
-| キー | 型 | デフォルト | 説明 |
-|------|-----|-----------|------|
-| `test.<method>_normal.expected_status` | int | `200` | 正常系の期待ステータス |
-| `test.<method>_normal.api_overrides` | dict | `{}` | API ごとの期待ステータス上書き |
+| キー | 型 | デフォルト | POST | PUT | DELETE | PATCH |
+|------|-----|-----------|:----:|:---:|:------:|:-----:|
+| `expected_status` | int | `200` | ○ | ○ | ○ | ○ |
+| `api_overrides` | dict | `{}` | ○ | ○ | ○ | ○ |
+| `body_overrides` | dict | `{}` | ○ | ○ | - | ○ |
+| `individual_only` | list | `[]` | ○ | ○ | ○ | ○ |
+| `data_comparison` | dict | - | ○ | ○ | ○ | ○ |
+
+- **`body_overrides`**: API 別にリクエストボディのフィールドを上書き。更新対象の ID 指定等に使用
+- **`individual_only`**: リストに含まれる API は `--api` 指定時のみ実行（全実行時はスキップ）。危険な削除 API の誤実行防止に有効
+- **`data_comparison`**: テスト前後のデータ差分を検出。各パターンに個別設定が可能。未設定の場合は `post_normal.data_comparison` にフォールバック
 
 ### test.crud_chain
 
@@ -127,7 +134,7 @@ API 接続設定。
 | `test.response_validation.enabled` | bool | `false` | レスポンスボディ検証の有効化 |
 | `test.response_validation.pagination_count_check` | bool | `true` | limit=N のとき結果が N 件以下かチェック |
 | `test.response_validation.required_fields_check` | bool | `true` | リソース配列の各要素で同じキーが存在するかチェック |
-| `test.response_validation.json_schema_check` | bool | `false` | APISpec パラメータ定義からフィールド名・型を検証 |
+| `test.response_validation.json_schema_check` | bool | `true` | APISpec パラメータ定義からフィールド名・型を検証 |
 | `test.response_validation.json_schema_skip_params` | list[string] | `[]` | 型検証から追加で除外するパラメータ名。`offset`, `limit`, `fields` は常に除外 |
 
 > **注意**: `pagination_count_check`, `required_fields_check`, `json_schema_check` はすべて `enabled: true` が前提条件です。`enabled: false` の場合、個別オプションの値に関わらず検証は実行されません。
@@ -176,3 +183,24 @@ Slack 通知設定。
 | `request_body` | dict | No | `null` | リクエストボディ |
 | `use_auth` | bool | No | `true` | 認証トークンを付与するか |
 | `expected_status` | int | No | `200` | 期待する HTTP ステータスコード |
+
+## CLI オプション: --safe-write / --safe-post
+
+書き込み系テストを確認プロンプト付きで安全に実行するオプション。
+
+```bash
+# POST/PUT/DELETE/PATCH 全て有効化
+python -m api_test_runner run --safe-write
+
+# POST のみ有効化（--safe-write のエイリアス的に使える）
+python -m api_test_runner run --safe-post
+```
+
+| フラグ | 追加されるパターン |
+|--------|-------------------|
+| `--safe-write` | `post_normal`, `put_normal`, `delete_normal`, `patch_normal` |
+| `--safe-post` | `post_normal` のみ |
+
+- `test.patterns` に未登録のパターンのみ自動追加（重複なし）
+- 実行前に確認プロンプトが表示される（`y` で続行、それ以外で中断）
+- 実データの登録・変更・削除が発生するため、テスト環境での使用を推奨

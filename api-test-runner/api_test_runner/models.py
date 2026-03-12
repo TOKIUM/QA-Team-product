@@ -34,6 +34,8 @@ class ApiSpec:
 class TestCase:
     """テストケース定義."""
 
+    __test__ = False  # pytest collection 除外
+
     name: str            # "get-groups"
     pattern: str         # "auth" | "no_auth" | "pagination"
     api: ApiSpec | None   # None for custom tests
@@ -49,6 +51,8 @@ class TestCase:
 class TestResult:
     """テスト実行結果."""
 
+    __test__ = False  # pytest collection 除外
+
     test_case: TestCase
     status_code: int
     response_body: dict | list | None
@@ -58,3 +62,6 @@ class TestResult:
     request_url: str | None = None      # 実際のリクエスト URL
     request_headers: dict | None = None  # 送信ヘッダー
     schema_warnings: list[str] = field(default_factory=list)  # スキーマ検証警告
+    before_snapshot: dict | list | None = None   # テスト前のGETレスポンス
+    after_snapshot: dict | list | None = None    # テスト後のGETレスポンス
+    data_diff_summary: dict | None = None        # 差分サマリー
