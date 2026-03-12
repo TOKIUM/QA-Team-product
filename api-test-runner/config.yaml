@@ -30,6 +30,25 @@ custom_tests:
       order: asc
   url_path: payment_requests/reports
   use_auth: true
+# --- dencho PUT: 国税関係書類編集（CSV仕様書のURLに日本語プレースホルダーがあるためcustom_testで定義）---
+- expected_status: 200
+  method: PUT
+  name: put-td-tax_documents-normal
+  url_path: td/tax_documents/placeholder-uuid
+  use_auth: true
+  request_body:
+    document_type: "receipt"
+    name: "[APIテスト]編集済み書類"
+    transacted_at: "2026-01-15"
+    supplier_name: "[APIテスト]編集済み取引先"
+- expected_status: 401
+  method: PUT
+  name: put-td-tax_documents-normal-no-auth
+  url_path: td/tax_documents/placeholder-uuid
+  use_auth: false
+  request_body:
+    document_type: "receipt"
+    name: "[APIテスト]編集済み書類"
 notification:
   slack:
     on_failure_only: true
