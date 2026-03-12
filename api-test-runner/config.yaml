@@ -121,12 +121,25 @@ test:
     - projects-bulk_update_job
     - projects-bulk_delete_job
     - members-bulk_update_job
+    # expansion: 更新・削除系
+    - groups-bulk_update_job
+    - groups-bulk_delete_job
+    - projects-bulk_assign_job
+    - approval_flows-bulk_attach_job
+    - category_visibility_preferences-bulk_update_job
+    - generic_fields-data_set-placeholder-uuid-items-bulk_update_jobs
+    - generic_fields-data_set-placeholder-uuid-items-bulk_delete_jobs
+    - kernels-authentications-samls-placeholder-uuid-saml_accounts-import_jobs
+    # invoicing: 更新系
+    - kernels-suppliers-bulk_update_job
+    - kernels-clients-companies-bulk_update_job
     api_overrides:
       members-bulk_create_job:
         expected_status: 200
       projects-bulk_update_job:
         expected_status: 200
     body_overrides:
+      # === core ===
       members-bulk_create_job:
         authorities:
           is_accountant: false
@@ -145,6 +158,59 @@ test:
         name: "[APIテスト]更新済みプロジェクト_{NOW}"
       projects-bulk_delete_job:
         id: 64e73281-426d-4026-9171-7d130ccf2f7b
+      # === expansion ===
+      projects-bulk_assign_job:
+        id: "placeholder-uuid"
+        post_id: "placeholder-uuid"
+        user_ids: ["placeholder-uuid"]
+      approval_flows-bulk_attach_job:
+        ids: ["placeholder-uuid"]
+        user_ids: ["placeholder-uuid"]
+        request_type_id: "placeholder-uuid"
+      groups-bulk_create_job:
+        name: "[APIテスト]テスト部署_{NOW}"
+      groups-bulk_update_job:
+        id: "placeholder-uuid"
+      groups-bulk_delete_job:
+        id: "placeholder-uuid"
+      category_visibility_preferences-bulk_update_job:
+        user_id: "placeholder-uuid"
+        category_id: "placeholder-uuid"
+      generic_fields-data_set-placeholder-uuid-items-bulk_create_jobs:
+        name: "[APIテスト]テスト選択肢_{NOW}"
+        code: "api_test_code"
+      generic_fields-data_set-placeholder-uuid-items-bulk_update_jobs:
+        id: "placeholder-uuid"
+        name: "[APIテスト]更新済み選択肢_{NOW}"
+        code: "api_test_updated"
+      generic_fields-data_set-placeholder-uuid-items-bulk_delete_jobs:
+        id: "placeholder-uuid"
+      kernels-authentications-samls-placeholder-uuid-saml_accounts-import_jobs:
+        id: "placeholder-uuid"
+      # === invoicing ===
+      kernels-suppliers-bulk_create_job:
+        supplier_name: "[APIテスト]テスト取引先_{NOW}"
+        payment_method_type: "bank_transfer"
+      kernels-suppliers-bulk_update_job:
+        id: "placeholder-uuid"
+        supplier_name: "[APIテスト]更新済み取引先_{NOW}"
+        payment_method_type: "bank_transfer"
+      kernels-clients-companies-bulk_create_job:
+        code: "api_test_001"
+        first_display_name: "[APIテスト]テスト企業_{NOW}"
+        business_partner_type: "external"
+        business_owner_type: "corporation"
+      kernels-clients-companies-bulk_update_job:
+        id: "placeholder-uuid"
+        first_display_name: "[APIテスト]更新済み企業_{NOW}"
+      # === dencho ===
+      td-tax_documents:
+        mimetype: "application/pdf"
+        original_filename: "api_test_document.pdf"
+        document_type: "receipt"
+        name: "[APIテスト]テスト書類_{NOW}"
+        transacted_at: "2026-01-01"
+        supplier_name: "[APIテスト]テスト取引先"
     crud_sequence:
       enabled: false
       sequences:

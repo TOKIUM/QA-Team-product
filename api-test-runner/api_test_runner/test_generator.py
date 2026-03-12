@@ -362,6 +362,9 @@ class TestGenerator:
                 overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
                 self._apply_body_overrides(body, api_body_ov)
+                # body_overrides のみで構成されるケース（必須パラメータなしのAPI）
+                if not body and api_body_ov:
+                    body = dict(api_body_ov) if isinstance(api_body_ov, dict) else {}
                 if not body:
                     continue
                 # 最小ボディ正常系
@@ -409,6 +412,8 @@ class TestGenerator:
                 overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
                 self._apply_body_overrides(body, api_body_ov)
+                if not body and api_body_ov:
+                    body = dict(api_body_ov) if isinstance(api_body_ov, dict) else {}
                 if not body:
                     continue
                 cases.append(TestCase(
@@ -488,6 +493,8 @@ class TestGenerator:
                 overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
                 self._apply_body_overrides(body, api_body_ov)
+                if not body and api_body_ov:
+                    body = dict(api_body_ov) if isinstance(api_body_ov, dict) else {}
                 if not body:
                     continue
                 cases.append(TestCase(
