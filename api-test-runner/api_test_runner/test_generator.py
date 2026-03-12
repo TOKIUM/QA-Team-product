@@ -634,18 +634,31 @@ class TestGenerator:
                 top_val.append(elem)
             break  # 最初の配列キーのみ処理
 
-    @staticmethod
-    def _resolve_paths(spec: ApiSpec, base_path: str) -> tuple[str, str]:
+    def _resolve_paths(self, spec: ApiSpec, base_path: str) -> tuple[str, str]:
         """spec.url から相対URLパスと一意なリソース名を導出する.
+
+        パスパラメータ (:param) は config の path_params 設定値で置換する。
 
         Returns:
             url_path: HTTP クライアントに渡す相対パス (例: "members/bulk_create_job.json")
             resource_name: テスト名に使う一意な識別子 (例: "members-bulk_create_job")
         """
-        if base_path and spec.url.startswith(base_path):
-            url_path = spec.url[len(base_path):].lstrip("/")
+        url = spec.url
+
+        # パスパラメータの置換
+        if spec.path_params:
+            path_param_defaults = (
+                self.config.get("test", {}).get("path_params", {})
+            )
+            for param in spec.path_params:
+                placeholder = f":{param}"
+                value = str(path_param_defaults.get(param, "placeholder-uuid"))
+                url = url.replace(placeholder, value)
+
+        if base_path and url.startswith(base_path):
+            url_path = url[len(base_path):].lstrip("/")
         else:
-            url_path = spec.url.split("/")[-1]
+            url_path = url.split("/")[-1]
         resource_name = url_path.replace(".json", "").replace("/", "-")
         return url_path, resource_name
 

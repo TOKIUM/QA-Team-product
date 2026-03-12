@@ -88,6 +88,35 @@ def resolve_settings(config: dict, env: dict[str, str]) -> tuple[str, str]:
     return base_url, api_key
 
 
+def _collect_specs_by_stage(
+    csv_dir: Path,
+    stage: str,
+    config: dict,
+    methods: list[str] | None = None,
+) -> list:
+    """--stage に応じてスキャン対象ディレクトリを決定し、全 ApiSpec を収集する."""
+    stages_config = config.get("stages", {})
+
+    if stage == "core" or not stage:
+        # デフォルト: ルートディレクトリのみ（後方互換）
+        return parse_directory(csv_dir, methods=methods)
+
+    if stage == "all":
+        # 全サブディレクトリを再帰スキャン
+        return parse_directory(csv_dir, methods=methods, recursive=True)
+
+    # 特定ステージ: config から directories を取得、なければステージ名をディレクトリ名として使用
+    stage_info = stages_config.get(stage, {})
+    directories = stage_info.get("directories", [stage])
+
+    specs = []
+    for subdir in directories:
+        target = csv_dir / subdir if subdir != "." else csv_dir
+        if target.exists():
+            specs.extend(parse_directory(target, methods=methods))
+    return specs
+
+
 def cmd_parse(args: argparse.Namespace, project_root: Path) -> int:
     """parse サブコマンド: CSV 解析のみ（テストケース一覧表示）."""
     csv_dir = project_root / args.csv_dir
@@ -96,7 +125,10 @@ def cmd_parse(args: argparse.Namespace, project_root: Path) -> int:
         print(f"Error: CSV directory not found: {csv_dir}")
         return 1
 
-    specs = parse_directory(csv_dir)
+    stage = getattr(args, "stage", None) or "core"
+    config_path = project_root / getattr(args, "config", "config.yaml")
+    config = load_config(config_path) if config_path.exists() else {}
+    specs = _collect_specs_by_stage(csv_dir, stage, config)
     if not specs:
         print(f"Error: No valid API specs found in {csv_dir}")
         return 1
@@ -275,7 +307,8 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
             if spec and (methods is None or spec.method in methods):
                 specs.append(spec)
     else:
-        specs = parse_directory(csv_dir, methods=methods)
+        stage = getattr(args, "stage", None) or "core"
+        specs = _collect_specs_by_stage(csv_dir, stage, config, methods=methods)
 
     if not specs:
         print(f"Error: No valid API specs found in {csv_dir}")
@@ -634,11 +667,17 @@ def main() -> int:
                             help="結果をJSON形式でファイル保存 (例: results/latest_run.json)")
     run_parser.add_argument("--fetch-resource", action="store_true",
                             help="リソースを自動取得してbody_overridesに設定")
+    run_parser.add_argument("--stage", "-s", default=None,
+                            help="スキャン対象ステージ (core/expansion/invoicing/dencho/all, default: core)")
 
     # parse
     parse_parser = subparsers.add_parser("parse", help="CSV 解析のみ（一覧表示）")
     parse_parser.add_argument("csv_dir", nargs="?", default="document",
                               help="CSV ディレクトリ (default: document)")
+    parse_parser.add_argument("--stage", "-s", default=None,
+                              help="スキャン対象ステージ (core/expansion/invoicing/dencho/all, default: core)")
+    parse_parser.add_argument("--config", "-c", default="config.yaml",
+                              help="設定ファイル (default: config.yaml)")
 
     # check
     check_parser = subparsers.add_parser("check", help="プリフライトチェック（接続・認証・設定値検証）")

@@ -37,7 +37,22 @@ notification:
 output:
   json_indent: 4
   results_dir: results
+stages:
+  core:
+    directories: ["."]
+  expansion:
+    directories: ["expansion"]
+  invoicing:
+    directories: ["invoicing"]
+  dencho:
+    directories: ["dencho"]
+  all:
+    directories: [".", "expansion", "invoicing", "dencho"]
 test:
+  path_params:
+    data_set_id: "placeholder-uuid"
+    id: "placeholder-uuid"
+    saml_setting_id: "placeholder-uuid"
   boundary:
     api_overrides:
       groups:

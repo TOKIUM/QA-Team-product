@@ -8,7 +8,7 @@ VALID_PATTERNS = {
     "post_normal", "put_normal", "delete_normal", "patch_normal",
     "invalid_body", "crud_chain",
 }
-KNOWN_TOP_KEYS = {"api", "test", "output", "custom_tests", "notification"}
+KNOWN_TOP_KEYS = {"api", "test", "output", "custom_tests", "notification", "stages"}
 
 
 def validate_config(config: dict) -> list[str]:

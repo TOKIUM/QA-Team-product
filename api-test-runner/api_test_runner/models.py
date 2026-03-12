@@ -28,6 +28,7 @@ class ApiSpec:
     method: str          # "GET"
     resource: str        # "groups"
     params: list[Parameter] = field(default_factory=list)
+    path_params: list[str] = field(default_factory=list)  # URL内パスパラメータ名
 
 
 @dataclass

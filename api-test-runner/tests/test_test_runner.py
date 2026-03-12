@@ -15,19 +15,19 @@ from api_test_runner.validator import ResponseValidator
 class TestResolvePaths:
     def test_strips_base_path(self):
         spec = ApiSpec("3", "test", "/api/v2/groups.json", "GET", "groups")
-        path, name = TestGenerator._resolve_paths(spec, "/api/v2")
+        path, name = TestGenerator({})._resolve_paths(spec,"/api/v2")
         assert path == "groups.json"
         assert name == "groups"
 
     def test_nested_url(self):
         spec = ApiSpec("8", "test", "/api/v2/members/bulk_create_job.json", "GET", "bulk_create_job")
-        path, name = TestGenerator._resolve_paths(spec, "/api/v2")
+        path, name = TestGenerator({})._resolve_paths(spec,"/api/v2")
         assert path == "members/bulk_create_job.json"
         assert name == "members-bulk_create_job"
 
     def test_no_base_path(self):
         spec = ApiSpec("3", "test", "/groups.json", "GET", "groups")
-        path, name = TestGenerator._resolve_paths(spec, "")
+        path, name = TestGenerator({})._resolve_paths(spec,"")
         assert path == "groups.json"
         assert name == "groups"
 
