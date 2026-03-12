@@ -24,21 +24,34 @@ class ResponseValidator:
             return
 
         if body is None:
-            result.schema_warnings.append("レスポンスボディが空です")
+            result.schema_warnings.append(
+                "スキーマ検証: レスポンスボディが空です。"
+                "APIが正常にデータを返していない可能性があります")
             return
         if not isinstance(body, dict):
             result.schema_warnings.append(
-                f"レスポンスが dict ではなく {type(body).__name__} です"
-            )
+                f"スキーマ検証: レスポンスがJSON Object(dict)ではなく "
+                f"{type(body).__name__} です。API仕様と実装が異なる可能性があります")
             return
         if resource not in body:
-            result.schema_warnings.append(
-                f"キー '{resource}' がレスポンスに存在しません (keys: {list(body.keys())})"
-            )
+            actual_keys = list(body.keys())
+            # POST系バッチジョブ（job_id返却）の場合は専用メッセージ
+            if "job_id" in actual_keys and tc.pattern in ("post_normal", "put_normal", "patch_normal", "delete_normal"):
+                result.schema_warnings.append(
+                    f"スキーマ検証: バッチジョブ登録APIのため、レスポンスは "
+                    f"'{resource}' 配列ではなく job_id を返却しています。"
+                    f"これはバッチジョブAPIの正常な動作です（実際のキー: {actual_keys}）")
+            else:
+                result.schema_warnings.append(
+                    f"スキーマ検証: レスポンスに期待キー '{resource}' がありません。"
+                    f"実際のキー: {actual_keys}。"
+                    f"APIのレスポンス構造がCSV仕様と異なる可能性があります")
             return
         if not isinstance(body[resource], list):
             result.schema_warnings.append(
-                f"'{resource}' が list ではなく {type(body[resource]).__name__} です"
+                f"スキーマ検証: '{resource}' が配列(list)ではなく "
+                f"{type(body[resource]).__name__} です。"
+                f"一覧APIは配列を返す仕様ですが、単一オブジェクトが返されています"
             )
 
     @staticmethod
@@ -52,31 +65,36 @@ class ResponseValidator:
         if tc.expected_status == 401:
             if body is None or body == {}:
                 result.schema_warnings.append(
-                    "401 レスポンスボディが空です")
+                    "エラー検証: 認証エラー(401)のレスポンスボディが空です。"
+                    "エラーメッセージを返すのが望ましい実装です")
             return
 
         if tc.expected_status == 400:
             if body is None:
                 result.schema_warnings.append(
-                    "400 レスポンスボディが空です")
+                    "エラー検証: バリデーションエラー(400)のレスポンスボディが空です。"
+                    "エラー内容をクライアントに伝えるためボディが必要です")
                 return
             if not isinstance(body, dict):
                 result.schema_warnings.append(
-                    f"400 レスポンスが dict ではなく {type(body).__name__} です")
+                    f"エラー検証: 400レスポンスがJSON Object(dict)ではなく "
+                    f"{type(body).__name__} です。エラー詳細の解析ができません")
                 return
             if "message" not in body:
                 result.schema_warnings.append(
-                    "400 レスポンスに 'message' キーがありません "
-                    f"(keys: {list(body.keys())})")
+                    f"エラー検証: 400レスポンスに 'message' キーがありません。"
+                    f"実際のキー: {list(body.keys())}。"
+                    f"エラー原因の特定にmessageフィールドが推奨されます")
             if tc.pattern == "missing_required":
                 has_detail = any(
                     k in body for k in ("param", "missing_values", "errors")
                 )
                 if not has_detail:
                     result.schema_warnings.append(
-                        "missing_required 400 レスポンスに 'param', "
-                        "'missing_values', 'errors' のいずれもありません "
-                        f"(keys: {list(body.keys())})")
+                        f"エラー検証: 必須パラメータ欠損(400)のレスポンスに "
+                        f"詳細情報('param', 'missing_values', 'errors')がありません。"
+                        f"実際のキー: {list(body.keys())}。"
+                        f"どのパラメータが不足しているか特定できません")
 
     def validate_response_body(self, result: TestResult) -> None:
         """レスポンスボディの内容を検証し、警告を result.schema_warnings に追加.
@@ -100,7 +118,8 @@ class ResponseValidator:
         # 空ボディ検知
         if body is None or body == {} or body == []:
             result.schema_warnings.append(
-                "response_validation: 200 レスポンスボディが空です")
+                "レスポンス検証: 200 OKなのにボディが空です。"
+                "データが0件の可能性、またはAPIの異常が考えられます")
             return
 
         if not isinstance(body, dict) or not resource:
@@ -116,7 +135,9 @@ class ResponseValidator:
             if limit is not None and isinstance(limit, int) and limit > 0:
                 if len(items) > limit:
                     result.schema_warnings.append(
-                        f"response_validation: limit={limit} だが {len(items)} 件返却")
+                        f"レスポンス検証: limit={limit}を指定したのに"
+                        f"{len(items)}件返却されています。"
+                        f"ページネーションが正しく動作していない可能性があります")
 
         # キー一貫性チェック
         if rv_config.get("required_fields_check", True) and len(items) >= 2:
@@ -129,8 +150,9 @@ class ResponseValidator:
                     missing = all_keys - set(item.keys())
                     if missing:
                         result.schema_warnings.append(
-                            f"response_validation: {resource}[{i}] にキー欠損: "
-                            f"{sorted(missing)}")
+                            f"レスポンス検証: {resource}の{i+1}件目に "
+                            f"他の要素にあるキーが欠損しています: {sorted(missing)}。"
+                            f"レスポンス構造が要素間で不一致です")
                         break  # 1件目の不一致で終了
 
     # デフォルトの除外パラメータ（クエリパラメータでありレスポンスフィールドではない）
@@ -181,11 +203,13 @@ class ResponseValidator:
                 type_error = self._check_type(actual_value, expected_type)
                 if type_error:
                     result.schema_warnings.append(
-                        f"json_schema: {resource}[0].{field_name} "
-                        f"の型が不一致 (期待: {expected_type}, 実際: {type_error})")
+                        f"型検証: {resource}[0].{field_name} の型が "
+                        f"CSV仕様と不一致です（仕様: {expected_type}, 実際: {type_error}）。"
+                        f"CSV仕様の型定義かAPI実装を確認してください")
             else:
                 result.schema_warnings.append(
-                    f"json_schema: {resource}[0] にフィールド '{field_name}' がありません")
+                    f"型検証: {resource}の1件目に '{field_name}' フィールドがありません。"
+                    f"CSV仕様では定義されていますが、レスポンスに含まれていません")
 
     @staticmethod
     def _build_field_type_map(

@@ -5,8 +5,11 @@ let runStartTime = null;
 let allResults = [];
 let currentFilter = "all";
 let currentSort = { col: null, asc: true };
-let csvFileList = [];  // 全CSVファイル名リスト
+let csvFileList = [];  // 全CSVファイル情報 [{name, method, url_path}, ...]
 let showOpCols = false;  // 操作・データ変化列の表示フラグ
+let getEndpoints = {};   // url_path → GETエンドポイントのマッピング（設定から取得）
+let resourceCache = {};  // getEndpoint → items[] のキャッシュ
+let resourceSelections = {};  // apiKey → [id, id, ...]（API別の選択状態、複数可）
 const ALL_PATTERNS = ["auth", "pagination", "search", "boundary", "missing_required", "post_normal", "put_normal", "delete_normal", "patch_normal"];
 
 /** CSVファイル名からAPI名を抽出する */
@@ -39,6 +42,8 @@ function updateSelectedCount() {
         el.textContent = `${selected.length} / ${total} 選択中`;
         targetEl.textContent = `${selected.length} ファイル選択中`;
     }
+    // リソースパネルの表示制御
+    updateResourcePanel();
 }
 
 /** 全選択/全解除（表示中の行のみ対象） */
@@ -107,6 +112,9 @@ function updatePatternStatus() {
         el.style.color = "var(--primary)";
     }
 
+    // リソース選択パネルの表示制御
+    updateResourcePanel();
+
     // post_normal注意表示
     const warnEl = document.getElementById("postNormalWarning");
     if (selected.includes("post_normal")) {
@@ -120,6 +128,189 @@ function updatePatternStatus() {
     } else {
         if (warnEl) warnEl.remove();
     }
+}
+
+// ─── リソース選択パネル ──────────────────────────
+
+/** 選択中CSVとパターンからリソース選択パネルの表示を制御 */
+function updateResourcePanel() {
+    const section = document.getElementById("resourceSection");
+    const patterns = getSelectedPatterns();
+    const hasWritePattern = patterns.some(p =>
+        ["post_normal", "put_normal", "delete_normal", "patch_normal"].includes(p));
+
+    if (!hasWritePattern) {
+        section.style.display = "none";
+        return;
+    }
+
+    // 選択中のPOST系CSVで、get_endpointsにマッピングがあるものを探す
+    const selectedFiles = getSelectedCsvFiles();
+    const matchedApis = [];  // {apiKey, apiLabel, url_path, getEndpoint}
+    for (const info of csvFileList) {
+        if (info.method !== "POST") continue;
+        if (selectedFiles.length > 0 && !selectedFiles.includes(info.name)) continue;
+        const getEp = getEndpoints[info.url_path];
+        if (!getEp) continue;
+        const apiKey = info.url_path.replace(".json", "").replace("/", "-");
+        // 重複除去
+        if (matchedApis.some(a => a.apiKey === apiKey)) continue;
+        // ラベル生成: "projects-bulk_update_job" → "projects 更新"
+        const label = extractApiLabel(apiKey);
+        matchedApis.push({ apiKey, apiLabel: label, url_path: info.url_path, getEndpoint: getEp });
+    }
+
+    if (matchedApis.length === 0) {
+        section.style.display = "none";
+        return;
+    }
+
+    section.style.display = "block";
+    renderResourceGroups(matchedApis);
+}
+
+/** apiKeyからUI表示用ラベルを生成 */
+function extractApiLabel(apiKey) {
+    // "projects-bulk_update_job" → "projects / 更新"
+    const opMap = { create: "登録", update: "更新", delete: "削除" };
+    for (const [en, ja] of Object.entries(opMap)) {
+        if (apiKey.includes(en)) {
+            const resource = apiKey.split("-")[0];
+            return `${resource} / ${ja}`;
+        }
+    }
+    return apiKey;
+}
+
+/** API別グループでリソース選択UIを描画 */
+async function renderResourceGroups(matchedApis) {
+    const listEl = document.getElementById("resourceList");
+    const statusEl = document.getElementById("resourceStatus");
+    statusEl.textContent = `(${matchedApis.length} API)`;
+
+    // 必要なGETエンドポイントを重複なく取得
+    const uniqueEndpoints = [...new Set(matchedApis.map(a => a.getEndpoint))];
+
+    // キャッシュにないエンドポイントを並列フェッチ
+    const fetches = uniqueEndpoints
+        .filter(ep => !resourceCache[ep])
+        .map(async ep => {
+            const data = await fetchJson(
+                `/api/resources?endpoint=${encodeURIComponent(ep)}&limit=100`);
+            resourceCache[ep] = data.error ? [] : (data.items || []);
+        });
+
+    if (fetches.length > 0) {
+        listEl.innerHTML = '<div class="empty-state"><div class="icon">...</div><p>リソースを取得中...</p></div>';
+        await Promise.all(fetches);
+    }
+
+    // グループ別描画
+    let html = '';
+    for (const api of matchedApis) {
+        const items = resourceCache[api.getEndpoint] || [];
+        const selectedId = resourceSelections[api.apiKey] || "";
+        const radioName = `res_${api.apiKey}`;
+
+        const selectedIds = selectedId || [];
+        const selCount = selectedIds.length;
+
+        html += `<details class="resource-group" open>
+            <summary style="cursor:pointer;font-weight:600;padding:6px 0;border-bottom:1px solid #eee;margin-bottom:4px">
+                ${escapeHtml(api.apiLabel)}
+                <span style="font-weight:400;color:var(--text-secondary);font-size:12px;margin-left:8px">${api.getEndpoint} (${items.length}件)</span>
+                ${selCount > 0 ? `<span style="color:var(--primary);font-size:12px;margin-left:4px">✓ ${selCount}件選択</span>` : ''}
+            </summary>`;
+
+        if (items.length === 0) {
+            html += '<div style="padding:4px 8px;color:#999;font-size:13px">リソースなし</div>';
+        } else {
+            const idField = items[0].id !== undefined ? "id" : Object.keys(items[0])[0];
+            const nameField = items[0].name !== undefined ? "name"
+                : items[0].title !== undefined ? "title"
+                : Object.keys(items[0]).find(k => k !== idField) || idField;
+
+            html += `<div style="max-height:160px;overflow:auto"><table><tbody>`;
+            for (const item of items) {
+                const id = String(item[idField] || "");
+                const name = String(item[nameField] || "");
+                const checked = selectedIds.includes(id) ? "checked" : "";
+                html += `<tr class="clickable" data-api-key="${escapeHtml(api.apiKey)}" data-id="${escapeHtml(id)}">
+                    <td style="width:36px"><input type="checkbox" value="${escapeHtml(id)}"
+                        ${checked} onchange="onResourceToggle('${escapeHtml(api.apiKey)}', this.value, this.checked)"></td>
+                    <td class="text-sm" style="font-family:monospace;width:120px">${escapeHtml(id.substring(0, 12))}…</td>
+                    <td style="font-weight:500">${escapeHtml(name)}</td>
+                </tr>`;
+            }
+            html += `</tbody></table></div>`;
+        }
+        html += `</details>`;
+    }
+    listEl.innerHTML = html;
+
+    // 行クリックでチェックボックストグル
+    listEl.querySelectorAll("tbody tr.clickable").forEach(tr => {
+        tr.addEventListener("click", (e) => {
+            if (e.target.tagName === "INPUT") return;
+            const cb = tr.querySelector("input[type=checkbox]");
+            if (cb) {
+                cb.checked = !cb.checked;
+                onResourceToggle(tr.dataset.apiKey, tr.dataset.id, cb.checked);
+            }
+        });
+    });
+}
+
+/** チェックボックストグル時（API別・複数選択対応） */
+function onResourceToggle(apiKey, id, checked) {
+    if (!resourceSelections[apiKey]) resourceSelections[apiKey] = [];
+    if (checked) {
+        if (!resourceSelections[apiKey].includes(id)) {
+            resourceSelections[apiKey].push(id);
+        }
+    } else {
+        resourceSelections[apiKey] = resourceSelections[apiKey].filter(v => v !== id);
+    }
+    updateResourceSelectionStatus();
+}
+
+/** 選択状態のサマリー表示を更新 */
+function updateResourceSelectionStatus() {
+    const totalSelected = Object.values(resourceSelections)
+        .reduce((sum, ids) => sum + ids.length, 0);
+    const apiCount = Object.values(resourceSelections)
+        .filter(ids => ids.length > 0).length;
+    const statusEl = document.getElementById("resourceStatus");
+    if (totalSelected > 0) {
+        statusEl.textContent = `(${apiCount} API / ${totalSelected}件 選択中)`;
+    } else {
+        statusEl.textContent = "";
+    }
+}
+
+/** リソース検索フィルタ */
+function filterResourceList() {
+    const query = document.getElementById("resourceSearch").value.toLowerCase();
+    document.querySelectorAll("#resourceList tbody tr").forEach(tr => {
+        const text = tr.textContent.toLowerCase();
+        tr.style.display = text.includes(query) ? "" : "none";
+    });
+}
+
+/** 全選択状態からbody_overridesを構築（複数選択対応） */
+function buildBodyOverrides() {
+    const overrides = {};
+    let hasAny = false;
+    for (const [apiKey, ids] of Object.entries(resourceSelections)) {
+        if (!ids || ids.length === 0) continue;
+        hasAny = true;
+        if (ids.length === 1) {
+            overrides[apiKey] = { id: ids[0] };
+        } else {
+            overrides[apiKey] = ids.map(id => ({ id }));
+        }
+    }
+    return hasAny ? overrides : null;
 }
 
 async function refreshCsv() {
@@ -143,7 +334,9 @@ async function refreshCsv() {
         return;
     }
 
-    csvFileList = data.files.map(f => typeof f === "string" ? f : f.name);
+    csvFileList = data.files.map(f => typeof f === "string"
+        ? { name: f, method: "", url_path: "" }
+        : { name: f.name, method: f.method || "", url_path: f.url_path || "" });
     countEl.textContent = `(${data.files.length} ファイル)`;
 
     let html = '<table><thead><tr><th style="width:36px"><input type="checkbox" id="csvSelectAll" onchange="selectAllCsv(this.checked)" checked></th><th style="width:36px">#</th><th style="width:60px">メソッド</th><th>API名</th></tr></thead><tbody>';
@@ -205,6 +398,12 @@ async function startRun() {
     const selected = getSelectedCsvFiles();
     if (selected.length > 0 && selected.length < csvFileList.length) {
         body.csv_files = selected;
+    }
+
+    // リソース選択からbody_overridesを構築
+    const overrides = buildBodyOverrides();
+    if (overrides) {
+        body.body_overrides = overrides;
     }
 
     const result = await postJson("/api/run", body);
@@ -560,12 +759,16 @@ function showDetail(r) {
 
 refreshCsv();
 
-// config.yamlのパターン設定でデフォルトを初期化
+// config.yamlの設定を取得してパターン・get_endpointsを初期化
 (async function initPatterns() {
     try {
         const settings = await fetchJson("/api/settings");
         if (settings.patterns && Array.isArray(settings.patterns)) {
             const activePatterns = new Set(settings.patterns);
+            // get_endpointsマッピングを取得
+            if (settings.get_endpoints) {
+                getEndpoints = settings.get_endpoints;
+            }
             document.querySelectorAll("#patternChecks .filter-btn[data-pat]").forEach(btn => {
                 btn.classList.toggle("active", activePatterns.has(btn.dataset.pat));
             });

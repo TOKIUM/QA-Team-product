@@ -100,16 +100,73 @@ def create_app(project_root: Path) -> FastAPI:
             return {"files": [], "error": f"ディレクトリが見つかりません: {csv_dir}"}
         from ..csv_parser import parse_single
         file_list = []
+        # base_path を取得してurl_path抽出に使用
+        cfg = _load_config()
+        base_url = cfg.get("api", {}).get("base_url", "")
+        from urllib.parse import urlparse
+        base_path = urlparse(base_url).path.rstrip("/")
+
         for f in sorted(d.glob("*.csv"), key=lambda p: p.name):
-            info = {"name": f.name, "method": ""}
+            info = {"name": f.name, "method": "", "url_path": ""}
             try:
                 spec = parse_single(f)
                 if spec:
                     info["method"] = spec.method
+                    # _resolve_paths と同じロジック
+                    if base_path and spec.url.startswith(base_path):
+                        info["url_path"] = spec.url[len(base_path):].lstrip("/")
+                    else:
+                        info["url_path"] = spec.url.split("/")[-1]
             except Exception:
                 pass
             file_list.append(info)
         return {"files": file_list, "csv_dir": csv_dir}
+
+    # ─── API: リソース取得 ─────────────────────────
+
+    @app.get("/api/resources")
+    async def api_resources(endpoint: str, limit: int = 100,
+                            keyword: str = ""):
+        """指定エンドポイントからリソース一覧を取得."""
+        config = _load_config()
+        env = _load_env()
+        base_url, api_key = _resolve_settings(config, env)
+
+        if not base_url or not api_key:
+            return {"error": "BASE_URL または API_KEY が未設定です。"}
+
+        from ..http_client import ApiClient
+        client = ApiClient(base_url, api_key, timeout=15)
+        try:
+            url = client.base_url + "/" + endpoint.lstrip("/")
+            params = {"limit": limit}
+            if keyword:
+                params["keyword"] = keyword
+            headers = {
+                "Accept": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            }
+            resp = client.session.get(url, params=params, headers=headers,
+                                      timeout=client.timeout)
+            if resp.status_code != 200:
+                return {"error": f"API エラー: {resp.status_code}",
+                        "items": []}
+            data = resp.json()
+            # レスポンスが配列 or オブジェクト内配列を探索
+            items = []
+            if isinstance(data, list):
+                items = data
+            elif isinstance(data, dict):
+                # 最初に見つかった配列値を採用
+                for v in data.values():
+                    if isinstance(v, list):
+                        items = v
+                        break
+            return {"items": items[:limit]}
+        except Exception as e:
+            return {"error": str(e), "items": []}
+        finally:
+            client.close()
 
     # ─── API: テスト実行 ──────────────────────────
 
@@ -119,6 +176,7 @@ def create_app(project_root: Path) -> FastAPI:
         csv_dir = body.get("csv_dir", "document")
         patterns = body.get("patterns")  # list or None
         csv_files = body.get("csv_files")  # list of filenames or None
+        body_overrides = body.get("body_overrides")  # dict or None
 
         config = _load_config()
         env = _load_env()
@@ -134,7 +192,8 @@ def create_app(project_root: Path) -> FastAPI:
         if real_errors:
             return {"error": "設定エラー: " + "; ".join(real_errors)}
 
-        result = manager.start(config, base_url, api_key, csv_dir, patterns, csv_files)
+        result = manager.start(config, base_url, api_key, csv_dir, patterns,
+                               csv_files, body_overrides)
         return result
 
     @app.get("/api/run/status")
@@ -209,7 +268,19 @@ def create_app(project_root: Path) -> FastAPI:
             "slack_webhook_url": config.get("notification", {}).get("slack", {}).get("webhook_url", ""),
             "slack_failure_only": config.get("notification", {}).get("slack", {}).get("on_failure_only", True),
             "env_files": _get_env_files(),
+            "get_endpoints": _get_all_get_endpoints(config),
         }
+
+    def _get_all_get_endpoints(cfg: dict) -> dict:
+        """全パターンのget_endpointsマッピングを統合して返す."""
+        result = {}
+        test = cfg.get("test", {})
+        for pattern_key in ("post_normal", "put_normal",
+                            "delete_normal", "patch_normal"):
+            dc = test.get(pattern_key, {}).get("data_comparison", {})
+            endpoints = dc.get("get_endpoints", {})
+            result.update(endpoints)
+        return result
 
     @app.post("/api/settings")
     async def api_settings_save(request: Request):

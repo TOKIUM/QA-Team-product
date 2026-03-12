@@ -358,16 +358,10 @@ class TestGenerator:
                     "expected_status", success_status)
                 # API別body_overrides → 共通search.overrides の順でマージ
                 api_body_ov = pn_body_overrides.get(resource_name, {})
-                overrides = {**base_overrides, **api_body_ov}
+                flat_ov = api_body_ov[0] if isinstance(api_body_ov, list) and api_body_ov else (api_body_ov if isinstance(api_body_ov, dict) else {})
+                overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
-                # body_overrides の追加フィールドを配列要素にマージ
-                # （必須でないフィールドもoverridesで指定すればボディに含まれる）
-                if api_body_ov and body:
-                    for top_key, top_val in body.items():
-                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
-                            for ov_key, ov_val in api_body_ov.items():
-                                if ov_val is not None and ov_key not in top_val[0]:
-                                    top_val[0][ov_key] = ov_val
+                self._apply_body_overrides(body, api_body_ov)
                 if not body:
                     continue
                 # 最小ボディ正常系
@@ -411,14 +405,10 @@ class TestGenerator:
                 api_success_status = pn_overrides.get(
                     "expected_status", success_status)
                 api_body_ov = pn_body_overrides.get(resource_name, {})
-                overrides = {**base_overrides, **api_body_ov}
+                flat_ov = api_body_ov[0] if isinstance(api_body_ov, list) and api_body_ov else (api_body_ov if isinstance(api_body_ov, dict) else {})
+                overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
-                if api_body_ov and body:
-                    for top_key, top_val in body.items():
-                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
-                            for ov_key, ov_val in api_body_ov.items():
-                                if ov_val is not None and ov_key not in top_val[0]:
-                                    top_val[0][ov_key] = ov_val
+                self._apply_body_overrides(body, api_body_ov)
                 if not body:
                     continue
                 cases.append(TestCase(
@@ -494,14 +484,10 @@ class TestGenerator:
                 api_success_status = pn_overrides.get(
                     "expected_status", success_status)
                 api_body_ov = pn_body_overrides.get(resource_name, {})
-                overrides = {**base_overrides, **api_body_ov}
+                flat_ov = api_body_ov[0] if isinstance(api_body_ov, list) and api_body_ov else (api_body_ov if isinstance(api_body_ov, dict) else {})
+                overrides = {**base_overrides, **flat_ov}
                 body = self._build_minimal_body(spec.params, overrides)
-                if api_body_ov and body:
-                    for top_key, top_val in body.items():
-                        if isinstance(top_val, list) and top_val and isinstance(top_val[0], dict):
-                            for ov_key, ov_val in api_body_ov.items():
-                                if ov_val is not None and ov_key not in top_val[0]:
-                                    top_val[0][ov_key] = ov_val
+                self._apply_body_overrides(body, api_body_ov)
                 if not body:
                     continue
                 cases.append(TestCase(
@@ -617,6 +603,38 @@ class TestGenerator:
         return None
 
     @staticmethod
+    def _apply_body_overrides(body: dict, api_body_ov: dict | list) -> None:
+        """body_overridesをリクエストボディの配列要素にマージする.
+
+        api_body_ov が dict の場合: 配列の先頭要素に各フィールドをマージ（従来動作）
+        api_body_ov が list の場合: 配列要素をリストの数だけ複製し各々にマージ
+        """
+        if not api_body_ov or not body:
+            return
+
+        # リスト形式を正規化
+        ov_items = api_body_ov if isinstance(api_body_ov, list) else [api_body_ov]
+
+        for top_key, top_val in body.items():
+            if not (isinstance(top_val, list) and top_val
+                    and isinstance(top_val[0], dict)):
+                continue
+            template = top_val[0]
+            # 最初の要素にマージ
+            for ov_key, ov_val in ov_items[0].items():
+                if ov_val is not None and ov_key not in template:
+                    template[ov_key] = ov_val
+            # 2件目以降: テンプレートを複製してマージ
+            for ov_item in ov_items[1:]:
+                import copy
+                elem = copy.deepcopy(template)
+                for ov_key, ov_val in ov_item.items():
+                    if ov_val is not None:
+                        elem[ov_key] = ov_val
+                top_val.append(elem)
+            break  # 最初の配列キーのみ処理
+
+    @staticmethod
     def _resolve_paths(spec: ApiSpec, base_path: str) -> tuple[str, str]:
         """spec.url から相対URLパスと一意なリソース名を導出する.
 
@@ -662,7 +680,12 @@ class TestGenerator:
     ) -> str | int | bool | list | dict:
         """POST 用テスト値を自動推定する."""
         if overrides and param.param_name in overrides:
-            return overrides[param.param_name]
+            val = overrides[param.param_name]
+            # {NOW} プレースホルダーを実行時タイムスタンプに展開
+            if isinstance(val, str) and "{NOW}" in val:
+                from datetime import datetime
+                val = val.replace("{NOW}", datetime.now().strftime("%Y%m%d_%H%M%S"))
+            return val
 
         data_type = param.data_type
 

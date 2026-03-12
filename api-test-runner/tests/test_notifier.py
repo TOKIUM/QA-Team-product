@@ -101,7 +101,7 @@ class TestBuildPayload:
         result = TestResult(
             test_case=tc, status_code=400,
             response_body={"error": "bad"}, elapsed_ms=100, passed=True,
-            schema_warnings=["400 レスポンスに 'message' キーがありません (keys: ['error'])"],
+            schema_warnings=["エラー検証: 400レスポンスに 'message' キーがありません。実際のキー: ['error']。エラー原因の特定にmessageフィールドが推奨されます"],
         )
         payload = notifier.build_payload([result])
         text = payload["text"]

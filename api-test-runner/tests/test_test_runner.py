@@ -288,7 +288,7 @@ class TestValidateResponseBody:
         runner = self._make_runner(enabled=False)
         result = self._make_result(sample_spec, {})
         runner._validator.validate_response_body(result)
-        assert not any("response_validation" in w for w in result.schema_warnings)
+        assert not any("レスポンス検証" in w for w in result.schema_warnings)
 
     def test_fail_result_skipped(self, sample_spec):
         runner = self._make_runner()
@@ -301,7 +301,7 @@ class TestValidateResponseBody:
         body = {"groups": [{"id": 1, "name": "a"}, {"id": 2}]}
         result = self._make_result(sample_spec, body)
         runner._validator.validate_response_body(result)
-        assert any("キー欠損" in w for w in result.schema_warnings)
+        assert any("欠損" in w for w in result.schema_warnings)
 
     def test_key_consistency_ok(self, sample_spec):
         runner = self._make_runner()

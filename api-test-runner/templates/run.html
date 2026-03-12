@@ -32,9 +32,7 @@
             <button class="filter-btn" data-pat="boundary" onclick="togglePattern(this)">boundary</button>
             <button class="filter-btn" data-pat="missing_required" onclick="togglePattern(this)">missing_required</button>
             <button class="filter-btn" data-pat="post_normal" onclick="togglePattern(this)">post_normal</button>
-            <button class="filter-btn" data-pat="put_normal" onclick="togglePattern(this)">put_normal</button>
-            <button class="filter-btn" data-pat="delete_normal" onclick="togglePattern(this)">delete_normal</button>
-            <button class="filter-btn" data-pat="patch_normal" onclick="togglePattern(this)">patch_normal</button>
+            <!-- put_normal / delete_normal / patch_normal: TOKIUM APIはPOSTのみのため非表示 -->
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(true)" style="margin-left:8px">全選択</button>
             <button class="btn btn-secondary btn-sm" onclick="selectAllPatterns(false)">全解除</button>
         </div>
@@ -47,9 +45,6 @@
                 <tr><td class="pat-name">boundary</td><td>limit/offset の境界値（負数/ゼロ/上限超過）</td></tr>
                 <tr><td class="pat-name">missing_required</td><td>必須パラメータ欠損で 400 を期待</td></tr>
                 <tr><td class="pat-name">post_normal</td><td>POST 正常系リクエスト</td></tr>
-                <tr><td class="pat-name">put_normal</td><td>PUT 正常系リクエスト</td></tr>
-                <tr><td class="pat-name">delete_normal</td><td>DELETE 正常系リクエスト</td></tr>
-                <tr><td class="pat-name">patch_normal</td><td>PATCH 正常系リクエスト</td></tr>
             </table>
         </details>
     </div>
@@ -67,6 +62,22 @@
             <span id="progressLabel"></span>
             <span id="progressTime"></span>
         </div>
+    </div>
+</div>
+
+<div id="resourceSection" class="card" style="display:none">
+    <h3>対象リソース選択 <span id="resourceStatus" class="fw-normal text-secondary"></span></h3>
+    <p class="text-sm" style="color:var(--text-secondary);margin-bottom:8px">
+        各APIで操作する既存リソースを選択できます。未選択のAPIはconfig.yamlのbody_overridesを使用します。
+    </p>
+    <div class="toolbar" style="margin-bottom:8px">
+        <input type="text" id="resourceSearch" placeholder="リソース名で検索..."
+               oninput="filterResourceList()"
+               style="max-width:240px;padding:6px 10px;font-size:13px">
+        <button class="btn btn-secondary btn-sm" onclick="fetchResources()">再取得</button>
+    </div>
+    <div id="resourceList" style="max-height:220px;overflow:auto">
+        <div class="empty-state"><div class="icon">...</div><p>リソースを取得中</p></div>
     </div>
 </div>
 

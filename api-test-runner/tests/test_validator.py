@@ -52,7 +52,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"id": 1, "name": "test", "active": True}]},
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_type_mismatch_integer(self):
         """整数フィールドに文字列がある場合、警告."""
@@ -65,7 +65,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"id": "not_a_number"}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "id" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "id" in w for w in result.schema_warnings)
 
     def test_type_mismatch_string(self):
         """文字列フィールドに整数がある場合、警告."""
@@ -78,7 +78,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"name": 123}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "name" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "name" in w for w in result.schema_warnings)
 
     def test_type_mismatch_boolean(self):
         """真偽値フィールドに文字列がある場合、警告."""
@@ -91,7 +91,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"active": "yes"}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "active" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "active" in w for w in result.schema_warnings)
 
     def test_type_mismatch_array(self):
         """配列フィールドに文字列がある場合、警告."""
@@ -104,7 +104,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"tags": "not_array"}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "tags" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "tags" in w for w in result.schema_warnings)
 
     def test_missing_field(self):
         """定義されたフィールドがレスポンスにない場合、警告."""
@@ -118,7 +118,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"id": 1}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "name" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "name" in w for w in result.schema_warnings)
 
     def test_null_value_allowed(self):
         """null 値は型チェックをスキップ."""
@@ -131,7 +131,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"name": None}]},
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_disabled(self):
         """json_schema_check: false の場合、検証しない."""
@@ -144,7 +144,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"id": "bad"}]},
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_skips_non_get(self):
         """GET 以外のメソッドはスキップ."""
@@ -158,7 +158,7 @@ class TestValidateJsonSchema:
             method="POST",
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_skips_failed(self):
         """FAIL テストはスキップ."""
@@ -168,7 +168,7 @@ class TestValidateJsonSchema:
         validator = self._make_validator()
         result = self._make_result(api=spec, body=None, passed=False)
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_skips_pagination_params(self):
         """offset/limit/fields はスキップする."""
@@ -201,7 +201,7 @@ class TestValidateJsonSchema:
             body={"groups": []},
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_bool_not_counted_as_int(self):
         """bool は整数として扱わない."""
@@ -214,7 +214,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"id": True}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "id" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "id" in w for w in result.schema_warnings)
 
 
     def test_custom_skip_params(self):
@@ -257,7 +257,7 @@ class TestValidateJsonSchema:
         )
         validator.validate_json_schema(result)
         # user はオブジェクト型として検証（子フィールドは対象外）
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
     def test_nested_object_type_mismatch(self):
         """ネストされたオブジェクト型に文字列が入っている場合、警告."""
@@ -270,7 +270,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"user": "not_object"}]},
         )
         validator.validate_json_schema(result)
-        assert any("json_schema" in w and "user" in w for w in result.schema_warnings)
+        assert any("型検証" in w and "user" in w for w in result.schema_warnings)
 
     def test_nested_array_type_check(self):
         """配列型フィールドがリストであれば警告なし."""
@@ -286,7 +286,7 @@ class TestValidateJsonSchema:
             body={"groups": [{"tags": [{"name": "a"}]}]},
         )
         validator.validate_json_schema(result)
-        assert not any("json_schema" in w for w in result.schema_warnings)
+        assert not any("型検証" in w for w in result.schema_warnings)
 
 
 class TestCheckType:
