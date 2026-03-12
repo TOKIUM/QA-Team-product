@@ -5,6 +5,9 @@ Usage:
     python -m api_test_runner run [csv_dir] --pattern auth,search
     python -m api_test_runner run [csv_dir] --api groups,members
     python -m api_test_runner run [csv_dir] --failed-only
+    python -m api_test_runner run --pattern auth --output-json
+    python -m api_test_runner run --safe-post --yes --fetch-resource
+    python -m api_test_runner run --csv-files "file1.csv,file2.csv"
     python -m api_test_runner parse [csv_dir]
     python -m api_test_runner check [csv_dir] [--config config.yaml]
     python -m api_test_runner gui
@@ -20,7 +23,8 @@ from pathlib import Path
 
 import yaml
 
-from .csv_parser import parse_directory
+from .body_override import merge_body_overrides
+from .csv_parser import parse_directory, parse_single
 from .http_client import ApiClient
 from .reporter import Reporter
 from .test_runner import TestRunner
@@ -165,6 +169,61 @@ def _filter_failed_only(test_cases: list, results_dir: Path) -> list:
     return [tc for tc in test_cases if tc.name in failed_names]
 
 
+def _fetch_and_apply_resources(
+    config: dict, base_url: str, api_key: str,
+) -> dict:
+    """get_endpoints マッピングからリソースを自動取得し body_overrides に設定する."""
+    test_cfg = config.get("test", {})
+    all_endpoints: dict[str, str] = {}
+    for pattern_key in ("post_normal", "put_normal", "delete_normal", "patch_normal"):
+        dc = test_cfg.get(pattern_key, {}).get("data_comparison", {})
+        endpoints = dc.get("get_endpoints", {})
+        all_endpoints.update(endpoints)
+
+    if not all_endpoints:
+        print("Warning: --fetch-resource: get_endpoints が config に未設定です")
+        return config
+
+    client = ApiClient(base_url, api_key, timeout=15)
+    overrides: dict[str, dict] = {}
+    try:
+        for post_path, get_path in all_endpoints.items():
+            url = base_url.rstrip("/") + "/" + get_path.lstrip("/")
+            headers = {
+                "Accept": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            }
+            try:
+                resp = client.session.get(
+                    url, params={"limit": 5}, headers=headers, timeout=15)
+                if resp.status_code != 200:
+                    print(f"  Warning: {get_path} → {resp.status_code}")
+                    continue
+                data = resp.json()
+                # レスポンスから配列を探索
+                items = []
+                if isinstance(data, list):
+                    items = data
+                elif isinstance(data, dict):
+                    for v in data.values():
+                        if isinstance(v, list):
+                            items = v
+                            break
+                if items and isinstance(items[0], dict) and "id" in items[0]:
+                    overrides[post_path] = {"id": items[0]["id"]}
+                    print(f"  {post_path} → id={items[0]['id']}")
+            except Exception as e:
+                print(f"  Warning: {get_path} 取得失敗: {e}")
+    finally:
+        client.close()
+
+    if overrides:
+        config = merge_body_overrides(config, overrides)
+        print(f"  {len(overrides)} 件のリソースを body_overrides に設定しました")
+
+    return config
+
+
 def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     """run サブコマンド: CSV 解析 → テスト実行 → 結果保存 → レポート."""
     config_path = project_root / args.config
@@ -201,7 +260,23 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
 
     # CSV 解析（対象メソッド）
     methods = config.get("test", {}).get("methods", ["GET", "POST"])
-    specs = parse_directory(csv_dir, methods=methods)
+
+    # --csv-files: 個別ファイル指定（Web UIのファイル選択と同等）
+    csv_files = getattr(args, "csv_files", None)
+    if csv_files:
+        file_names = [f.strip() for f in csv_files.split(",")]
+        specs = []
+        for fname in file_names:
+            fpath = csv_dir / fname
+            if not fpath.exists():
+                print(f"Warning: CSV file not found: {fpath}")
+                continue
+            spec = parse_single(fpath)
+            if spec and (methods is None or spec.method in methods):
+                specs.append(spec)
+    else:
+        specs = parse_directory(csv_dir, methods=methods)
+
     if not specs:
         print(f"Error: No valid API specs found in {csv_dir}")
         return 1
@@ -215,13 +290,17 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     results_dir_name = config.get("output", {}).get("results_dir", "results")
     results_dir = project_root / results_dir_name
 
-    print("========================================")
-    print("  API Tests - Python Runner")
-    print("========================================")
-    print()
-    print(f"Base URL: {base_url}")
-    print(f"CSV specs: {len(specs)} APIs")
-    print()
+    # --output-json: テキスト出力をstderrにリダイレクト（stdoutはJSON専用）
+    output_json = getattr(args, "output_json", False)
+    _print = (lambda *a, **kw: print(*a, file=sys.stderr, **kw)) if output_json else print
+
+    _print("========================================")
+    _print("  API Tests - Python Runner")
+    _print("========================================")
+    _print()
+    _print(f"Base URL: {base_url}")
+    _print(f"CSV specs: {len(specs)} APIs")
+    _print()
 
     # --pattern 指定時は config.patterns を上書きしてテスト生成に反映
     if hasattr(args, "pattern") and args.pattern:
@@ -245,23 +324,42 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
                 patterns.append(wp)
                 added.append(wp)
         flag_name = "--safe-write" if safe_write else "--safe-post"
-        print(f"** {flag_name}: {label} 正常系テストが有効化されました **")
+        _print(f"** {flag_name}: {label} 正常系テストが有効化されました **")
         if added:
-            print(f"   追加パターン: {', '.join(added)}")
-        print("   注意: 実データの登録・変更・削除が発生します")
-        try:
-            answer = input("   続行しますか？ (y/N): ").strip().lower()
-        except (EOFError, KeyboardInterrupt):
-            answer = ""
-        if answer != "y":
-            print("中断しました")
-            return 0
+            _print(f"   追加パターン: {', '.join(added)}")
+        _print("   注意: 実データの登録・変更・削除が発生します")
+        auto_yes = getattr(args, "yes", False)
+        if not auto_yes:
+            try:
+                answer = input("   続行しますか？ (y/N): ").strip().lower()
+            except (EOFError, KeyboardInterrupt):
+                answer = ""
+            if answer != "y":
+                _print("中断しました")
+                return 0
+        else:
+            _print("   --yes: 確認スキップ")
 
-    # --api 指定時は individual_only を無効化（個別指定なので全API生成が必要）
-    if hasattr(args, "api") and args.api:
+    # --api / --csv-files 指定時は individual_only を無効化
+    if (hasattr(args, "api") and args.api) or csv_files:
         test_cfg = config.setdefault("test", {})
         for pattern_key in ("post_normal", "put_normal", "delete_normal", "patch_normal"):
             test_cfg.setdefault(pattern_key, {})["individual_only"] = []
+
+    # --body-override: JSON文字列でbody_overridesを指定
+    cli_body_override = getattr(args, "body_override", None)
+    if cli_body_override:
+        try:
+            overrides = json.loads(cli_body_override)
+        except json.JSONDecodeError as e:
+            print(f"Error: --body-override の JSON が不正です: {e}")
+            return 1
+        config = merge_body_overrides(config, overrides)
+
+    # --fetch-resource: リソースを自動取得してbody_overridesに設定
+    fetch_resource = getattr(args, "fetch_resource", False)
+    if fetch_resource:
+        config = _fetch_and_apply_resources(config, base_url, api_key)
 
     # テストケース生成
     client = ApiClient(
@@ -298,24 +396,23 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
     info = f"Test cases: {len(test_cases)} ({method_info})"
     if filtered:
         info += f" (filtered from {total_before})"
-    print(info)
-    print()
-    print("----------------------------------------")
+    _print(info)
+    _print()
+    _print("----------------------------------------")
 
     # ドライラン
     if hasattr(args, "dry_run") and args.dry_run:
         from .validator import ResponseValidator
         for tc in test_cases:
             desc = ResponseValidator.test_description(tc)
-            print(f"  {desc}")
+            _print(f"  {desc}")
             if tc.request_body and tc.use_auth:
-                import json
                 body_str = json.dumps(tc.request_body, ensure_ascii=False)
                 if len(body_str) > 120:
                     body_str = body_str[:120] + "..."
-                print(f"    body: {body_str}")
-        print()
-        print(f"Dry run: {len(test_cases)} test(s) would be executed")
+                _print(f"    body: {body_str}")
+        _print()
+        _print(f"Dry run: {len(test_cases)} test(s) would be executed")
         client.close()
         return 0
 
@@ -324,19 +421,59 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
 
     # レポート
     reporter = Reporter()
-    reporter.print_summary(results)
+
+    if not output_json:
+        reporter.print_summary(results)
 
     report_path = reporter.save_report(results, results_dir)
     if report_path:
-        print(f"Report: {report_path}")
+        _print(f"Report: {report_path}")
 
     html_path = reporter.save_html_report(results, results_dir)
     if html_path:
-        print(f"Report: {html_path}")
+        _print(f"Report: {html_path}")
 
     csv_path = reporter.save_csv_report(results, results_dir)
     if csv_path:
-        print(f"Report: {csv_path}")
+        _print(f"Report: {csv_path}")
+
+    # --output-json / --output-json-file: 結果をJSON形式で出力
+    output_json_file = getattr(args, "output_json_file", None)
+    if output_json or output_json_file:
+        total = len(results)
+        passed = sum(1 for r in results if r.passed)
+        failed_count = total - passed
+        json_output = {
+            "summary": {
+                "total": total,
+                "passed": passed,
+                "failed": failed_count,
+            },
+            "tests": [
+                {
+                    "name": r.test_case.name,
+                    "pattern": r.test_case.pattern,
+                    "method": r.test_case.method,
+                    "url_path": r.test_case.url_path,
+                    "expected_status": r.test_case.expected_status,
+                    "actual_status": r.status_code,
+                    "passed": r.passed,
+                    "elapsed_ms": round(r.elapsed_ms, 1),
+                    "schema_warnings": r.schema_warnings or [],
+                }
+                for r in results
+            ],
+            "report_path": str(report_path) if report_path else None,
+        }
+        json_str = json.dumps(json_output, indent=2, ensure_ascii=False)
+        if output_json_file:
+            out_path = Path(output_json_file)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+                f.write(json_str + "\n")
+            _print(f"JSON output: {out_path}")
+        if output_json:
+            print(json_str)
 
     # Slack 通知
     notification = config.get("notification", {})
@@ -349,9 +486,9 @@ def cmd_run(args: argparse.Namespace, project_root: Path) -> int:
             from .notifier import SlackNotifier
             notifier = SlackNotifier()
             if notifier.notify(results, webhook_url):
-                print("Slack notification sent.")
+                _print("Slack notification sent.")
             else:
-                print("Warning: Slack notification failed.")
+                _print("Warning: Slack notification failed.")
 
     client.close()
 
@@ -485,6 +622,18 @@ def main() -> int:
                             help="書き込み系テスト (POST/PUT/DELETE/PATCH) を安全に実行（確認プロンプト付き）")
     run_parser.add_argument("--env", "-e", default=None,
                             help="環境名 (例: staging → .env.staging を読み込み)")
+    run_parser.add_argument("--yes", "-y", action="store_true",
+                            help="確認プロンプトをスキップ（自動実行向け）")
+    run_parser.add_argument("--csv-files", default=None,
+                            help="CSVファイル名カンマ区切りで個別指定 (例: 15プロジェクト更新用.csv)")
+    run_parser.add_argument("--body-override", default=None,
+                            help='JSON文字列でbody_overrides指定 (例: \'{"api.json": {"id": "abc"}}\')')
+    run_parser.add_argument("--output-json", action="store_true",
+                            help="結果をJSON形式で標準出力（機械可読）")
+    run_parser.add_argument("--output-json-file", default=None,
+                            help="結果をJSON形式でファイル保存 (例: results/latest_run.json)")
+    run_parser.add_argument("--fetch-resource", action="store_true",
+                            help="リソースを自動取得してbody_overridesに設定")
 
     # parse
     parse_parser = subparsers.add_parser("parse", help="CSV 解析のみ（一覧表示）")

@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
+from ..body_override import merge_body_overrides
 from ..csv_parser import parse_directory
 from ..http_client import ApiClient
 from ..reporter import Reporter
@@ -55,7 +56,8 @@ class RunManager:
 
     def start(self, config: dict, base_url: str, api_key: str,
               csv_dir: str, patterns: list[str] | None = None,
-              csv_files: list[str] | None = None) -> dict:
+              csv_files: list[str] | None = None,
+              body_overrides: dict | None = None) -> dict:
         """テスト実行を開始する（バックグラウンドスレッド）."""
         with self._lock:
             if self._state.status == "running":
@@ -64,7 +66,8 @@ class RunManager:
 
         t = threading.Thread(
             target=self._run_thread,
-            args=(config, base_url, api_key, csv_dir, patterns, csv_files),
+            args=(config, base_url, api_key, csv_dir, patterns, csv_files,
+                  body_overrides),
             daemon=True,
         )
         t.start()
@@ -72,9 +75,13 @@ class RunManager:
 
     def _run_thread(self, config: dict, base_url: str, api_key: str,
                     csv_dir_name: str, patterns: list[str] | None,
-                    csv_files: list[str] | None):
+                    csv_files: list[str] | None,
+                    body_overrides: dict | None = None):
         """バックグラウンドでテストを実行."""
         try:
+            # Web UIからのbody_overridesをconfigにマージ
+            if body_overrides:
+                config = merge_body_overrides(config, body_overrides)
             csv_dir = self.project_root / csv_dir_name
             if not csv_dir.exists():
                 self._set_error(f"CSV ディレクトリが見つかりません: {csv_dir}")
