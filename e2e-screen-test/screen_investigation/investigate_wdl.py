@@ -4,7 +4,11 @@ import os
 import time
 from pathlib import Path
 from datetime import datetime
+from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
+
+# .envから認証情報を読み込み
+load_dotenv(Path(__file__).parent.parent / "ログイン" / ".env")
 
 BASE_URL = os.environ.get("WDL_BASE_URL", "https://invoicing-wdl-staging.keihi.com")
 SCREENSHOT_DIR = Path(__file__).parent / "screenshots" / "wdl"
