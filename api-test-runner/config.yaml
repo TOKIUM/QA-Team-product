@@ -83,6 +83,10 @@ test:
         zero_expected_status: 400
       projects:
         zero_expected_status: 400
+      approval_flows:
+        zero_expected_status: 400
+      request_types:
+        zero_expected_status: 400
     offset_large_expected_status: 200
     offset_large_value: 999999
     offset_negative_expected_status: 400
