@@ -584,6 +584,23 @@ def main():
                 if args.verbose:
                     print(f"  ✅ {qs}点 {fs['file']}")
             else:
+                # 除外理由を付与
+                stats = fs['stats']
+                reasons = []
+                if stats.get('expected_count', 0) == 0:
+                    reasons.append('期待値0字（テンプレ/空）')
+                if stats.get('vague_rate', 0) > 0.03:
+                    reasons.append(f"曖昧率{stats['vague_rate']*100:.1f}%")
+                elif stats.get('vague_rate', 0) > 0.01:
+                    reasons.append(f"曖昧率{stats['vague_rate']*100:.1f}%")
+                if stats.get('koto_1_rate', 1) < 0.5:
+                    reasons.append(f"こと1回率{stats['koto_1_rate']*100:.0f}%")
+                if stats.get('good_ending_rate', 1) < 0.3:
+                    reasons.append(f"良好末尾率{stats['good_ending_rate']*100:.0f}%")
+                if not reasons:
+                    reasons.append(f'スコア{qs}点（{args.min_score}点未満）')
+                fs['exclude_reason'] = '/'.join(reasons)
+                fs['cases'] = stats.get('case_count', 0)
                 excluded_files.append(fs)
                 print(f"  ❌ {qs}点 {fs['file']}（除外）")
         if excluded_files:
@@ -681,6 +698,241 @@ def main():
 
     # 古いスナップショットの自動クリーンアップ（最新3件のみ保持）
     cleanup_old_snapshots(report_base, keep=3)
+
+    # 学習対象一覧の自動生成（品質基準/学習対象一覧.md + Vault版）
+    generate_inventory(benchmark, excluded_files, report_dir)
+
+
+def _normalize_name(name):
+    """ファイル名を正規化して比較しやすくする"""
+    import unicodedata
+    n = os.path.splitext(name)[0]
+    # プレフィックス除去
+    for prefix in ['【テスト項目書】', '【テンプレ】', '【メイテック様】',
+                    '【レクチャー用】', 'テスト項目書_', 'テスト項目書_ ']:
+        if n.startswith(prefix):
+            n = n[len(prefix):]
+            break
+    # 全角→半角スペース、連続スペース圧縮
+    n = unicodedata.normalize('NFKC', n)
+    n = re.sub(r'\s+', ' ', n).strip()
+    return n
+
+
+def _load_qa_schedule():
+    """QAスケジュール表からプロジェクト名→担当者のマッピングを読み込み"""
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    schedule_path = os.path.join(base_dir, 'QAスケジュール表.xlsx')
+    if not os.path.isfile(schedule_path):
+        return {}
+    try:
+        wb = openpyxl.load_workbook(schedule_path, read_only=True, data_only=True)
+        schedule_map = {}  # project_name -> assignee
+        for ws in wb.worksheets:
+            if 'スケジュール' not in ws.title:
+                continue
+            for row in ws.iter_rows(min_row=2, values_only=True):
+                if len(row) < 15:
+                    continue
+                project = row[2]   # C列: プロジェクト名
+                task = row[13]     # N列: タスク（設計/実行）
+                assignee = row[14] # O列: 担当者
+                if project and assignee and task:
+                    task_str = str(task)
+                    if '設計' in task_str:
+                        schedule_map[str(project).strip()] = str(assignee).strip()
+        wb.close()
+        return schedule_map
+    except Exception:
+        return {}
+
+
+def generate_inventory(benchmark, excluded_files, report_dir):
+    """学習対象一覧.md と Vault版を自動生成する"""
+    from difflib import SequenceMatcher
+
+    # authors.json 読み込み
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    authors_path = os.path.join(base_dir, '品質基準', 'authors.json')
+    authors_map = {}
+    if os.path.isfile(authors_path):
+        with open(authors_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            authors_map = data.get('authors', {})
+
+    # 正規化済みインデックスを構築
+    normalized_index = {}
+    for key, author in authors_map.items():
+        normalized_index[_normalize_name(key)] = author
+
+    # QAスケジュール表の読み込み
+    schedule_map = _load_qa_schedule()
+
+    def lookup_author(filename):
+        """ファイル名から作成者を検索（3段階フォールバック）"""
+        name = os.path.splitext(filename)[0]
+
+        # 1. authors.json 完全一致
+        if name in authors_map:
+            return authors_map[name]
+
+        # 2. 正規化後の完全一致
+        norm = _normalize_name(filename)
+        if norm in normalized_index:
+            return normalized_index[norm]
+
+        # 3. 正規化後のあいまい検索（類似度85%以上）
+        best_score, best_author = 0.0, None
+        for key, author in normalized_index.items():
+            score = SequenceMatcher(None, norm, key).ratio()
+            if score > best_score:
+                best_score, best_author = score, author
+        if best_score >= 0.85:
+            return best_author
+
+        # 4. QAスケジュール表とのキーワード突合
+        for project, assignee in schedule_map.items():
+            # プロジェクト名の主要キーワードがファイル名に含まれるか
+            keywords = [w for w in re.split(r'[\s、,/()（）]+', project)
+                        if len(w) >= 3]
+            if keywords and all(kw in name for kw in keywords[:2]):
+                return assignee
+
+        return '不明'
+
+    today = datetime.now().strftime('%Y-%m-%d')
+    bm = benchmark
+    per_file = bm['per_file']
+
+    # 作成者別集計
+    author_stats = {}
+    unknown_files = []
+
+    # 学習対象のテーブル行
+    target_rows = []
+    for i, pf in enumerate(per_file, 1):
+        author = lookup_author(pf['file'])
+        if author == '不明':
+            unknown_files.append(pf['file'])
+        score = pf.get('quick_score', '?')
+        weight = f"{pf.get('weight', 1.0):.1f}x"
+
+        # 作成者別集計
+        if author not in author_stats:
+            author_stats[author] = {'target': 0, 'excluded': 0, 'scores': []}
+        author_stats[author]['target'] += 1
+        if isinstance(score, (int, float)):
+            author_stats[author]['scores'].append(score)
+
+        target_rows.append(
+            f"| {i} | {pf['file'][:80]} | {score} | {weight} | {pf['cases']:,} "
+            f"| {pf['koto_1_rate']*100:.0f}% | {pf['vague_rate']*100:.1f}% "
+            f"| {pf['good_ending_rate']*100:.0f}% | {author} |"
+        )
+
+    # 除外ファイルのテーブル行
+    excluded_rows = []
+    for i, ef in enumerate(excluded_files or [], 1):
+        author = lookup_author(ef['file'])
+        if author == '不明':
+            unknown_files.append(ef['file'])
+
+        if author not in author_stats:
+            author_stats[author] = {'target': 0, 'excluded': 0, 'scores': []}
+        author_stats[author]['excluded'] += 1
+
+        reason = ef.get('exclude_reason', 'スコア90点未満')
+        cases = ef.get('cases', '?')
+        cases_str = f"{cases:,}" if isinstance(cases, int) else str(cases)
+        excluded_rows.append(
+            f"| {i} | {ef['file'][:80]} | {reason} | {cases_str} | {author} |"
+        )
+
+    # 作成者別サマリーテーブル
+    author_rows = []
+    for author, stats in sorted(author_stats.items(),
+                                key=lambda x: x[1]['target'] + x[1]['excluded'],
+                                reverse=True):
+        total = stats['target'] + stats['excluded']
+        avg = f"{sum(stats['scores'])/len(stats['scores']):.1f}" if stats['scores'] else '—'
+        author_rows.append(
+            f"| {author} | {stats['target']} | {stats['excluded']} | {total} | {avg} |"
+        )
+
+    total_target = len(per_file)
+    total_excluded = len(excluded_files or [])
+    total_cases = bm['_meta']['total_cases']
+
+    md = f"""# テスト項目書 学習対象一覧
+
+最終更新: {today}
+
+## 概要
+
+| 項目 | 値 |
+|------|-----|
+| 学習対象 | {total_target}件 / {total_cases:,}ケース |
+| 除外 | {total_excluded}件 |
+| 除外基準 | スコア{bm['_meta']['quality_gate'].get('min_score', 90)}点未満 or 期待値なし(テンプレ/空) |
+| 重み付け | 95点以上→1.2x / 90-94点→1.0x |
+
+---
+
+## 作成者別サマリー
+
+| 作成者 | 学習対象 | 除外 | 合計 | 平均スコア（対象のみ） |
+|--------|---------|------|------|----------------------|
+{chr(10).join(author_rows)}
+
+---
+
+## 現在の学習対象（{total_target}件）
+
+| # | ファイル名 | スコア | 重み | ケース数 | こと1回率 | 曖昧率 | 良好末尾率 | 作成者 |
+|---|-----------|--------|------|----------|----------|--------|-----------|--------|
+{chr(10).join(target_rows)}
+
+---
+
+## 除外されたファイル（{total_excluded}件）
+
+| # | ファイル名 | 除外理由 | ケース数 | 作成者 |
+|---|-----------|----------|---------|--------|
+{chr(10).join(excluded_rows)}
+"""
+
+    # 品質基準/学習対象一覧.md に保存
+    inventory_path = os.path.join(base_dir, '品質基準', '学習対象一覧.md')
+    with open(inventory_path, 'w', encoding='utf-8') as f:
+        f.write(md)
+    print(f"\n学習対象一覧: {inventory_path}")
+
+    # Vault版を生成
+    vault_dir = os.path.join(os.path.expanduser('~'),
+                             'ClaudeCode用', 'Obsidian Vault',
+                             '10_Work', 'テストケース評価')
+    if os.path.isdir(vault_dir):
+        vault_md = f"""---
+tags: [テストケース, 学習, 品質基準, 参考例, 作成者]
+created: {today}
+updated: {today}
+source: "品質基準/学習対象一覧.md"
+---
+
+{md}"""
+        vault_path = os.path.join(vault_dir, f'{today}_学習対象一覧.md')
+        with open(vault_path, 'w', encoding='utf-8') as f:
+            f.write(vault_md)
+        print(f"Vault版: {vault_path}")
+
+    # 不明ファイルの警告
+    if unknown_files:
+        print(f"\n⚠ 作成者不明: {len(unknown_files)}件")
+        print("  品質基準/authors.json に追記してください:")
+        for uf in unknown_files:
+            print(f"    \"{os.path.splitext(uf)[0]}\": \"作成者名\",")
+
+    return inventory_path
 
 
 def cleanup_old_snapshots(report_base, keep=3):

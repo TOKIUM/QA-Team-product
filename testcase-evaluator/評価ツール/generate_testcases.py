@@ -1354,13 +1354,16 @@ def write_excel(test_cases, output_path, spec_text=None, ticket_keys=None):
         # No列: 数値（data_only=True で読み込まれても値が残るように）
         ws.cell(row=row, column=TC_COL["no"], value=i + 1)
 
+        # グループ化TC: group_parent=false の子行は confirm空・steps="-"
+        is_group_child = tc.get("group_parent") is False
+
         # テストケースデータ
         field_map = {
-            "confirm": tc.get("confirm", ""),
+            "confirm": "" if is_group_child else tc.get("confirm", ""),
             "screen": tc.get("screen", ""),
             "target": tc.get("target", ""),
             "detail": tc.get("detail", ""),
-            "steps": tc.get("steps", ""),
+            "steps": "-" if is_group_child else tc.get("steps", ""),
             "expected": tc.get("expected", ""),
             "notes": tc.get("notes", ""),
         }

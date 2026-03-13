@@ -20,6 +20,7 @@
     リカバリー	パスワード再設定
 """
 import os, sys, re, json, argparse
+from collections import Counter
 from datetime import datetime
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -32,6 +33,9 @@ except ImportError:
 
 from common import (
     HEADER_KEYWORDS, SKIP_SHEET_PATTERNS, VAGUE_EXCEPTIONS,
+    SCREEN_NAME_URL_PATTERN, SCREEN_NAME_IMPL_TERMS, SCREEN_NAME_VAGUE,
+    FORMAT_PRECONDITION_KEYWORDS, FORMAT_EXECUTION_KEYWORDS,
+    SECURITY_KEYWORDS,
     detect_header_row, detect_columns, find_sheet,
     should_skip_sheet, strip_parens, is_vague_exception,
 )
@@ -42,7 +46,8 @@ from common import (
 # =====================================================================
 
 # 曖昧表現のNGパターン（期待値列に含まれていたらNG）
-VAGUE_PATTERNS = [
+# 外部JSON（品質基準/vague_patterns.json）があればそちらを優先。なければハードコードを使用
+VAGUE_PATTERNS_DEFAULT = [
     (r'正常であること', 5, '「正常であること」は具体的な期待値に書き換えてください'),
     (r'正常に動作すること', 5, '「正常に動作すること」は具体的な挙動を記載してください'),
     (r'問題ないこと', 5, '「問題ないこと」は具体的な期待値に書き換えてください'),
@@ -57,6 +62,21 @@ VAGUE_PATTERNS = [
     (r'想定通り', 3, '「想定通り」は具体的な内容を記載してください'),
 ]
 
+def _load_vague_patterns():
+    """品質基準/vague_patterns.json から曖昧表現パターンを読み込む"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    json_path = os.path.join(script_dir, '..', '品質基準', 'vague_patterns.json')
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return [(p[0], p[1], p[2]) for p in data.get('patterns', [])]
+        except (json.JSONDecodeError, IndexError, KeyError):
+            pass
+    return VAGUE_PATTERNS_DEFAULT
+
+VAGUE_PATTERNS = _load_vague_patterns()
+
 # 期待値の複数「こと」検出
 MULTI_KOTO_PENALTY = 2  # 1件あたりの減点
 
@@ -67,9 +87,9 @@ CUSTOM_WORD_PENALTY = 1  # 1件あたりの減点
 MISSING_STEPS_PENALTY = 2  # 1件あたりの減点
 
 # 上限設定
-MAX_VAGUE_PENALTY = 20
-MAX_MULTI_KOTO_PENALTY = 15
-MAX_CUSTOM_WORD_PENALTY = 15
+MAX_VAGUE_PENALTY = 15
+MAX_MULTI_KOTO_PENALTY = 10
+MAX_CUSTOM_WORD_PENALTY = 10
 MAX_MISSING_STEPS_PENALTY = 10
 
 # =====================================================================
@@ -122,6 +142,26 @@ MAX_GRANULARITY_PENALTY = 15
 MAX_GUARDRAIL_PENALTY = 10
 MAX_MONEY_P1_PENALTY = 5
 MAX_KANTEN_COVERAGE_PENALTY = 5
+
+# チェック7: 画面名・フォーマット
+MAX_SCREEN_FORMAT_PENALTY = 15
+SCREEN_URL_PENALTY = 2
+SCREEN_IMPL_PENALTY = 1
+SCREEN_VAGUE_PENALTY = 2
+FORMAT_NO_SECTION_PENALTY = 1
+MAX_FORMAT_NO_SECTION_PENALTY = 3
+FORMAT_SAME_LINE_PENALTY = 1
+MAX_FORMAT_SAME_LINE_PENALTY = 3
+
+# チェック8: 構造化
+MAX_STRUCTURE_PENALTY = 10
+GROUPING_PENALTY = 1       # グループ化は推奨（必須ではない）
+MAX_GROUPING_PENALTY = 3
+NO_DT_PENALTY = 2          # 小規模チケットではDT不要の場合もある
+COMPLEX_PRECONDITION_PENALTY = 2
+
+# チェック9: 観点シート品質
+MAX_PERSPECTIVE_QUALITY_PENALTY = 10
 
 # 金額関連キーワード（ガードレール qa-perspectives.md 1-13 準拠）
 # 注意: "金額"単体は画面カラム名として頻出するため除外。金額「計算」に関するキーワードに限定
@@ -529,59 +569,77 @@ def check_granularity(cases, col_map, benchmark=None):
 # =====================================================================
 
 def check_money_priority(cases, col_map):
-    """金額関連テストのP1優先度チェック
+    """金額・セキュリティ関連テストのP1優先度チェック
 
-    ガードレール基準: 金額計算に関するテストは原則P1とする。
+    ガードレール基準:
+    - 金額計算に関するテストは原則P1とする
+    - セキュリティ関連テスト（認証/権限/脆弱性）も原則P1とする
     """
     issues = []
     priority_col = col_map.get('priority')
 
     # 金額関連ケースを検出
     money_cases = []
+    security_cases = []
     text_fields = [k for k in ('confirm', 'target', 'detail', 'expected') if k in col_map]
     for case in cases:
+        is_money = False
+        is_security = False
         for field in text_fields:
             val = case.get(field, '')
             if any(kw in val for kw in MONEY_KEYWORDS):
-                money_cases.append(case)
-                break
+                is_money = True
+            if any(kw in val for kw in SECURITY_KEYWORDS):
+                is_security = True
+        if is_money:
+            money_cases.append(case)
+        elif is_security:
+            security_cases.append(case)
 
-    if not money_cases:
-        return {'money_cases': 0, 'issues': [], 'penalty': 0}
+    p1_required_cases = money_cases + security_cases
+    if not p1_required_cases:
+        return {'money_cases': 0, 'security_cases': 0, 'issues': [], 'penalty': 0}
 
     if priority_col is None:
-        # 優先度列がないテンプレート → P1設定確認不可として警告
+        msg_parts = []
+        if money_cases:
+            msg_parts.append(f'金額{len(money_cases)}件')
+        if security_cases:
+            msg_parts.append(f'セキュリティ{len(security_cases)}件')
         issues.append({
             'type': 'no_priority_column',
-            'message': f'金額関連テスト{len(money_cases)}件検出。優先度列がないためP1設定を確認できません',
+            'message': f'{"+".join(msg_parts)}検出。優先度列がないためP1設定を確認できません',
         })
-        return {'money_cases': len(money_cases), 'issues': issues, 'penalty': 3}
+        return {'money_cases': len(money_cases), 'security_cases': len(security_cases),
+                'issues': issues, 'penalty': 2}
 
-    # P1でない金額テストを検出
+    # P1でないケースを検出
     non_p1 = []
-    for case in money_cases:
+    for case in p1_required_cases:
         priority = str(case.get('priority', '')).strip().upper()
         if priority not in ('P1', '1', 'HIGH', '高'):
-            non_p1.append(case)
+            case_type = '金額' if case in money_cases else 'セキュリティ'
+            non_p1.append((case, case_type))
 
     if non_p1:
-        for case in non_p1[:5]:
+        for case, case_type in non_p1[:5]:
             pri_val = case.get('priority', '').strip() or '(空)'
             issues.append({
-                'type': 'money_not_p1',
+                'type': 'priority_not_p1',
                 'no': case['no'],
                 'row': case['row'],
                 'priority': pri_val,
-                'message': f'No.{case["no"]}: 金額関連テストがP1ではありません (現在: {pri_val})',
+                'message': f'No.{case["no"]}: {case_type}関連テストがP1ではありません (現在: {pri_val})',
             })
         if len(non_p1) > 5:
             issues.append({
-                'type': 'money_not_p1_more',
+                'type': 'priority_not_p1_more',
                 'message': f'... 他 {len(non_p1) - 5}件',
             })
 
     penalty = min(len(non_p1), MAX_MONEY_P1_PENALTY)
-    return {'money_cases': len(money_cases), 'non_p1': len(non_p1), 'issues': issues, 'penalty': penalty}
+    return {'money_cases': len(money_cases), 'security_cases': len(security_cases),
+            'non_p1': len(non_p1), 'issues': issues, 'penalty': penalty}
 
 
 def check_kanten_tc_coverage(cases, col_map, ws_kanten):
@@ -634,8 +692,9 @@ def check_kanten_tc_coverage(cases, col_map, ws_kanten):
     # 各○観点がTCでカバーされているか確認
     uncovered = []
     for persp in marked_perspectives:
-        # 観点テキストから3文字以上の日本語単語を抽出
-        words = re.findall(r'[\u3040-\u9fff]{3,}', persp['text'])
+        # 観点テキストからプレフィックス（TH_/WDL_等）を除去し、2文字以上の日本語単語を抽出
+        clean_text = re.sub(r'[A-Z]{2,}_', '', persp['text'])
+        words = re.findall(r'[\u3040-\u9fff]{2,}', clean_text)
         if not words:
             continue
         # いずれかのキーワードがTCテキストに含まれていればカバー済み
@@ -667,10 +726,442 @@ def check_kanten_tc_coverage(cases, col_map, ws_kanten):
 
 
 # =====================================================================
+# チェック7: 画面名・フォーマット
+# =====================================================================
+
+def check_screen_and_format(cases, col_map):
+    """画面名とフォーマットのチェック
+
+    7a. 画面名フォーマット（上限-8点）:
+        - URL混入: 画面列に /path が含まれる → -2点/件
+        - 実装用語: モーダル/ドロワー等 → -1点/件
+        - 曖昧画面名: 全画面共通等 → -2点/件
+
+    7b. 手順フォーマット（上限-7点）:
+        - 【前提条件】【実行手順】分離なし → -1点/件（上限-4点）
+        - 同一行に【前提条件】【実行手順】混在 → -1点/件（上限-3点）
+    """
+    issues = []
+    penalty_7a = 0
+    penalty_7b_nosection = 0
+    penalty_7b_sameline = 0
+
+    # --- 7a: 画面名チェック ---
+    if 'screen' in col_map:
+        for case in cases:
+            screen = case.get('screen', '')
+            if not screen or screen.strip() in ('', '-', 'None'):
+                continue
+
+            # URL混入
+            if re.search(SCREEN_NAME_URL_PATTERN, screen):
+                penalty_7a += SCREEN_URL_PENALTY
+                issues.append({
+                    'type': 'screen_url',
+                    'no': case['no'],
+                    'row': case['row'],
+                    'value': screen[:60],
+                    'message': f'No.{case["no"]}: 画面名にURLパスが混入「{screen[:40]}」→ 画面名のみ記載',
+                })
+
+            # 実装用語
+            for term in SCREEN_NAME_IMPL_TERMS:
+                if term in screen:
+                    penalty_7a += SCREEN_IMPL_PENALTY
+                    issues.append({
+                        'type': 'screen_impl',
+                        'no': case['no'],
+                        'row': case['row'],
+                        'value': screen[:60],
+                        'message': f'No.{case["no"]}: 実装用語「{term}」→ ユーザー視点の画面名に変更',
+                    })
+                    break  # 1件につき1回のみ
+
+            # 曖昧画面名
+            for vague in SCREEN_NAME_VAGUE:
+                if vague in screen:
+                    penalty_7a += SCREEN_VAGUE_PENALTY
+                    issues.append({
+                        'type': 'screen_vague',
+                        'no': case['no'],
+                        'row': case['row'],
+                        'value': screen[:60],
+                        'message': f'No.{case["no"]}: 曖昧な画面名「{vague}」→ 具体的な画面名を記載',
+                    })
+                    break
+
+    penalty_7a = min(penalty_7a, 8)  # 7a上限
+
+    # --- 7b: 手順フォーマットチェック ---
+    if 'steps' in col_map:
+        for case in cases:
+            steps = case.get('steps', '')
+            if not steps or steps.strip() in ('', '-', 'None'):
+                continue
+
+            has_any_section = any(kw in steps for kw in FORMAT_PRECONDITION_KEYWORDS + FORMAT_EXECUTION_KEYWORDS)
+
+            # 手順に内容があるが【】セクション分離なし
+            # 30文字以上かつ改行を含む（複数行手順）の場合のみ検出
+            if not has_any_section and len(steps.strip()) > 30 and '\n' in steps:
+                penalty_7b_nosection += FORMAT_NO_SECTION_PENALTY
+                issues.append({
+                    'type': 'format_no_section',
+                    'no': case['no'],
+                    'row': case['row'],
+                    'message': f'No.{case["no"]}: 手順に【前提条件】【実行手順】のセクション分離なし',
+                })
+
+            # 同一行に【前提条件】と【実行手順】が混在（改行なし連結）
+            has_precond = any(kw in steps for kw in FORMAT_PRECONDITION_KEYWORDS)
+            has_exec = any(kw in steps for kw in FORMAT_EXECUTION_KEYWORDS)
+            if has_precond and has_exec:
+                # 改行で分離されているか確認
+                lines = steps.split('\n')
+                for line in lines:
+                    if any(kw in line for kw in FORMAT_PRECONDITION_KEYWORDS) and \
+                       any(kw in line for kw in FORMAT_EXECUTION_KEYWORDS):
+                        penalty_7b_sameline += FORMAT_SAME_LINE_PENALTY
+                        issues.append({
+                            'type': 'format_same_line',
+                            'no': case['no'],
+                            'row': case['row'],
+                            'message': f'No.{case["no"]}: 【前提条件】と【実行手順】が同一行に混在→改行で分離',
+                        })
+                        break
+
+    penalty_7b_nosection = min(penalty_7b_nosection, MAX_FORMAT_NO_SECTION_PENALTY)
+    penalty_7b_sameline = min(penalty_7b_sameline, MAX_FORMAT_SAME_LINE_PENALTY)
+    penalty_7b = penalty_7b_nosection + penalty_7b_sameline
+    penalty_7b = min(penalty_7b, 7)  # 7b上限
+
+    total_penalty = min(penalty_7a + penalty_7b, MAX_SCREEN_FORMAT_PENALTY)
+    return {
+        'issues': issues,
+        'penalty': total_penalty,
+        'penalty_7a': min(penalty_7a, 8),
+        'penalty_7b': min(penalty_7b, 7),
+    }
+
+
+# =====================================================================
+# チェック8: 構造化（グループTC・DT・シナリオ）
+# =====================================================================
+
+def check_structure(cases, col_map, wb):
+    """構造化チェック
+
+    8a. グループ化TC検証（上限-5点）:
+        同一「確認すること」内で期待値3件以上あるのにグループ化（手順「-」）なし → -2点/グループ
+
+    8b. デシジョンテーブル存在確認（-3点）:
+        シート一覧に「デシジョン」「DT」「条件表」がなく、観点シートにもDT領域なし → -3点
+
+    8c. テストシナリオシート確認（-2点）:
+        複雑な前提条件がある場合にシナリオシートなし → -2点
+    """
+    issues = []
+    penalty_8a = 0
+    penalty_8b = 0
+    penalty_8c = 0
+
+    # --- 8a: グループ化TC検証 ---
+    # 同一「確認すること」内で手順が類似している（共通化すべき）ケースのみ検知
+    if 'confirm' in col_map:
+        groups = {}
+        for case in cases:
+            confirm = case.get('confirm', '').strip()
+            if not confirm:
+                continue
+            if confirm not in groups:
+                groups[confirm] = []
+            groups[confirm].append(case)
+
+        for confirm, group_cases in groups.items():
+            if len(group_cases) < 5:  # 5件以上のグループのみ対象
+                continue
+            # 全行に手順が記載されている（グループ化されていない）
+            steps_list = [
+                (c.get('steps', '') or '').strip()
+                for c in group_cases
+                if (c.get('steps', '') or '').strip() not in ('', '-', 'None')
+            ]
+            if len(steps_list) < 5:
+                continue
+            # 手順の類似度チェック: 最初の1行が同じ手順が50%以上なら共通化すべき
+            first_lines = [s.split('\n')[0].strip() for s in steps_list]
+            most_common_count = Counter(first_lines).most_common(1)[0][1]
+            similarity_rate = most_common_count / len(first_lines)
+            if similarity_rate >= 0.50:
+                penalty_8a += GROUPING_PENALTY
+                issues.append({
+                    'type': 'no_grouping',
+                    'confirm': confirm[:30],
+                    'count': len(group_cases),
+                    'message': f'「{confirm[:30]}」: {len(group_cases)}件で手順の{similarity_rate*100:.0f}%が類似→ 共通手順は親行にまとめ子行は「-」',
+                })
+
+    penalty_8a = min(penalty_8a, MAX_GROUPING_PENALTY)
+
+    # --- 8b: デシジョンテーブル存在確認 ---
+    dt_sheet_keywords = ['デシジョン', 'DT', '条件表', 'decision']
+    has_dt_sheet = False
+    if wb:
+        for sheet_name in wb.sheetnames:
+            if any(kw in sheet_name for kw in dt_sheet_keywords):
+                has_dt_sheet = True
+                break
+
+    if not has_dt_sheet:
+        # 観点シート内のDT領域も確認
+        has_dt_in_kanten = False
+        kanten_candidates = ['観点', '観点シート', 'テスト観点']
+        ws_kanten = find_sheet(wb, kanten_candidates) if wb else None
+        if ws_kanten:
+            for row in range(1, min(ws_kanten.max_row + 1, 200)):
+                for col in range(1, min(ws_kanten.max_column + 1, 20)):
+                    val = ws_kanten.cell(row=row, column=col).value
+                    if val and isinstance(val, str):
+                        if any(kw in val for kw in ['デシジョン', 'DT', '条件表', '条件/動作']):
+                            has_dt_in_kanten = True
+                            break
+                if has_dt_in_kanten:
+                    break
+
+        if not has_dt_in_kanten:
+            penalty_8b = NO_DT_PENALTY
+            issues.append({
+                'type': 'no_dt',
+                'message': 'デシジョンテーブルが見つかりません（シート/観点シート内ともになし）',
+            })
+
+    # --- 8c: シナリオシート確認 ---
+    scenario_keywords = ['シナリオ', '開発側連携']
+    has_scenario = False
+    if wb:
+        for sheet_name in wb.sheetnames:
+            if any(kw in sheet_name for kw in scenario_keywords):
+                has_scenario = True
+                break
+
+    if not has_scenario:
+        # 複雑な前提条件の有無を推定（Railsコマンド、SQL、API呼び出し等）
+        complex_keywords = ['rails', 'rake', 'SQL', 'curl', 'API', 'コンソール', 'DB操作', 'マイグレーション']
+        has_complex = False
+        for case in cases:
+            steps = case.get('steps', '')
+            if steps and any(kw.lower() in steps.lower() for kw in complex_keywords):
+                has_complex = True
+                break
+
+        if has_complex:
+            penalty_8c = COMPLEX_PRECONDITION_PENALTY
+            issues.append({
+                'type': 'no_scenario',
+                'message': '複雑な前提条件（Rails/SQL/API等）がありますがシナリオシートがありません→ 開発側連携用のシナリオシートの追加を推奨',
+            })
+
+    total_penalty = min(penalty_8a + penalty_8b + penalty_8c, MAX_STRUCTURE_PENALTY)
+    return {
+        'issues': issues,
+        'penalty': total_penalty,
+        'penalty_8a': penalty_8a,
+        'penalty_8b': penalty_8b,
+        'penalty_8c': penalty_8c,
+    }
+
+
+# =====================================================================
+# チェック9: 観点シート品質
+# =====================================================================
+
+def check_perspective_quality(ws_kanten):
+    """観点シート品質チェック
+
+    9a. 記入密度（上限-6点）:
+        L3（画面列）空欄率20%超→-3点、40%超→-6点
+        L5（詳細列）空欄率40%超→-2点、60%超→-4点
+
+    9b. 対象外理由チェック（上限-2点）:
+        「対象外」「×」「-」マーク行で理由列が空欄 → -1点/件
+
+    9c. パンくず形式チェック（上限-2点）:
+        リグレッション行でパンくず率50%未満 → -2点
+    """
+    issues = []
+    if not ws_kanten:
+        return {'checked': False, 'issues': [], 'penalty': 0}
+
+    penalty_9a = 0
+    penalty_9b = 0
+    penalty_9c = 0
+
+    PERSPECTIVE_SECTION_START = 27
+
+    # --- 観点シートの列位置を推定 ---
+    # L3=画面列, L5=詳細列を検出
+    # ヘッダー行（Row26付近）から列位置を特定
+    screen_col = None
+    detail_col = None
+    reason_col = None
+    mark_col = None
+
+    for header_row in range(24, 28):
+        for col in range(1, min(ws_kanten.max_column + 1, 30)):
+            val = ws_kanten.cell(row=header_row, column=col).value
+            if not val:
+                continue
+            val_str = str(val).strip()
+            if '画面' in val_str and screen_col is None:
+                screen_col = col
+            if ('詳細' in val_str or '内容' in val_str) and detail_col is None:
+                detail_col = col
+            if '理由' in val_str and reason_col is None:
+                reason_col = col
+            if ('対象' in val_str and '対象外' not in val_str) and mark_col is None:
+                mark_col = col
+
+    # --- 9a: 記入密度 ---
+    total_rows = 0
+    screen_empty = 0
+    detail_empty = 0
+
+    for row in range(PERSPECTIVE_SECTION_START, min(ws_kanten.max_row + 1, 300)):
+        # 空行スキップ（全セルが空なら終了と見なす）
+        row_has_data = False
+        for col in range(1, min(ws_kanten.max_column + 1, 20)):
+            if ws_kanten.cell(row=row, column=col).value:
+                row_has_data = True
+                break
+        if not row_has_data:
+            continue
+
+        total_rows += 1
+
+        if screen_col:
+            val = ws_kanten.cell(row=row, column=screen_col).value
+            if not val or str(val).strip() == '':
+                screen_empty += 1
+
+        if detail_col:
+            val = ws_kanten.cell(row=row, column=detail_col).value
+            if not val or str(val).strip() == '':
+                detail_empty += 1
+
+    if total_rows > 0:
+        if screen_col:
+            screen_empty_rate = screen_empty / total_rows
+            if screen_empty_rate > 0.40:
+                penalty_9a += 6
+                issues.append({
+                    'type': 'screen_density',
+                    'message': f'観点シート画面列: 空欄率{screen_empty_rate*100:.0f}%（基準: 20%以下）',
+                })
+            elif screen_empty_rate > 0.20:
+                penalty_9a += 3
+                issues.append({
+                    'type': 'screen_density',
+                    'message': f'観点シート画面列: 空欄率{screen_empty_rate*100:.0f}%（基準: 20%以下）',
+                })
+
+        if detail_col:
+            detail_empty_rate = detail_empty / total_rows
+            if detail_empty_rate > 0.60:
+                penalty_9a += 4
+                issues.append({
+                    'type': 'detail_density',
+                    'message': f'観点シート詳細列: 空欄率{detail_empty_rate*100:.0f}%（基準: 40%以下）',
+                })
+            elif detail_empty_rate > 0.40:
+                penalty_9a += 2
+                issues.append({
+                    'type': 'detail_density',
+                    'message': f'観点シート詳細列: 空欄率{detail_empty_rate*100:.0f}%（基準: 40%以下）',
+                })
+
+    penalty_9a = min(penalty_9a, 6)
+
+    # --- 9b: 対象外理由チェック ---
+    exclusion_markers = ['対象外', '×', '✕', '☓']
+    missing_reason_count = 0
+    for row in range(PERSPECTIVE_SECTION_START, min(ws_kanten.max_row + 1, 300)):
+        row_has_exclusion = False
+        for col in range(1, min(ws_kanten.max_column + 1, 20)):
+            val = ws_kanten.cell(row=row, column=col).value
+            if val and str(val).strip() in exclusion_markers:
+                row_has_exclusion = True
+                break
+            if val and isinstance(val, str) and val.strip() == '-':
+                # 「-」はマーク列（mark_col近辺）でのみ対象外と判定
+                if mark_col and abs(col - mark_col) <= 2:
+                    row_has_exclusion = True
+                    break
+
+        if row_has_exclusion and reason_col:
+            reason_val = ws_kanten.cell(row=row, column=reason_col).value
+            if not reason_val or str(reason_val).strip() == '':
+                missing_reason_count += 1
+                if missing_reason_count <= 3:
+                    issues.append({
+                        'type': 'no_exclusion_reason',
+                        'row': row,
+                        'message': f'観点シートRow{row}: 対象外だが理由が空欄',
+                    })
+
+    if missing_reason_count > 3:
+        issues.append({
+            'type': 'no_exclusion_reason_more',
+            'message': f'... 他 {missing_reason_count - 3}件の対象外理由なし',
+        })
+    penalty_9b = min(missing_reason_count, 2)
+
+    # --- 9c: パンくず形式チェック ---
+    regression_keywords = ['影響', '既存', 'リグレッション', '回帰']
+    regression_rows = 0
+    breadcrumb_count = 0
+
+    for row in range(PERSPECTIVE_SECTION_START, min(ws_kanten.max_row + 1, 300)):
+        row_text = ''
+        for col in range(1, min(ws_kanten.max_column + 1, 20)):
+            val = ws_kanten.cell(row=row, column=col).value
+            if val:
+                row_text += str(val)
+
+        if any(kw in row_text for kw in regression_keywords):
+            regression_rows += 1
+            if screen_col:
+                screen_val = ws_kanten.cell(row=row, column=screen_col).value
+                if screen_val and isinstance(screen_val, str):
+                    if '>' in screen_val or '→' in screen_val:
+                        breadcrumb_count += 1
+
+    if regression_rows > 0:
+        breadcrumb_rate = breadcrumb_count / regression_rows
+        if breadcrumb_rate < 0.50:
+            penalty_9c = 2
+            issues.append({
+                'type': 'breadcrumb',
+                'message': f'リグレッション行{regression_rows}件中パンくず形式{breadcrumb_count}件（{breadcrumb_rate*100:.0f}%、基準: 50%以上）',
+            })
+
+    total_penalty = min(penalty_9a + penalty_9b + penalty_9c, MAX_PERSPECTIVE_QUALITY_PENALTY)
+    return {
+        'checked': True,
+        'issues': issues,
+        'penalty': total_penalty,
+        'penalty_9a': penalty_9a,
+        'penalty_9b': penalty_9b,
+        'penalty_9c': penalty_9c,
+        'total_rows': total_rows,
+    }
+
+
+# =====================================================================
 # レポート生成
 # =====================================================================
 
-def generate_report(filepath, sheet_results, benchmark):
+def generate_report(filepath, sheet_results, benchmark, screen_format_result=None,
+                     structure_result=None, perspective_quality_result=None):
     """評価レポートを生成（複数シート対応）
 
     sheet_results: list of dict, 各要素は以下のキーを持つ:
@@ -678,6 +1169,9 @@ def generate_report(filepath, sheet_results, benchmark):
         multi_issues, multi_penalty, word_issues, word_penalty,
         steps_issues, steps_penalty, granularity_stats,
         guardrail_money, guardrail_kanten
+    screen_format_result: check_screen_and_format() の結果（全シート合算済み）
+    structure_result: check_structure() の結果
+    perspective_quality_result: check_perspective_quality() の結果
     """
 
     # 全シート合算
@@ -741,9 +1235,16 @@ def generate_report(filepath, sheet_results, benchmark):
         MAX_GUARDRAIL_PENALTY
     )
 
+    # 新チェック7-9のペナルティ
+    total_screen_format_penalty = screen_format_result.get('penalty', 0) if screen_format_result else 0
+    total_structure_penalty = structure_result.get('penalty', 0) if structure_result else 0
+    total_perspective_quality_penalty = perspective_quality_result.get('penalty', 0) if perspective_quality_result else 0
+
     total_penalty = (total_vague_penalty + total_multi_penalty +
                      total_word_penalty + total_steps_penalty +
-                     total_granularity_penalty + total_guardrail_penalty)
+                     total_granularity_penalty + total_guardrail_penalty +
+                     total_screen_format_penalty + total_structure_penalty +
+                     total_perspective_quality_penalty)
     score = max(0, 100 - total_penalty)
 
     multi_sheet = len(sheet_results) > 1
@@ -779,13 +1280,19 @@ def generate_report(filepath, sheet_results, benchmark):
     lines.append("-" * 70)
     lines.append("減点サマリー")
     lines.append("-" * 70)
-    lines.append(f"  1. 期待値の曖昧表現:     -{total_vague_penalty}点 ({len(all_vague_issues)}件検出)")
-    lines.append(f"  2. 期待値の複数混在:     -{total_multi_penalty}点 ({len(all_multi_issues)}件検出)")
-    lines.append(f"  3. 我流の単語:           -{total_word_penalty}点 ({len(all_word_issues)}件検出)")
-    lines.append(f"  4. 手順の省略:           -{total_steps_penalty}点 ({len(all_steps_issues)}件検出)")
-    lines.append(f"  5. 粒度・品質:           -{total_granularity_penalty}点 (過去参考例との比較)")
+    lines.append(f"  1. 期待値の曖昧表現:     -{total_vague_penalty}点 ({len(all_vague_issues)}件検出, 上限{MAX_VAGUE_PENALTY})")
+    lines.append(f"  2. 期待値の複数混在:     -{total_multi_penalty}点 ({len(all_multi_issues)}件検出, 上限{MAX_MULTI_KOTO_PENALTY})")
+    lines.append(f"  3. 我流の単語:           -{total_word_penalty}点 ({len(all_word_issues)}件検出, 上限{MAX_CUSTOM_WORD_PENALTY})")
+    lines.append(f"  4. 手順の省略:           -{total_steps_penalty}点 ({len(all_steps_issues)}件検出, 上限{MAX_MISSING_STEPS_PENALTY})")
+    lines.append(f"  5. 粒度・品質:           -{total_granularity_penalty}点 (過去参考例との比較, 上限{MAX_GRANULARITY_PENALTY})")
     guardrail_issue_count = len(all_guardrail_money_issues) + len(all_guardrail_kanten_issues)
-    lines.append(f"  6. ガードレール準拠:     -{total_guardrail_penalty}点 ({guardrail_issue_count}件検出)")
+    lines.append(f"  6. ガードレール準拠:     -{total_guardrail_penalty}点 ({guardrail_issue_count}件検出, 上限{MAX_GUARDRAIL_PENALTY})")
+    sf_issue_count = len(screen_format_result.get('issues', [])) if screen_format_result else 0
+    lines.append(f"  7. 画面名・フォーマット: -{total_screen_format_penalty}点 ({sf_issue_count}件検出, 上限{MAX_SCREEN_FORMAT_PENALTY})")
+    st_issue_count = len(structure_result.get('issues', [])) if structure_result else 0
+    lines.append(f"  8. 構造化:               -{total_structure_penalty}点 ({st_issue_count}件検出, 上限{MAX_STRUCTURE_PENALTY})")
+    pq_issue_count = len(perspective_quality_result.get('issues', [])) if perspective_quality_result else 0
+    lines.append(f"  9. 観点シート品質:       -{total_perspective_quality_penalty}点 ({pq_issue_count}件検出, 上限{MAX_PERSPECTIVE_QUALITY_PENALTY})")
     lines.append(f"  ---")
     lines.append(f"  合計減点: -{total_penalty}点")
     lines.append("")
@@ -928,18 +1435,25 @@ def generate_report(filepath, sheet_results, benchmark):
     lines.append(f"【6】ガードレール準拠（qa-perspectives.md基準） (-{total_guardrail_penalty}点)")
     lines.append("-" * 70)
 
-    # 6a. 金額テストP1チェック
+    # 6a. 金額・セキュリティテストP1チェック
     total_money_cases = sum(sr.get('guardrail_money', {}).get('money_cases', 0) for sr in sheet_results)
-    lines.append(f"  [6a] 金額関連テストのP1設定 (-{total_guardrail_money_penalty}点)")
-    lines.append(f"    金額関連テスト検出: {total_money_cases}件")
+    total_security_cases = sum(sr.get('guardrail_money', {}).get('security_cases', 0) for sr in sheet_results)
+    lines.append(f"  [6a] 金額・セキュリティ関連テストのP1設定 (-{total_guardrail_money_penalty}点)")
+    p1_parts = []
+    if total_money_cases > 0:
+        p1_parts.append(f"金額{total_money_cases}件")
+    if total_security_cases > 0:
+        p1_parts.append(f"セキュリティ{total_security_cases}件")
+    if p1_parts:
+        lines.append(f"    P1推奨テスト検出: {' + '.join(p1_parts)}")
     if all_guardrail_money_issues:
         for issue in all_guardrail_money_issues:
             prefix = f"[{issue['_sheet']}] " if multi_sheet else ""
             lines.append(f"    {prefix}{issue['message']}")
-    elif total_money_cases > 0:
+    elif total_money_cases + total_security_cases > 0:
         lines.append(f"    全件P1設定済み")
     else:
-        lines.append(f"    金額関連テストなし（チェック対象外）")
+        lines.append(f"    金額・セキュリティ関連テストなし（チェック対象外）")
 
     lines.append("")
 
@@ -961,6 +1475,51 @@ def generate_report(filepath, sheet_results, benchmark):
 
     lines.append("")
 
+    # チェック7: 画面名・フォーマット
+    if screen_format_result:
+        lines.append("-" * 70)
+        lines.append(f"【7】画面名・フォーマット (-{total_screen_format_penalty}点)")
+        lines.append("-" * 70)
+        sf_issues = screen_format_result.get('issues', [])
+        if sf_issues:
+            lines.append(f"  [7a] 画面名 (-{screen_format_result.get('penalty_7a', 0)}点)")
+            for issue in sf_issues:
+                if issue['type'].startswith('screen_'):
+                    lines.append(f"    {issue['message']}")
+            lines.append(f"  [7b] 手順フォーマット (-{screen_format_result.get('penalty_7b', 0)}点)")
+            for issue in sf_issues:
+                if issue['type'].startswith('format_'):
+                    lines.append(f"    {issue['message']}")
+        else:
+            lines.append(f"  指摘なし")
+        lines.append("")
+
+    # チェック8: 構造化
+    if structure_result:
+        lines.append("-" * 70)
+        lines.append(f"【8】構造化 (-{total_structure_penalty}点)")
+        lines.append("-" * 70)
+        st_issues = structure_result.get('issues', [])
+        if st_issues:
+            for issue in st_issues:
+                lines.append(f"    {issue['message']}")
+        else:
+            lines.append(f"  指摘なし")
+        lines.append("")
+
+    # チェック9: 観点シート品質
+    if perspective_quality_result and perspective_quality_result.get('checked'):
+        lines.append("-" * 70)
+        lines.append(f"【9】観点シート品質 (-{total_perspective_quality_penalty}点)")
+        lines.append("-" * 70)
+        pq_issues = perspective_quality_result.get('issues', [])
+        if pq_issues:
+            for issue in pq_issues:
+                lines.append(f"    {issue['message']}")
+        else:
+            lines.append(f"  指摘なし")
+        lines.append("")
+
     # 修正推奨
     if total_penalty > 0:
         lines.append("=" * 70)
@@ -968,7 +1527,8 @@ def generate_report(filepath, sheet_results, benchmark):
         lines.append("=" * 70)
         priority = 1
         if all_guardrail_money_issues:
-            lines.append(f"  {priority}. 金額関連テスト{total_money_cases}件の優先度をP1に設定（ガードレール基準）")
+            p1_total = total_money_cases + total_security_cases
+            lines.append(f"  {priority}. P1推奨テスト{p1_total}件の優先度をP1に設定（ガードレール基準）")
             priority += 1
         if all_vague_issues:
             lines.append(f"  {priority}. 曖昧な期待値 {len(all_vague_issues)}件を具体的な表現に書き換え")
@@ -989,6 +1549,15 @@ def generate_report(filepath, sheet_results, benchmark):
             priority += 1
         if all_guardrail_kanten_issues:
             lines.append(f"  {priority}. 観点シート○の{total_uncovered}件にTCを追加（観点カバレッジ不足）")
+            priority += 1
+        if screen_format_result and screen_format_result.get('issues'):
+            lines.append(f"  {priority}. 画面名・フォーマットの修正（{len(screen_format_result['issues'])}件）")
+            priority += 1
+        if structure_result and structure_result.get('issues'):
+            lines.append(f"  {priority}. 構造化の改善（{len(structure_result['issues'])}件）")
+            priority += 1
+        if perspective_quality_result and perspective_quality_result.get('issues'):
+            lines.append(f"  {priority}. 観点シート品質の改善（{len(perspective_quality_result['issues'])}件）")
         lines.append("")
     else:
         lines.append("=" * 70)
@@ -1161,10 +1730,31 @@ def main():
     print()
     total_cases = sum(len(sr['cases']) for sr in sheet_results)
     print(f"合計: {len(sheet_results)}シート / {total_cases}件")
+
+    # 新チェック7-9（全シート合算のケースで実行）
+    all_cases = []
+    all_col_map = {}
+    for sr in sheet_results:
+        all_cases.extend(sr['cases'])
+        if not all_col_map:
+            all_col_map = sr['col_map']
+
+    # チェック7: 画面名・フォーマット
+    screen_format_result = check_screen_and_format(all_cases, all_col_map)
+    # チェック8: 構造化
+    structure_result = check_structure(all_cases, all_col_map, wb)
+    # チェック9: 観点シート品質
+    perspective_quality_result = check_perspective_quality(ws_kanten)
+
     print()
 
     # レポート生成
-    report, score = generate_report(args.excel_file, sheet_results, benchmark)
+    report, score = generate_report(
+        args.excel_file, sheet_results, benchmark,
+        screen_format_result=screen_format_result,
+        structure_result=structure_result,
+        perspective_quality_result=perspective_quality_result,
+    )
 
     print(report)
 
